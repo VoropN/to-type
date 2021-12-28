@@ -1,6 +1,5 @@
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 import styles from '../styles/Home.module.scss';
-import classNames from "classnames";
 import { getWord } from "../helpers/getWord";
 import { scrollToElement } from "../helpers";
 import { Timer } from "../components/Timer";
@@ -11,11 +10,12 @@ export async function getStaticProps(context: any) {
   return { props: { text: data } }
 }
 
-const spaceSymbols = ['↵'];
+const visibleSymbols = ['↵'];
+const space = '_';
 const getSymbol = (letter: string) => {
   if (/\r|\n|Enter/.test(letter)) return '↵';
-  if (/\s/.test(letter)) return '˽';
-  if (/`|'|’/.test(letter)) return '\'';
+  if (/\s/.test(letter)) return space;
+  if (/[`'’]/.test(letter)) return '\'';
   if (/[-—]/g.test(letter)) return '-';
   if (/[….·]/.test(letter)) return '.';
 
@@ -97,16 +97,20 @@ const Home: FC<any> = ({ text }) => {
       <h4>Clicked: {inputtedLetter}</h4>
       <h4>Typed: {position} </h4>
       <Timer shouldStart={shouldStart} shouldUpdate={clicked} setShouldStart={setShouldStart} onUpdate={onTimeUpdate}/>
-      <h4>Errors: {errors} / {position ? (errors / position * 100).toFixed(2) : 0} %</h4>
+      <h4>Errors: {errors} / {position ? (errors / position * 100).toFixed(2) : 0}%</h4>
       <h4>Speed: {speed}</h4>
     </div>
     <div className={styles.text}>
       <span className={styles.line}>{text.slice(0, word.position.start)}</span>
-      <div className={classNames(styles.word, { [styles.inline]: /\s/.test(text[position]) })}>
+      <div className={styles.word}>
         {word.text.start}
-        <span ref={selectedRef} data-clicked={isInputtedLetterVisible ? clicked : ''}
-              data-text={spaceSymbols.includes(selected) ? selected : ''}
-              className={classNames(styles.selected, { [styles.transparent]: spaceSymbols.includes(selected) })}>
+        <span
+          ref={selectedRef}
+          className={styles.selected}
+          {...{
+            ...(isInputtedLetterVisible && {"data-clicked": clicked}),
+            ...(visibleSymbols.includes(selected) && {"data-text": selected})
+          }}>
         {text[position]}
       </span>
         {word.text.end}

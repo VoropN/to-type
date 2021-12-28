@@ -9,7 +9,7 @@ $header-height: 75px;
 
 .header {
   display: grid;
-  grid-template-columns: repeat(4, 100px) 150px 120px;
+  grid-template-columns: repeat(4, 100px) 200px 120px;
   padding: 10px 20px;
   position: fixed;
   color: red;
@@ -21,37 +21,41 @@ $header-height: 75px;
 
 .text {
   white-space: pre-wrap;
-  margin-top: $header-height;
+  margin-top: $header-height + 20px;
   padding: 25px;
   line-height: 2;
   text-align: justify;
 }
 
 .word {
-  display: inline-block;
+  display: inline;
   text-shadow: 0 0 .3px;
+  white-space: nowrap;
 }
 
-.inline {
-  display: inline;
+@media not all and (min-resolution:.001dpcm) {
+  .word {
+      text-shadow: 0 0 1px;
+  }
 }
 
 .selected {
   position: relative;
   color: red;
-  text-decoration: underline red;
+  white-space: pre-wrap;
 
   &:after {
     content: attr(data-text);
     position: absolute;
     width: 100%;
     min-width: 5px;
-    bottom: 0;
+    bottom: -1.5px;
     left: 0;
     height: 100%;
     color: red;
     display: flex;
     align-items: center;
+    border-bottom: 2px solid;
   }
 
   &:before {

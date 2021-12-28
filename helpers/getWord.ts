@@ -8,10 +8,10 @@ export const getWord = ({ position, text }: IGetWord) => {
   const wordData = { position: { start: position, end: position }, text: { start: '', end: '' } };
   const letter = text[position];
   if (!/\s+/.test(letter)) {
-    while (wordData.position.start > 0 && !/\s+/.test(text[--wordData.position.start])) {
+    while (wordData.position.start > 0 && !/\s+|[-—]/.test(text[--wordData.position.start])) {
       wordData.text.start = text[wordData.position.start] + wordData.text.start;
     }
-    while (!/\s+/.test(text[++wordData.position.end]) && wordData.position.end < textLength) {
+    while (!/\s+|[-—]/.test(text[++wordData.position.end]) && wordData.position.end < textLength) {
       wordData.text.end += text[wordData.position.end];
     }
     wordData.position.start && ++wordData.position.start;
