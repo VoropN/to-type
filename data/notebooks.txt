@@ -1,0 +1,80 @@
+The Factory Pattern is one of the core design pattern principles for creating an object. It allows clients to create objects using a common interface. In TypeScript, there are many different ways in which you can use the factory pattern to make your code cleaner and more concise. In this article, we’ll demonstrate how to create a factory pattern using TypeScript Generics.
+What is Factory?
+The authors of the book Design Patterns: Elements of Reusable Object-Oriented Software define the Factory Pattern as:
+Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+In other words, the factory design pattern defines an interface or an abstract class and allows subclasses to decide which object to instantiate. In that way, we are adding polymorphic behavior to the instantiation.
+How Does It Work?
+The client calls the create function with a subclass from a factory instead of creating objects directly with a concrete class. As a factory corresponds to a single interface variant, all its objects will be compatible.
+
+How the Factory pattern works
+Each client calls create with a subclass of a factory interface and receives a class to be instantiated. This class is related in some way to the subclass, and each client can behave differently based on that subclass.
+Example
+The purpose of this example is to create a user authentication factory for any type of user (ordinary, administrator, moderator, etc) in an application.
+Defining Interfaces
+First, let’s define the BaseUser interface which is the main interface in our factory, and its subclasses that will be used in Authentication to define the signIn and signOut methods. In the following code snippet, we’ll illustrate two implementations of the BaseUser interface, Administrator and Ordinary:
+
+Defining Factory Creator
+With the main interface created, we can define the factory creation function. This function will return a class that will be used to instantiate an Authentication functionality based on the chosen subclass.
+In this example, we are just calling an authentication service on the signIn method and setting some properties when the signOut method is called.
+
+Using Our Factory
+Now it’s time to use our factory to create a class for the Administrator user and the Ordinary user. We just need to inform the correct subclass to use the correct authentication and user in our create object.
+
+Conclusion
+The Factory Method is one of the most used design patterns. It provides a simple way to extend the object family with minor changes to the application code.
+Cesar William Alvarenga
+Software Engineer
+
+Follow
+
+84
+
+
+Factory Pattern
+Typescript
+JavaScript
+Software Development
+Software Engineering
+84
+
+
+
+
+
+
+
+More from Cesar William Alvarenga
+Follow
+
+Software Engineer
+
+Jun 9
+
+Design Patterns In TypeScript — Observer
+How to define and maintain dependencies between objects
+
+Photo made with Canva.
+Also known as Dependents or Publish-Subscribe, the Observer pattern helps us create decoupled components and modules. It improves the testability, composition, and scalability of our applications. In this post, I’m going to show you some concepts around the Observer pattern, how it works, and a practical example.
+What is Observer?
+The authors of…
+Read more · 3 min read
+
+60
+
+
+
+Share your ideas with millions of readers.
+
+Write on Medium
+Published in Level Up Coding
+
+·Jun 6
+
+Design Patterns In TypeScript — Singleton
+How to restrict the instantiation of a class to one object
+
+Photo made with Canva.
+Singleton is one of the most used design patterns in software development. In this post, we will learn how to implement this pattern in the context of web development using TypeScript.
+What is Singleton?
+The authors of the book Design Patterns: Elements of Reusable Object-Oriented Software defines Singleton Pattern as:
+A singleton class…

@@ -1,0 +1,17 @@
+.timerButton {
+  border: .5px solid rgba(greenyellow, .5);
+  border-radius: 4px;
+  background: greenyellow;
+  padding: 4px 15px;
+  cursor: pointer;
+  box-shadow: 1px 2px 3px grey, inset 1px 2px 3px #ddffc2;
+  outline: none;
+
+}
+
+.timerButtonStop {
+  background: red;
+  border: 1px solid rgba(red, .5);
+  color: white;
+  box-shadow: 1px 2px 3px grey, inset 1px 2px 3px #f89797;
+}
