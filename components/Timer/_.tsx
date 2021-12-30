@@ -1,13 +1,14 @@
-import { memo, useEffect, useRef, useState } from "react";
+import {memo, useEffect, useMemo, useRef, useState} from "react";
 import classNames from "classnames";
-import styles from './Timer.module.scss';
+import styles from './styles.module.scss';
 
-type ITimer = {
+interface ITimer {
+  name: string;
   shouldUpdate: any;
   shouldStart: boolean;
   onUpdate: ({ time }: { time: number; }) => void;
   setShouldStart: (isTrue: boolean) => void;
-};
+}
 
 const startTimer = ({ time, setTime }: { time: number; setTime: (time: number) => void }) => {
   const start = Date.now() - time;
@@ -19,12 +20,13 @@ const startTimer = ({ time, setTime }: { time: number; setTime: (time: number) =
   }
 };
 
-export const Timer = memo(({ setShouldStart, shouldUpdate, onUpdate, shouldStart }: ITimer) => {
+const Timer = ({ setShouldStart, shouldUpdate, onUpdate, shouldStart, name }: ITimer) => {
+  const timerName = useMemo(() => `timer-${name}`, [name]);
   const [time, setTime] = useState(0);
   const clearIntervalTimer = useRef<any>(null);
 
   useEffect(() => {
-    setTime(Number(localStorage.getItem('time') || 0));
+    setTime(Number(localStorage.getItem(timerName) || 0));
   }, []);
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export const Timer = memo(({ setShouldStart, shouldUpdate, onUpdate, shouldStart
 
   useEffect(() => {
     onUpdate({ time });
-    localStorage.setItem('time', String(time));
+    localStorage.setItem(timerName, String(time));
   }, [time]);
 
   useEffect(() => {
@@ -82,4 +84,6 @@ export const Timer = memo(({ setShouldStart, shouldUpdate, onUpdate, shouldStart
       </button>
     </div>
   );
-});
+};
+
+export default memo(Timer);

@@ -39,24 +39,44 @@ $header-height: 75px;
   }
 }
 
+.space {
+  white-space: pre-wrap;
+}
+
 .selected {
   position: relative;
   color: red;
-  white-space: pre-wrap;
+  text-decoration: underline;
+  text-underline-position: under;
 
   &:after {
     content: attr(data-text);
     position: absolute;
     width: 100%;
     min-width: 5px;
-    bottom: -1.5px;
+    bottom: 0;
     left: 0;
     height: 100%;
     color: red;
     display: flex;
     align-items: center;
-    border-bottom: 2px solid;
   }
+  
+  //&:after {
+  //  content: attr(data-text);
+  //  position: absolute;
+  //  width: 100%;
+  //  min-width: 5px;
+  //  bottom: -1.5px
+  //  left: 0;
+  //  height: 100%;
+  //  color: red;
+  //  display: flex;
+  //  align-items: center;
+  //  border-bottom: 2px solid;
+  //}
+  
+  
 
   &:before {
     content: attr(data-clicked);
