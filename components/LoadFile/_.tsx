@@ -1,47 +1,28 @@
+import {ChangeEvent, Dispatch, memo, SetStateAction, Ref} from "react";
 import styles from './styles.module.scss';
-import {ChangeEvent, memo, useRef} from "react";
+import {ITextOptions} from "./useLoadFileProps";
 
-interface ILoadFile {
-  setText: (options: ILoadedFileData) => void;
-  setLoading: (isLoading: boolean) => void;
-  setError?: (errors: any) => void;
-}
-export interface ILoadedFileData {
-  content: string | ArrayBuffer
-  textOptions: {
-    name: string;
-    size: number;
-    lastModified: number;
-    lastModifiedDate?: Date;
-    type: "text/html" | "text/plain" | string;
-  };
+export interface ILoadFile {
+  text: string;
+  isLoading: boolean;
+  errors: any;
+  setText: Dispatch<SetStateAction<string>>;
+  setLoading: Dispatch<SetStateAction<boolean>>
+  setErrors?: Dispatch<SetStateAction<any>>
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  fileButtonRef: Ref<HTMLInputElement>;
+  textOptions: ITextOptions
 }
 
-const LoadFile = ({setText, setLoading, setError}: ILoadFile) => {
-  const ref = useRef<HTMLInputElement>(null);
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target?.files?.[0];
 
-    if (file) {
-      setLoading(true);
-      const reader = new FileReader();
-      reader.onload = (ev: ProgressEvent<FileReader>) => {
-        const content = ev.target?.result;
-        content && setText({ content, textOptions: file });
-        setLoading(false);
-        ref.current?.blur();
-      }
-      reader.onerror = (errors) => setError?.(errors);
-      reader.readAsText(file);
-    }
-  }
+const LoadFile = ({fileButtonRef, onChange}: ILoadFile) => {
   return (
     <div className={styles.container}>
       <input type="file"
              placeholder='choose text'
              accept="text/plain, text/html"
              onChange={onChange}
-             ref={ref}
+             ref={fileButtonRef}
       />
     </div>
   )
