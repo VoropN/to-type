@@ -1,12 +1,12 @@
-import {memo} from "react";
+import {Dispatch, memo, SetStateAction} from "react";
 import classNames from "classnames";
 import styles from './styles.module.scss';
 
 export interface IPagination {
   fullText: string;
-  setText: (text: string) => void;
+  setText: Dispatch<SetStateAction<string>>
   activePage: number;
-  setActivePage: (activePage: number) => void;
+  setActivePage: Dispatch<SetStateAction<number>>
 }
 
 const Pagination = ({ setText, fullText, activePage, setActivePage }: IPagination) => {

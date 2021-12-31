@@ -1,4 +1,4 @@
-import {memo, useEffect, useMemo, useRef, useState} from "react";
+import {Dispatch, memo, SetStateAction, useEffect, useMemo, useRef, useState} from "react";
 import classNames from "classnames";
 import styles from './styles.module.scss';
 
@@ -7,7 +7,7 @@ interface ITimer {
   shouldUpdate: any;
   shouldStart: boolean;
   onUpdate: ({ time }: { time: number; }) => void;
-  setShouldStart: (isTrue: boolean) => void;
+  setShouldStart: Dispatch<SetStateAction<boolean>>
 }
 
 const startTimer = ({ time, setTime }: { time: number; setTime: (time: number) => void }) => {

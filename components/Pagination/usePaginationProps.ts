@@ -1,13 +1,13 @@
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {IPagination} from "./index";
 
 export interface IUsePaginationProps {
   fullText: string;
-  setText: (text: string) => void;
+  setText: Dispatch<SetStateAction<string>>
+  activePage: number;
+  setActivePage: Dispatch<SetStateAction<number>>
 }
-export const usePaginationProps = ({fullText, setText}: IUsePaginationProps): IPagination => {
-  const [activePage, setActivePage] = useState(0);
-
+export const usePaginationProps = ({fullText, setText, activePage, setActivePage}: IUsePaginationProps): IPagination => {
   return {
     fullText, setText, activePage, setActivePage
   }

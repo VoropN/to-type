@@ -1,6 +1,11 @@
-type IGetWord = {
+interface IGetWord {
   position: number;
   text: string;
+}
+
+export interface IWordData {
+ position: { start: number; end: number; };
+ text: { start: string; end: string; }
 }
 
 export const getWord = ({ position, text }: IGetWord) => {

@@ -6,7 +6,7 @@ export interface ILoadFile {
   text: string;
   isLoading: boolean;
   errors: any;
-  setText: Dispatch<SetStateAction<string>>;
+  setText: Dispatch<SetStateAction<string>>
   setLoading: Dispatch<SetStateAction<boolean>>
   setErrors?: Dispatch<SetStateAction<any>>
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
