@@ -5,11 +5,11 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
-import { getWord, scrollToElement } from "../../helpers";
-import { getSymbol } from "./helpers";
-import { ITextOptions } from "../LoadFile";
-import { ITextToEnter } from "./_";
+} from 'react';
+import { getWord, scrollToElement } from '../../helpers';
+import { enterSymbol, getSymbol } from './helpers';
+import { ITextOptions } from '../LoadFile';
+import { ITextToEnter } from './_';
 
 export interface IUseTextToEnterProps {
   headerRef: MutableRefObject<any>;
@@ -24,9 +24,10 @@ export const useTextToEnterProps = ({
   textOptions,
   isLoading,
 }: IUseTextToEnterProps): ITextToEnter => {
-  const [text, setText] = useState("");
-  const [pressedLetter, setPressedLetter] = useState("");
+  const [text, setText] = useState('');
+  const [pressedLetter, setPressedLetter] = useState('');
   const [typoCounter, setTypoCounter] = useState(0);
+  const [updateVersion, setUpdateVersion] = useState(0);
   const [typedCounter, setTypedCounter] = useState(0);
   const [shouldStart, setShouldStart] = useState(false);
   const [isPressedLetterVisible, setIsPressedLetterVisible] = useState(false);
@@ -84,7 +85,7 @@ export const useTextToEnterProps = ({
     setTypoCounter(progress.typoCounter);
     setTypedCounter(progress.typedCounter);
     setSpeedCounter(progress.speedCounter);
-    setPressedLetter("");
+    setPressedLetter('');
     updateActivePage({ position: progress.position });
   }, [textOptions, fullText, storedName]);
 
@@ -102,48 +103,51 @@ export const useTextToEnterProps = ({
   }, [storedName, position, typedCounter, typoCounter, speedCounter]);
 
   useEffect(() => {
+    if (pressedLetter === currentLetter) {
+      setIsPressedLetterVisible(false);
+      setTypedCounter(typedCounter + 1);
+      setPosition(
+        pressedLetter === enterSymbol
+          ? position + (fullText.slice(position).match(/\S/)?.index || 0)
+          : position + 1
+      );
+    } else {
+      setTypoCounter(typoCounter + 1);
+      setIsPressedLetterVisible(true);
+    }
+  }, [updateVersion]);
+
+  useEffect(() => {
+    scrollToElement({ headerRef, selectedRef, forceScroll: !shouldStart });
+  }, [updateVersion, shouldStart, headerRef, selectedRef, text]);
+
+  useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
       const { key } = event;
       event.preventDefault?.();
       switch (key) {
-        case "Down":
-        case "ArrowDown":
-        case "Up":
-        case "ArrowUp":
-        case "Left":
-        case "ArrowLeft":
-        case "Right":
-        case "ArrowRight":
-        case "Esc":
-        case "Escape":
+        case 'Down':
+        case 'ArrowDown':
+        case 'Up':
+        case 'ArrowUp':
+        case 'Left':
+        case 'ArrowLeft':
+        case 'Right':
+        case 'ArrowRight':
+        case 'Esc':
+        case 'Escape':
           break;
-        case "Enter":
+        case 'Enter':
         default: {
           const letter = getSymbol(key);
           setPressedLetter(letter);
-          if (
-            key === fullText[position] ||
-            letter === getSymbol(fullText[position])
-          ) {
-            setIsPressedLetterVisible(false);
-            setTypedCounter(typedCounter + 1);
-            setPosition((p) =>
-              key === "Enter"
-                ? position + (fullText.slice(position).match(/\S/)?.index || 0)
-                : position + 1
-            );
-          } else {
-            setTypoCounter(typoCounter + 1);
-            setIsPressedLetterVisible(true);
-          }
+          setUpdateVersion((version) => version + 1);
         }
       }
-
-      scrollToElement({ headerRef, selectedRef, forceScroll: !shouldStart });
     };
-    document.addEventListener("keypress", inputFunc, false);
-    return () => document.removeEventListener("keypress", inputFunc, false);
-  }, [shouldStart, position, typoCounter, typedCounter]);
+    document.addEventListener('keypress', inputFunc, false);
+    return () => document.removeEventListener('keypress', inputFunc, false);
+  }, [setPressedLetter, setUpdateVersion]);
 
   return {
     text,
@@ -159,6 +163,7 @@ export const useTextToEnterProps = ({
     typedCounter,
     onTimeUpdate,
     setActivePage,
+    updateVersion,
     currentLetter,
     pressedLetter,
     setShouldStart,

@@ -42,7 +42,9 @@ const Indicators = ({
       </div>
       <div>
         <h4>Typed: {typedCounter} </h4>
-        <h4>All: {length} </h4>
+        <h4>
+          All: {position}/{length}
+        </h4>
       </div>
       <div>
         <h4>Typo: {typoCounter}</h4>

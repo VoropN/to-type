@@ -1,7 +1,7 @@
 import { Dispatch, memo, MutableRefObject, SetStateAction } from "react";
 import classNames from "classnames";
 import styles from "./styles.module.scss";
-import { space, visibleSymbols } from "./helpers";
+import { spaceSymbol, visibleSymbols } from "./helpers";
 import { IWordData } from "../../helpers";
 
 export interface ITextToEnter {
@@ -9,6 +9,7 @@ export interface ITextToEnter {
   onTimeUpdate: ({ time }: { time: number }) => void;
   currentPosition: number;
   activePage: number;
+  updateVersion: number;
   pressedLetter: string;
   currentLetter: string;
   speedCounter: number;
@@ -51,7 +52,7 @@ const TextToEnter = ({
                 styles.selected,
                 {
                   [styles.space]:
-                    currentLetter === space ||
+                    currentLetter === spaceSymbol ||
                     visibleSymbols.includes(currentLetter),
                 },
                 { [styles.hideCaret]: visibleSymbols.includes(currentLetter) }
