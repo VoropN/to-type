@@ -75,16 +75,6 @@ export const useTextToEnterProps = ({
   }, [pressedLetter, fullText]);
 
   useEffect(() => {
-    if (pressedLetter) {
-      setShouldStart(true);
-      localStorage.setItem(
-        storedName,
-        JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
-      );
-    }
-  }, [pressedLetter, storedName, position, typedCounter, typoCounter]);
-
-  useEffect(() => {
     const progress = JSON.parse(
       localStorage.getItem(storedName) ||
         '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0}'
@@ -97,6 +87,19 @@ export const useTextToEnterProps = ({
     setPressedLetter("");
     updateActivePage({ position: progress.position });
   }, [textOptions, fullText, storedName]);
+
+  useEffect(() => {
+    if (pressedLetter) {
+      setShouldStart(true);
+    }
+  }, [pressedLetter]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      storedName,
+      JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
+    );
+  }, [storedName, position, typedCounter, typoCounter, speedCounter]);
 
   useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
@@ -124,7 +127,7 @@ export const useTextToEnterProps = ({
           ) {
             setIsPressedLetterVisible(false);
             setTypedCounter(typedCounter + 1);
-            setPosition(
+            setPosition((p) =>
               key === "Enter"
                 ? position + (fullText.slice(position).match(/\S/)?.index || 0)
                 : position + 1
@@ -141,14 +144,12 @@ export const useTextToEnterProps = ({
     document.addEventListener("keypress", inputFunc, false);
     return () => document.removeEventListener("keypress", inputFunc, false);
   }, [shouldStart, position, typoCounter, typedCounter]);
-  const selected = getSymbol(fullText[position]);
 
   return {
     text,
     word,
     setText,
     position,
-    selected,
     isLoading,
     activePage,
     typoCounter,

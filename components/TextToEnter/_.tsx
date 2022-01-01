@@ -22,19 +22,18 @@ export interface ITextToEnter {
   setShouldStart: Dispatch<SetStateAction<boolean>>;
   selectedRef: MutableRefObject<any>;
   word: IWordData;
-  selected: string;
   setText: Dispatch<SetStateAction<string>>;
 }
 
 const TextToEnter = ({
   text,
   word,
-  selected,
   position,
   isLoading,
   activePage,
   selectedRef,
   pressedLetter,
+  currentLetter,
   currentPosition,
   isPressedLetterVisible,
 }: ITextToEnter) => {
@@ -52,16 +51,17 @@ const TextToEnter = ({
                 styles.selected,
                 {
                   [styles.space]:
-                    selected === space || visibleSymbols.includes(selected),
+                    currentLetter === space ||
+                    visibleSymbols.includes(currentLetter),
                 },
-                { [styles.hideCaret]: visibleSymbols.includes(selected) }
+                { [styles.hideCaret]: visibleSymbols.includes(currentLetter) }
               )}
               {...{
                 ...(isPressedLetterVisible && {
                   "data-pressed": pressedLetter,
                 }),
-                ...(visibleSymbols.includes(selected) && {
-                  "data-text": selected,
+                ...(visibleSymbols.includes(currentLetter) && {
+                  "data-text": currentLetter,
                 }),
               }}
             >

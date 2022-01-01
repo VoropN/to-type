@@ -93,7 +93,7 @@ const Timer = ({
       clearTimeout(currentTimer);
     };
   }, [shouldStart, shouldUpdate]);
-  console.log(shouldStart, shouldUpdate);
+
   return (
     <div>
       <h4>Time: {(time / 1000).toFixed(0)}</h4>
