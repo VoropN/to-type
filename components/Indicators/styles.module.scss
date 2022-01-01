@@ -1,0 +1,17 @@
+.indicators {
+  display: grid;
+  grid-template-columns: repeat(5, 150px);
+  padding: 10px 20px;
+  position: fixed;
+  max-width: 700px;
+  color: red;
+  background: white;
+  top: 0;
+  min-width: 100%;
+  z-index: 100;
+  text-align: justify;
+}
+
+.typoPercentage {
+  margin-top: 5px;
+}

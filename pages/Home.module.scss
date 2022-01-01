@@ -1,18 +1,8 @@
+@import "styles/variables";
+
 .root {
   max-width: 700px;
   margin: auto;
   caret-color: red;
-  font-family: sans-serif;
-}
-
-.header {
-  display: grid;
-  grid-template-columns: repeat(4, 100px) 200px 120px;
-  padding: 10px 20px;
-  position: fixed;
-  color: red;
-  background: white;
-  top: 0;
-  min-width: 100%;
-  z-index: 100;
+  //font-family: $Anonymous-Pro, $IBM-Regular;
 }

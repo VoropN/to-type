@@ -1,8 +1,15 @@
-import {MutableRefObject, useEffect, useMemo, useRef, useState} from "react";
-import {getWord, scrollToElement} from "../../helpers";
-import {getSymbol} from "./helpers";
-import {ITextOptions} from "../LoadFile";
-import {ITextToEnter} from "./_";
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { getWord, scrollToElement } from "../../helpers";
+import { getSymbol } from "./helpers";
+import { ITextOptions } from "../LoadFile";
+import { ITextToEnter } from "./_";
 
 export interface IUseTextToEnterProps {
   headerRef: MutableRefObject<any>;
@@ -11,119 +18,150 @@ export interface IUseTextToEnterProps {
   isLoading: boolean;
 }
 
-export const useTextToEnterProps = ({ headerRef, fullText, textOptions, isLoading }: IUseTextToEnterProps): ITextToEnter => {
-  const [text, setText] = useState('');
-  const [clicked, setClicked] = useState('');
-  const [typo, setTypo] = useState(0);
+export const useTextToEnterProps = ({
+  headerRef,
+  fullText,
+  textOptions,
+  isLoading,
+}: IUseTextToEnterProps): ITextToEnter => {
+  const [text, setText] = useState("");
+  const [pressedLetter, setPressedLetter] = useState("");
+  const [typoCounter, setTypoCounter] = useState(0);
+  const [typedCounter, setTypedCounter] = useState(0);
   const [shouldStart, setShouldStart] = useState(false);
+  const [isPressedLetterVisible, setIsPressedLetterVisible] = useState(false);
   const [position, setPosition] = useState(0);
-  const [speed, setSpeed] = useState(0);
+  const [speedCounter, setSpeedCounter] = useState(0);
   const [activePage, setActivePage] = useState(0);
 
   const selectedRef = useRef<HTMLSpanElement>(null);
 
   const currentPosition = position - activePage * 1000;
-  const [prevLetter, currentLetter] = useMemo(() => [
-    getSymbol(fullText[position - 1]),
-    getSymbol(fullText[position])], [fullText, position]);
-  const inputtedLetter = getSymbol(clicked);``
-  const isInputtedLetterVisible = useMemo(() =>
-    !!inputtedLetter && currentLetter !== inputtedLetter && prevLetter !== inputtedLetter, [prevLetter, inputtedLetter, currentLetter]);
-  const word = useMemo(() => getWord({ text, position: currentPosition }), [text, currentPosition]);
+  const storedName = `progress-${textOptions.name}`;
+  const currentLetter = useMemo(
+    () => getSymbol(fullText[position]),
+    [fullText, position]
+  );
 
-  const updateActivePage = ({position}: {position: number;}) => {
-    const page = position / 1000 >> 0;
-    const state = page * 1000;
-    setActivePage(page);
-    setText(fullText.slice(state, state + 1000));
-    scrollToElement({ headerRef, selectedRef, forceScroll: true });
-  }
-  const onTimeUpdate = ({ time }: { time: number }) => {
-    if (position) {
-      const seconds = 1000 * 60;
-      setSpeed(Math.round(position * seconds / time));
-    }
-  }
+  const word = useMemo(
+    () => getWord({ text, position: currentPosition }),
+    [text, currentPosition]
+  );
 
-  const inputFunc = (event: KeyboardEvent) => {
-    const { key } = event;
-    event.preventDefault?.();
-    switch (key) {
-      case "Down":
-      case "ArrowDown":
-      case "Up":
-      case "ArrowUp":
-      case "Left":
-      case "ArrowLeft":
-      case "Right":
-      case "ArrowRight":
-      case "Esc":
-      case "Escape":
-        break;
-      case "Enter":
-      default:
-        setClicked(getSymbol(key));
-        if (key === fullText[position] || getSymbol(key) === getSymbol(fullText[position])) {
-          if (key === 'Enter') setPosition(
-            position +
-            (fullText.slice(position).match(/\S/)?.index || 0)
-          );
-          else setPosition(position + 1);
-        } else {
-          setTypo(typo + 1);
-        }
-    }
-
-    scrollToElement({ headerRef, selectedRef, forceScroll: !shouldStart });
-  }
+  const updateActivePage = useCallback(
+    ({ position }: { position: number }) => {
+      const page = (position / 1000) >> 0;
+      const state = page * 1000;
+      setActivePage(page);
+      setText(fullText.slice(state, state + 1000));
+      scrollToElement({ headerRef, selectedRef, forceScroll: true });
+    },
+    [setActivePage, setText, headerRef, selectedRef, fullText]
+  );
+  const onTimeUpdate = useCallback(
+    ({ time }: { time: number }) => {
+      if (position) {
+        const seconds = 1000 * 60;
+        setSpeedCounter(Math.round((position * seconds) / time));
+      }
+    },
+    [position, setSpeedCounter]
+  );
 
   useEffect(() => {
-    if (position / 1000 >> 0 !== activePage) {
-      updateActivePage({position});
+    if ((position / 1000) >> 0 !== activePage) {
+      updateActivePage({ position });
     }
-  }, [clicked, fullText]);
+  }, [pressedLetter, fullText]);
 
   useEffect(() => {
-    if (clicked) {
+    if (pressedLetter) {
       setShouldStart(true);
-      localStorage.setItem(`progress-${textOptions.name}`, JSON.stringify({position, typo, speed}));
+      localStorage.setItem(
+        storedName,
+        JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
+      );
     }
-  }, [position, clicked, position, typo, speed, setShouldStart]);
+  }, [pressedLetter, storedName, position, typedCounter, typoCounter]);
 
   useEffect(() => {
-    const progress = JSON.parse(localStorage.getItem(`progress-${textOptions.name}`) || '{"position": 0, "typo": 0, "speed": 0}');
+    const progress = JSON.parse(
+      localStorage.getItem(storedName) ||
+        '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0}'
+    );
+
     setPosition(progress.position);
-    setTypo(progress.typo);
-    setSpeed(progress.speed);
-    setClicked('');
-    updateActivePage({position: progress.position});
-  }, [textOptions, fullText]);
+    setTypoCounter(progress.typoCounter);
+    setTypedCounter(progress.typedCounter);
+    setSpeedCounter(progress.speedCounter);
+    setPressedLetter("");
+    updateActivePage({ position: progress.position });
+  }, [textOptions, fullText, storedName]);
 
   useEffect(() => {
-    document.addEventListener('keypress', inputFunc, false);
-    return () => document.removeEventListener('keypress', inputFunc, false);
-  }, [position, shouldStart]);
+    const inputFunc = (event: KeyboardEvent) => {
+      const { key } = event;
+      event.preventDefault?.();
+      switch (key) {
+        case "Down":
+        case "ArrowDown":
+        case "Up":
+        case "ArrowUp":
+        case "Left":
+        case "ArrowLeft":
+        case "Right":
+        case "ArrowRight":
+        case "Esc":
+        case "Escape":
+          break;
+        case "Enter":
+        default: {
+          const letter = getSymbol(key);
+          setPressedLetter(letter);
+          if (
+            key === fullText[position] ||
+            letter === getSymbol(fullText[position])
+          ) {
+            setIsPressedLetterVisible(false);
+            setTypedCounter(typedCounter + 1);
+            setPosition(
+              key === "Enter"
+                ? position + (fullText.slice(position).match(/\S/)?.index || 0)
+                : position + 1
+            );
+          } else {
+            setTypoCounter(typoCounter + 1);
+            setIsPressedLetterVisible(true);
+          }
+        }
+      }
+
+      scrollToElement({ headerRef, selectedRef, forceScroll: !shouldStart });
+    };
+    document.addEventListener("keypress", inputFunc, false);
+    return () => document.removeEventListener("keypress", inputFunc, false);
+  }, [shouldStart, position, typoCounter, typedCounter]);
   const selected = getSymbol(fullText[position]);
 
   return {
     text,
-    isLoading,
-    setText,
-    activePage,
-    setActivePage,
-    clicked,
-    typo,
-    speed,
-    onTimeUpdate,
-    currentLetter,
-    inputtedLetter,
-    position,
-    shouldStart,
-    setShouldStart,
-    isInputtedLetterVisible,
-    currentPosition,
-    selectedRef,
     word,
-    selected
-  }
-}
+    setText,
+    position,
+    selected,
+    isLoading,
+    activePage,
+    typoCounter,
+    shouldStart,
+    selectedRef,
+    speedCounter,
+    typedCounter,
+    onTimeUpdate,
+    setActivePage,
+    currentLetter,
+    pressedLetter,
+    setShouldStart,
+    currentPosition,
+    isPressedLetterVisible,
+  };
+};

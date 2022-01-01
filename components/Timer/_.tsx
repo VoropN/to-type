@@ -1,33 +1,53 @@
-import {Dispatch, memo, SetStateAction, useEffect, useMemo, useRef, useState} from "react";
+import {
+  Dispatch,
+  memo,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import classNames from "classnames";
-import styles from './styles.module.scss';
+import styles from "./styles.module.scss";
 
 interface ITimer {
   name: string;
   shouldUpdate: any;
   shouldStart: boolean;
-  onUpdate: ({ time }: { time: number; }) => void;
-  setShouldStart: Dispatch<SetStateAction<boolean>>
+  onUpdate: ({ time }: { time: number }) => void;
+  setShouldStart: Dispatch<SetStateAction<boolean>>;
 }
 
-const startTimer = ({ time, setTime }: { time: number; setTime: (time: number) => void }) => {
+const startTimer = ({
+  time,
+  setTime,
+}: {
+  time: number;
+  setTime: (time: number) => void;
+}) => {
   const start = Date.now() - time;
   const currentTimer = setInterval(() => {
     setTime(Date.now() - start);
   }, 1000);
   return () => {
     clearInterval(currentTimer);
-  }
+  };
 };
 
-const Timer = ({ setShouldStart, shouldUpdate, onUpdate, shouldStart, name }: ITimer) => {
+const Timer = ({
+  setShouldStart,
+  shouldUpdate,
+  onUpdate,
+  shouldStart,
+  name,
+}: ITimer) => {
   const timerName = useMemo(() => `timer-${name}`, [name]);
   const [time, setTime] = useState(0);
   const clearIntervalTimer = useRef<any>(null);
 
   useEffect(() => {
     setTime(Number(localStorage.getItem(timerName) || 0));
-  }, []);
+  }, [timerName]);
 
   useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
@@ -36,7 +56,7 @@ const Timer = ({ setShouldStart, shouldUpdate, onUpdate, shouldStart, name }: IT
         return; // Do nothing if the event was already processed
       }
 
-      switch (event.key) {
+      switch (key) {
         case "Esc": // IE/Edge specific value
         case "Escape":
           clearIntervalTimer.current?.();
@@ -47,10 +67,10 @@ const Timer = ({ setShouldStart, shouldUpdate, onUpdate, shouldStart, name }: IT
           return; // Quit when this doesn't handle the key event.
       }
       event?.preventDefault();
-    }
+    };
     window.addEventListener("keydown", inputFunc, true);
     return () => window.removeEventListener("keydown", inputFunc, true);
-  }, []);
+  }, [setShouldStart, clearIntervalTimer]);
 
   useEffect(() => {
     onUpdate({ time });
@@ -71,16 +91,19 @@ const Timer = ({ setShouldStart, shouldUpdate, onUpdate, shouldStart, name }: IT
     }, 3000);
     return () => {
       clearTimeout(currentTimer);
-    }
+    };
   }, [shouldStart, shouldUpdate]);
-
+  console.log(shouldStart, shouldUpdate);
   return (
     <div>
       <h4>Time: {(time / 1000).toFixed(0)}</h4>
       <button
-        className={classNames(styles.timerButton, { [styles.timerButtonStop]: shouldStart })}
-        onClick={() => setShouldStart(!shouldStart)}>
-        {shouldStart ? 'Stop' : 'Start'}
+        className={classNames(styles.timerButton, {
+          [styles.timerButtonStop]: shouldStart,
+        })}
+        onClick={() => setShouldStart(!shouldStart)}
+      >
+        {shouldStart ? "Stop" : "Start"}
       </button>
     </div>
   );

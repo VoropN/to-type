@@ -2,8 +2,8 @@
 module.exports = {
   reactStrictMode: true,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    config.module.rules.push({ test: /\.txt$/, use: 'raw-loader' });
+    config.module.rules.push({ test: /\.txt$/, use: "raw-loader" });
 
-    return config
+    return config;
   },
-}
+};

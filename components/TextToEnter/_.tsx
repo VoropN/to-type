@@ -1,48 +1,47 @@
-import {memo, MutableRefObject} from "react";
+import { Dispatch, memo, MutableRefObject, SetStateAction } from "react";
 import classNames from "classnames";
-import styles from './styles.module.scss';
-import {space, visibleSymbols} from "./helpers";
-import {IWordData} from "../../helpers";
+import styles from "./styles.module.scss";
+import { space, visibleSymbols } from "./helpers";
+import { IWordData } from "../../helpers";
 
 export interface ITextToEnter {
-  setActivePage: (value: (((prevState: number) => number) | number)) => void;
-  onTimeUpdate: ({time}: { time: number }) => void;
-  currentPosition:number;
+  setActivePage: Dispatch<SetStateAction<number>>;
+  onTimeUpdate: ({ time }: { time: number }) => void;
+  currentPosition: number;
   activePage: number;
-  inputtedLetter: string;
-  clicked: string;
+  pressedLetter: string;
   currentLetter: string;
-  speed: number;
+  speedCounter: number;
   isLoading: boolean;
-  typo: number;
+  typoCounter: number;
+  typedCounter: number;
   shouldStart: boolean;
-  isInputtedLetterVisible: boolean;
+  isPressedLetterVisible: boolean;
   text: string;
   position: number;
-  setShouldStart: (value: (((prevState: boolean) => boolean) | boolean)) => void;
+  setShouldStart: Dispatch<SetStateAction<boolean>>;
   selectedRef: MutableRefObject<any>;
   word: IWordData;
   selected: string;
-  setText: (value: (((prevState: string) => string) | string)) => void
+  setText: Dispatch<SetStateAction<string>>;
 }
 
 const TextToEnter = ({
-                       text,
-                       word,
-                       clicked,
-                       selected,
-                       position,
-                       isLoading,
-                       activePage,
-                       selectedRef,
-                       currentPosition,
-                       isInputtedLetterVisible
+  text,
+  word,
+  selected,
+  position,
+  isLoading,
+  activePage,
+  selectedRef,
+  pressedLetter,
+  currentPosition,
+  isPressedLetterVisible,
 }: ITextToEnter) => {
-
   return (
     <div className={styles.text}>
-      {isLoading && '...loading'}
-      {position / 1000 >> 0 === activePage ? (
+      {isLoading && "...loading"}
+      {(position / 1000) >> 0 === activePage ? (
         <>
           <span>{text.slice(0, word.position.start)}</span>
           <div className={styles.word}>
@@ -51,21 +50,32 @@ const TextToEnter = ({
               ref={selectedRef}
               className={classNames(
                 styles.selected,
-                {[styles.space]: selected === space || visibleSymbols.includes(selected)},
-                {[styles.hideCaret]: visibleSymbols.includes(selected)})}
+                {
+                  [styles.space]:
+                    selected === space || visibleSymbols.includes(selected),
+                },
+                { [styles.hideCaret]: visibleSymbols.includes(selected) }
+              )}
               {...{
-                ...(isInputtedLetterVisible && {"data-clicked": clicked}),
-                ...(visibleSymbols.includes(selected) && {"data-text": selected})
-              }}>
-            {text[currentPosition]}
-          </span>
+                ...(isPressedLetterVisible && {
+                  "data-pressed": pressedLetter,
+                }),
+                ...(visibleSymbols.includes(selected) && {
+                  "data-text": selected,
+                }),
+              }}
+            >
+              {text[currentPosition]}
+            </span>
             {word.text.end}
           </div>
           <span>{text.slice(word.position.end)}</span>
         </>
-      ) : text}
+      ) : (
+        text
+      )}
     </div>
-  )
+  );
 };
 
 export default memo(TextToEnter);
