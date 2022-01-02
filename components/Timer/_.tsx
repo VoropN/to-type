@@ -6,12 +6,13 @@ import {
   useMemo,
   useRef,
   useState,
-} from "react";
-import classNames from "classnames";
-import styles from "./styles.module.scss";
+} from 'react';
+import classNames from 'classnames';
+import styles from './styles.module.scss';
 
 interface ITimer {
   name: string;
+  className: string;
   shouldUpdate: any;
   shouldStart: boolean;
   onUpdate: ({ time }: { time: number }) => void;
@@ -40,6 +41,7 @@ const Timer = ({
   onUpdate,
   shouldStart,
   name,
+  className,
 }: ITimer) => {
   const timerName = useMemo(() => `timer-${name}`, [name]);
   const [time, setTime] = useState(0);
@@ -57,8 +59,8 @@ const Timer = ({
       }
 
       switch (key) {
-        case "Esc": // IE/Edge specific value
-        case "Escape":
+        case 'Esc': // IE/Edge specific value
+        case 'Escape':
           clearIntervalTimer.current?.();
           clearIntervalTimer.current = null;
           setShouldStart(false);
@@ -68,8 +70,8 @@ const Timer = ({
       }
       event?.preventDefault();
     };
-    window.addEventListener("keydown", inputFunc, true);
-    return () => window.removeEventListener("keydown", inputFunc, true);
+    window.addEventListener('keydown', inputFunc, true);
+    return () => window.removeEventListener('keydown', inputFunc, true);
   }, [setShouldStart, clearIntervalTimer]);
 
   useEffect(() => {
@@ -96,14 +98,14 @@ const Timer = ({
 
   return (
     <div>
-      <h4>Time: {(time / 1000).toFixed(0)}</h4>
+      <h4 className={className}>Time: {(time / 1000).toFixed(0)}</h4>
       <button
         className={classNames(styles.timerButton, {
           [styles.timerButtonStop]: shouldStart,
         })}
         onClick={() => setShouldStart(!shouldStart)}
       >
-        {shouldStart ? "Stop" : "Start"}
+        {shouldStart ? 'Stop' : 'Start'}
       </button>
     </div>
   );
