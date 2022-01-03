@@ -26,6 +26,7 @@ export interface ITextToEnter {
   selectedRef: MutableRefObject<any>;
   word: IWordData;
   setText: Dispatch<SetStateAction<string>>;
+  isPositionEditable: boolean;
 }
 
 const TextToEnter = ({

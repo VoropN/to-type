@@ -8,6 +8,7 @@ export interface IIndicators {
   position: number;
   length: number;
   shouldStart: boolean;
+  isPositionEditable: boolean;
   textOptions: ITextOptions;
   typoCounter: number;
   typedCounter: number;
@@ -35,6 +36,7 @@ const Indicators = ({
   enteredCounter,
   speedCounter,
   onChangePosition,
+  isPositionEditable,
   setIsPositionEditable,
 }: IIndicators) => {
   return (
@@ -57,6 +59,7 @@ const Indicators = ({
           <EditableField
             onChange={onChangePosition}
             onEdit={setIsPositionEditable}
+            isEditable={isPositionEditable}
           >
             {position}
           </EditableField>

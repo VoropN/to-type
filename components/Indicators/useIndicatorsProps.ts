@@ -1,5 +1,4 @@
 import { ILoadFile } from '../LoadFile';
-import { MutableRefObject } from 'react';
 import { ITextToEnter } from '../TextToEnter';
 import { IIndicators } from './';
 
@@ -17,6 +16,7 @@ export const useIndicatorsProps = ({
       textToEnterProps.typoCounter + textToEnterProps.typedCounter,
     typoCounter: textToEnterProps.typoCounter,
     onChangePosition: textToEnterProps.onChangePosition,
+    isPositionEditable: textToEnterProps.isPositionEditable,
     setIsPositionEditable: textToEnterProps.setIsPositionEditable,
     typedCounter: textToEnterProps.typedCounter,
     currentLetter: textToEnterProps.currentLetter,

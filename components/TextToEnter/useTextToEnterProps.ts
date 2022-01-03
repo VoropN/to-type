@@ -35,13 +35,17 @@ export const useTextToEnterProps = ({
   const [speedCounter, setSpeedCounter] = useState(0);
   const [activePage, setActivePage] = useState(0);
   const [isPositionEditable, setIsPositionEditable] = useState(false);
+  const maxPosition = useMemo(() => fullText.length - 1, [fullText]);
 
   useEffect(() => {
-    const newPosition =
-      position > fullText.length ? fullText.length - 1 : position;
-    setPosition(newPosition);
-    updateActivePage({ position: newPosition });
-  }, [position]);
+    let nextPosition = position;
+    if (position > maxPosition) {
+      setPosition(maxPosition);
+      nextPosition = maxPosition;
+    }
+    updateActivePage({ position: nextPosition });
+    selectedRef.current?.focus();
+  }, [position, maxPosition]);
 
   useEffect(() => {});
 
@@ -188,8 +192,9 @@ export const useTextToEnterProps = ({
     currentLetter,
     pressedLetter,
     setShouldStart,
-    onChangePosition,
     currentPosition,
+    onChangePosition,
+    isPositionEditable,
     setIsPositionEditable,
     isPressedLetterVisible,
   };
