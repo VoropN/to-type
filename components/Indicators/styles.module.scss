@@ -1,20 +1,17 @@
 .indicators {
   display: grid;
-  grid-template-columns: repeat(5, 120px);
-  grid-gap: 15px;
-  margin: 30px 0 20px;
-  position: fixed;
-  max-width: 700px;
+  grid-template-columns: 85px 3fr 4fr 3fr 90px;
+  grid-gap: 10px;
+  width: 750px;
+  margin: 10px 0 5px;
   color: red;
-  background: white;
   top: 0;
-  min-width: 100%;
   z-index: 100;
   text-align: justify;
 }
 
 .typoPercentage {
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .indicator {

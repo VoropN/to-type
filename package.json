@@ -9,6 +9,10 @@
     "stylelint-check": "stylelint-config-prettier-check"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.2.6",
     "classnames": "^2.3.1",
     "next": "12.0.7",
     "react": "17.0.2",

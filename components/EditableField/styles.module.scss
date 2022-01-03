@@ -1,0 +1,13 @@
+.container {
+  display: inline-flex;
+  position: relative;
+}
+
+.buttons {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+}

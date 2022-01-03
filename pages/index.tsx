@@ -1,16 +1,16 @@
-import { FC, useRef } from "react";
-import styles from "./Home.module.scss";
-import { LoadFile } from "../components/LoadFile";
-import { Pagination, usePaginationProps } from "../components/Pagination";
-import { useLoadFileProps } from "../components/LoadFile";
-import { TextToEnter, useTextToEnterProps } from "../components/TextToEnter";
-import { Indicators, useIndicatorsProps } from "../components/Indicators";
+import { FC, useRef } from 'react';
+import styles from './Home.module.scss';
+import { LoadFile } from '../components/LoadFile';
+import { Pagination, usePaginationProps } from '../components/Pagination';
+import { useLoadFileProps } from '../components/LoadFile';
+import { TextToEnter, useTextToEnterProps } from '../components/TextToEnter';
+import { Indicators, useIndicatorsProps } from '../components/Indicators';
 
 export async function getStaticProps(context: any) {
   // @ts-ignore
-  const text = (await import("/data/notebooks.txt")).default;
+  const text = (await import('/data/notebooks.txt')).default;
   return {
-    props: { data: { text, textOptions: { name: "medium-patterns" } } },
+    props: { data: { text, textOptions: { name: 'medium-patterns' } } },
   };
 }
 
@@ -32,18 +32,21 @@ const Home: FC<any> = ({ data }) => {
   });
 
   const indicatorsProps = useIndicatorsProps({
-    headerRef,
     loadFileProps,
     textToEnterProps,
   });
 
   return (
-    <div className={styles.root}>
-      <LoadFile {...loadFileProps} />
-      <Indicators {...indicatorsProps} />
-      <TextToEnter {...textToEnterProps} />
-      <Pagination {...paginationProps} />
-    </div>
+    <>
+      <header className={styles.header} ref={headerRef}>
+        <LoadFile {...loadFileProps} />
+        <Indicators {...indicatorsProps} />
+      </header>
+      <div className={styles.root}>
+        <TextToEnter {...textToEnterProps} />
+        <Pagination {...paginationProps} />
+      </div>
+    </>
   );
 };
 

@@ -1,8 +1,21 @@
-@import "styles/variables";
+@import 'styles/variables';
 
 .root {
   max-width: 700px;
   margin: auto;
   caret-color: red;
   //font-family: $Anonymous-Pro, $IBM-Regular;
+}
+
+.header {
+  height: $header-height;
+  top: 0;
+  background: azure;
+  margin: auto;
+  padding: 10px 0;
+  z-index: 10000;
+  width: 100%;
+  justify-content: center;
+  display: grid;
+  position: fixed;
 }

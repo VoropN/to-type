@@ -2,6 +2,7 @@ import { Dispatch, memo, SetStateAction, MutableRefObject } from 'react';
 import styles from './styles.module.scss';
 import { Timer } from '../Timer';
 import { ITextOptions } from '../LoadFile';
+import { EditableField } from '../EditableField';
 
 export interface IIndicators {
   position: number;
@@ -15,12 +16,12 @@ export interface IIndicators {
   setShouldStart: Dispatch<SetStateAction<boolean>>;
   currentLetter: string;
   speedCounter: number;
+  onChangePosition: (position: string) => void;
+  setIsPositionEditable: (isPositionEditable: boolean) => void;
   enteredCounter: number;
-  headerRef: MutableRefObject<any>;
 }
 
 const Indicators = ({
-  headerRef,
   typedCounter,
   currentLetter,
   pressedLetter,
@@ -33,9 +34,11 @@ const Indicators = ({
   typoCounter,
   enteredCounter,
   speedCounter,
+  onChangePosition,
+  setIsPositionEditable,
 }: IIndicators) => {
   return (
-    <div ref={headerRef} className={styles.indicators}>
+    <div className={styles.indicators}>
       <div>
         <h4 className={styles.indicator}>Await: {currentLetter}</h4>
         <h4 className={styles.indicator}>Pressed: {pressedLetter}</h4>
@@ -43,14 +46,22 @@ const Indicators = ({
       <div>
         <h4 className={styles.indicator}>Typed: {typedCounter} </h4>
         <h4 className={styles.indicator}>
-          Position: {position}/{length}
+          {`Typo: ${typoCounter} / ${
+            typoCounter ? ((typoCounter / enteredCounter) * 100).toFixed(2) : 0
+          }%`}
         </h4>
       </div>
       <div>
-        <h4 className={styles.indicator}>Typo: {typoCounter}</h4>
-        <h4 className={styles.typoPercentage}>
-          {typoCounter ? ((typoCounter / enteredCounter) * 100).toFixed(2) : 0}%
+        <h4 className={styles.indicator}>
+          Position:{' '}
+          <EditableField
+            onChange={onChangePosition}
+            onEdit={setIsPositionEditable}
+          >
+            {position}
+          </EditableField>
         </h4>
+        <h4 className={styles.indicator}>All: {length}</h4>
       </div>
       <Timer
         className={styles.indicator}

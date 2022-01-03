@@ -34,6 +34,16 @@ export const useTextToEnterProps = ({
   const [position, setPosition] = useState(0);
   const [speedCounter, setSpeedCounter] = useState(0);
   const [activePage, setActivePage] = useState(0);
+  const [isPositionEditable, setIsPositionEditable] = useState(false);
+
+  useEffect(() => {
+    const newPosition =
+      position > fullText.length ? fullText.length - 1 : position;
+    setPosition(newPosition);
+    updateActivePage({ position: newPosition });
+  }, [position]);
+
+  useEffect(() => {});
 
   const selectedRef = useRef<HTMLSpanElement>(null);
 
@@ -43,6 +53,9 @@ export const useTextToEnterProps = ({
     () => getSymbol(fullText[position]),
     [fullText, position]
   );
+  const onChangePosition = (position: string) => {
+    setPosition(parseInt(position) || 0);
+  };
 
   const word = useMemo(
     () => getWord({ text, position: currentPosition }),
@@ -57,7 +70,14 @@ export const useTextToEnterProps = ({
       setText(fullText.slice(state, state + 1000));
       scrollToElement({ headerRef, selectedRef, forceScroll: true });
     },
-    [setActivePage, setText, headerRef, selectedRef, fullText]
+    [
+      setActivePage,
+      setText,
+      headerRef,
+      selectedRef,
+      fullText,
+      isPositionEditable,
+    ]
   );
   const onTimeUpdate = useCallback(
     ({ time }: { time: number }) => {
@@ -123,6 +143,7 @@ export const useTextToEnterProps = ({
 
   useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
+      if (isPositionEditable) return;
       const { key } = event;
       event.preventDefault?.();
       switch (key) {
@@ -147,7 +168,7 @@ export const useTextToEnterProps = ({
     };
     document.addEventListener('keypress', inputFunc, false);
     return () => document.removeEventListener('keypress', inputFunc, false);
-  }, [setPressedLetter, setUpdateVersion]);
+  }, [setPressedLetter, setUpdateVersion, isPositionEditable]);
 
   return {
     text,
@@ -167,7 +188,9 @@ export const useTextToEnterProps = ({
     currentLetter,
     pressedLetter,
     setShouldStart,
+    onChangePosition,
     currentPosition,
+    setIsPositionEditable,
     isPressedLetterVisible,
   };
 };

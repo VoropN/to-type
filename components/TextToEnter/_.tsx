@@ -1,8 +1,8 @@
-import { Dispatch, memo, MutableRefObject, SetStateAction } from "react";
-import classNames from "classnames";
-import styles from "./styles.module.scss";
-import { spaceSymbol, visibleSymbols } from "./helpers";
-import { IWordData } from "../../helpers";
+import { Dispatch, memo, MutableRefObject, SetStateAction } from 'react';
+import classNames from 'classnames';
+import styles from './styles.module.scss';
+import { spaceSymbol, visibleSymbols } from './helpers';
+import { IWordData } from '../../helpers';
 
 export interface ITextToEnter {
   setActivePage: Dispatch<SetStateAction<number>>;
@@ -21,6 +21,8 @@ export interface ITextToEnter {
   text: string;
   position: number;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
+  onChangePosition: (position: string) => void;
+  setIsPositionEditable: (isPositionEditable: boolean) => void;
   selectedRef: MutableRefObject<any>;
   word: IWordData;
   setText: Dispatch<SetStateAction<string>>;
@@ -40,7 +42,7 @@ const TextToEnter = ({
 }: ITextToEnter) => {
   return (
     <div className={styles.text}>
-      {isLoading && "...loading"}
+      {isLoading && '...loading'}
       {(position / 1000) >> 0 === activePage ? (
         <>
           <span>{text.slice(0, word.position.start)}</span>
@@ -59,10 +61,10 @@ const TextToEnter = ({
               )}
               {...{
                 ...(isPressedLetterVisible && {
-                  "data-pressed": pressedLetter,
+                  'data-pressed': pressedLetter,
                 }),
                 ...(visibleSymbols.includes(currentLetter) && {
-                  "data-text": currentLetter,
+                  'data-text': currentLetter,
                 }),
               }}
             >

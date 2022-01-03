@@ -6,17 +6,7 @@ type ISetSelection = {
   shouldCollapse?: boolean;
 };
 
-export const selectNode = ({ ref }: ISetSelection) => {
-  if (!ref.current) return;
-  const range = document.createRange();
-  const selection = window.getSelection();
-
-  range.selectNodeContents(ref.current);
-  selection?.removeAllRanges();
-  selection?.addRange(range);
-};
-
-const setCaret = ({
+export const setCaret = ({
   ref,
   offset = 1,
   shouldCollapse = false,
