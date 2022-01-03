@@ -29,8 +29,8 @@ const EditableField = ({
   const [content, setContent] = useState(children);
 
   useEffect(() => {
-    setContent(children);
     if (isEditable) {
+      setContent(children);
       setCaret({ ref, offset: String(children).length });
     }
   }, [isEditable]);
@@ -41,8 +41,6 @@ const EditableField = ({
   };
   const onApply = (event: ChangeEvent<any>) => {
     onEdit(false);
-    event.target?.blur();
-    ref.current?.blur();
   };
   const onCancel = () => {
     if (!ref.current) return;
@@ -54,37 +52,43 @@ const EditableField = ({
     selection?.removeAllRanges();
   };
   const setEdit = () => {
+    setContent(children);
     onEdit(true);
   };
   const onBlur = useCallback(
     (event) => {
-      if (event.currentTarget?.contains(event?.relatedTarget) || !ref.current)
+      if (
+        (event.currentTarget?.contains(event?.relatedTarget) ?? true) ||
+        !ref.current
+      )
         return;
       onCancel();
     },
     [content]
   );
-  const actions = isEditable && {
-    onInput,
-    contentEditable: isEditable,
-    suppressContentEditableWarning: true,
-  };
+
+  const actions = isEditable
+    ? {
+        onInput,
+        contentEditable: isEditable,
+        suppressContentEditableWarning: true,
+        dangerouslySetInnerHTML: { __html: content },
+      }
+    : { dangerouslySetInnerHTML: { __html: children } };
   const containerActions = isEditable
     ? { onBlur }
-    : { 'aria-hidden': true, onClick: setEdit };
+    : {
+        'aria-hidden': true,
+        onClick: setEdit,
+      };
 
   return (
     <div className={styles.container} {...containerActions}>
-      <div
-        {...actions}
-        aria-hidden="true"
-        ref={ref}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      <div {...actions} ref={ref} />
       {isEditable ? (
         <div className={styles.buttons}>
           <IconButton size="small" onClick={onApply}>
-            <CheckIcon fontSize="small" color="success" />
+            <CheckIcon tabIndex={-1} fontSize="small" color="success" />
           </IconButton>
           <IconButton size="small" onClick={onCancel}>
             <CloseIcon fontSize="small" color="warning" />

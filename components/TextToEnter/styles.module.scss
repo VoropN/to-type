@@ -1,7 +1,7 @@
 @import 'styles/variables';
 
 .text {
-  white-space: pre-wrap;
+  white-space: pre-line;
   word-break: break-word;
   margin-top: $header-height + 5px;
   padding: 10px 0;
@@ -22,7 +22,7 @@
 }
 
 .space {
-  white-space: pre-wrap;
+  white-space: pre-line;
 }
 
 .selected {

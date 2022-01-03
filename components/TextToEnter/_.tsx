@@ -42,7 +42,7 @@ const TextToEnter = ({
   isPressedLetterVisible,
 }: ITextToEnter) => {
   return (
-    <div className={styles.text}>
+    <div className={styles.text} tabIndex={1}>
       {isLoading && '...loading'}
       {(position / 1000) >> 0 === activePage ? (
         <>

@@ -1,4 +1,4 @@
-import { Dispatch, memo, SetStateAction, MutableRefObject } from 'react';
+import { Dispatch, memo, SetStateAction } from 'react';
 import styles from './styles.module.scss';
 import { Timer } from '../Timer';
 import { ITextOptions } from '../LoadFile';
@@ -18,7 +18,7 @@ export interface IIndicators {
   currentLetter: string;
   speedCounter: number;
   onChangePosition: (position: string) => void;
-  setIsPositionEditable: (isPositionEditable: boolean) => void;
+  setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
   enteredCounter: number;
 }
 
@@ -39,6 +39,8 @@ const Indicators = ({
   isPositionEditable,
   setIsPositionEditable,
 }: IIndicators) => {
+  const onEditPosition = () =>
+    !isPositionEditable && setIsPositionEditable(true);
   return (
     <div className={styles.indicators}>
       <div>
@@ -54,7 +56,7 @@ const Indicators = ({
         </h4>
       </div>
       <div>
-        <h4 className={styles.indicator}>
+        <h4 className={styles.indicator} onClick={onEditPosition}>
           Position:{' '}
           <EditableField
             onChange={onChangePosition}
