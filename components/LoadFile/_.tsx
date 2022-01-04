@@ -1,6 +1,6 @@
-import { ChangeEvent, Dispatch, memo, SetStateAction, RefObject } from "react";
-import styles from "./styles.module.scss";
-import { ITextOptions } from "./useLoadFileProps";
+import { ChangeEvent, Dispatch, memo, SetStateAction, RefObject } from 'react';
+import styles from './styles.module.scss';
+import { ITextOptions } from './useLoadFileProps';
 
 export interface ILoadFile {
   text: string;
@@ -16,8 +16,9 @@ export interface ILoadFile {
 
 const LoadFile = ({ fileButtonRef, onChange }: ILoadFile) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} tabIndex={-1}>
       <input
+        tabIndex={-1}
         type="file"
         placeholder="choose text"
         accept="text/plain, text/html"
