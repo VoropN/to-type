@@ -43,7 +43,7 @@ export const useTextToEnterProps = ({
       setPosition(maxPosition);
       nextPosition = maxPosition;
     }
-    updateActivePage({ position: nextPosition });
+    updateActivePage({ position: nextPosition, forceScroll: false });
     selectedRef.current?.focus();
   }, [position, maxPosition]);
 
@@ -69,12 +69,18 @@ export const useTextToEnterProps = ({
   );
 
   const updateActivePage = useCallback(
-    ({ position }: { position: number }) => {
+    ({
+      position,
+      forceScroll = true,
+    }: {
+      position: number;
+      forceScroll?: boolean;
+    }) => {
       const page = (position / 1000) >> 0;
       const state = page * 1000;
       setActivePage(page);
       setText(fullText.slice(state, state + 1000));
-      scrollToElement({ headerRef, selectedRef, forceScroll: true });
+      scrollToElement({ headerRef, selectedRef, forceScroll });
     },
     [
       setActivePage,
@@ -144,8 +150,12 @@ export const useTextToEnterProps = ({
   }, [updateVersion]);
 
   useEffect(() => {
-    scrollToElement({ headerRef, selectedRef, forceScroll: !shouldStart });
-  }, [updateVersion, shouldStart, headerRef, selectedRef, text]);
+    scrollToElement({ headerRef, selectedRef, forceScroll: shouldStart });
+  }, [shouldStart]);
+
+  useEffect(() => {
+    scrollToElement({ headerRef, selectedRef });
+  }, [updateVersion, text]);
 
   useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
