@@ -14,10 +14,11 @@ import IconButton from '@mui/material/IconButton';
 import { setCaret } from './helpers';
 
 export interface IEditableField {
+  onEdit: (isEditable: boolean) => void;
   onChange: (text: string) => void;
   children: any;
-  onEdit: (isEditable: boolean) => void;
   isEditable: boolean;
+  onValidate?: (text: string) => boolean;
 }
 
 const EditableField = ({
@@ -25,6 +26,7 @@ const EditableField = ({
   onEdit,
   onChange,
   isEditable,
+  onValidate,
 }: IEditableField) => {
   const [content, setContent] = useState(children);
 
@@ -37,23 +39,30 @@ const EditableField = ({
 
   const ref = useRef<HTMLDivElement>(null);
   const onInput = (event: ChangeEvent<any>) => {
-    onChange?.(event.target.textContent);
+    const value = event.target.textContent;
+    if (onValidate && !onValidate(value)) {
+      onChange?.(content);
+    } else {
+      onChange?.(value);
+    }
   };
-  const onApply = (event: ChangeEvent<any>) => {
-    onEdit(false);
+  const onApply = () => {
+    onEdit?.(false);
+    if (!ref.current) return;
+    ref.current.textContent = children;
   };
   const onCancel = () => {
     if (!ref.current) return;
     onChange?.(content);
     setContent(content);
     ref.current.textContent = content;
-    onEdit(false);
+    onEdit?.(false);
     const selection = window.getSelection();
     selection?.removeAllRanges();
   };
   const setEdit = () => {
     setContent(children);
-    onEdit(true);
+    onEdit?.(true);
   };
   const onBlur = useCallback(
     (event) => {

@@ -22,7 +22,8 @@ export interface ITextToEnter {
   position: number;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
   onChangePosition: (position: string) => void;
-  setIsPositionEditable: (isPositionEditable: boolean) => void;
+  onValidatePosition: (position: string) => boolean;
+  setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
   selectedRef: MutableRefObject<any>;
   word: IWordData;
   setText: Dispatch<SetStateAction<string>>;

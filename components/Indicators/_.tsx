@@ -18,6 +18,7 @@ export interface IIndicators {
   currentLetter: string;
   speedCounter: number;
   onChangePosition: (position: string) => void;
+  onValidatePosition: (position: string) => boolean;
   setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
   enteredCounter: number;
 }
@@ -37,10 +38,13 @@ const Indicators = ({
   speedCounter,
   onChangePosition,
   isPositionEditable,
+  onValidatePosition,
   setIsPositionEditable,
 }: IIndicators) => {
-  const onEditPosition = () =>
+  const onPositionEdit = () => {
     !isPositionEditable && setIsPositionEditable(true);
+  };
+
   return (
     <div className={styles.indicators}>
       <div>
@@ -56,9 +60,10 @@ const Indicators = ({
         </h4>
       </div>
       <div>
-        <h4 className={styles.indicator} onClick={onEditPosition}>
+        <h4 className={styles.indicator} onClick={onPositionEdit}>
           Position:{' '}
           <EditableField
+            onValidate={onValidatePosition}
             onChange={onChangePosition}
             onEdit={setIsPositionEditable}
             isEditable={isPositionEditable}

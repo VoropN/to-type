@@ -57,9 +57,11 @@ export const useTextToEnterProps = ({
     () => getSymbol(fullText[position]),
     [fullText, position]
   );
-  const onChangePosition = (position: string) => {
-    setPosition(parseInt(position) || 0);
+  const onChangePosition = (rowPosition: string) => {
+    setPosition(parseInt(rowPosition));
   };
+  const onValidatePosition = (rowPosition: string) =>
+    !isNaN(parseInt(rowPosition));
 
   const word = useMemo(
     () => getWord({ text, position: currentPosition }),
@@ -194,6 +196,7 @@ export const useTextToEnterProps = ({
     setShouldStart,
     currentPosition,
     onChangePosition,
+    onValidatePosition,
     isPositionEditable,
     setIsPositionEditable,
     isPressedLetterVisible,

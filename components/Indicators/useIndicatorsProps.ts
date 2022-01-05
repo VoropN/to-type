@@ -15,6 +15,7 @@ export const useIndicatorsProps = ({
     enteredCounter:
       textToEnterProps.typoCounter + textToEnterProps.typedCounter,
     typoCounter: textToEnterProps.typoCounter,
+    onValidatePosition: textToEnterProps.onValidatePosition,
     onChangePosition: textToEnterProps.onChangePosition,
     isPositionEditable: textToEnterProps.isPositionEditable,
     setIsPositionEditable: textToEnterProps.setIsPositionEditable,

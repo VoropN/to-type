@@ -2,11 +2,21 @@
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
+
 //    "stylelint-config-standard",
 //    "stylelint-config-standard-scss",
 //    "stylelint-config-prettier",
     "prettier"
 //    "plugin:@typescript-eslint/eslint-recommended",
 //    "plugin:@typescript-eslint/recommended"
-  ]
+  ],
+  "rules": {
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "[I]\\w+"
+      }
+    ]
+  }
 }
