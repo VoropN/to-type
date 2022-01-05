@@ -7,6 +7,9 @@
   padding: 10px 0;
   line-height: 2;
   text-align: justify;
+  > * {
+    line-height: 2em;
+  }
 }
 
 .word {
@@ -28,20 +31,23 @@
 .selected {
   position: relative;
   color: red;
-  text-decoration: underline;
-  text-underline-position: under;
+  //text-decoration: underline;
+  //text-underline-position: under;
 
   &:after {
     content: attr(data-text);
     position: absolute;
     width: 100%;
     min-width: 5px;
-    bottom: 0;
     left: 0;
     height: 100%;
     color: red;
     display: flex;
-    align-items: center;
+    max-height: 1em;
+    align-items: stretch;
+    top: 0;
+    border-bottom: 2px solid;
+    bottom: -2px;
   }
 
   //&:after {
