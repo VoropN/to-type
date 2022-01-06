@@ -43,11 +43,9 @@ export const useTextToEnterProps = ({
       setPosition(maxPosition);
       nextPosition = maxPosition;
     }
-    updateActivePage({ position: nextPosition, forceScroll: false });
+    updateActivePage({ position: nextPosition });
     selectedRef.current?.focus();
   }, [position, maxPosition]);
-
-  useEffect(() => {});
 
   const selectedRef = useRef<HTMLSpanElement>(null);
 
@@ -58,7 +56,8 @@ export const useTextToEnterProps = ({
     [fullText, position]
   );
   const onChangePosition = (rowPosition: string) => {
-    setPosition(parseInt(rowPosition));
+    const nextPosition = parseInt(rowPosition);
+    setPosition(position > maxPosition ? maxPosition : nextPosition);
   };
   const onValidatePosition = (rowPosition: string) =>
     !isNaN(parseInt(rowPosition));
@@ -69,18 +68,12 @@ export const useTextToEnterProps = ({
   );
 
   const updateActivePage = useCallback(
-    ({
-      position,
-      forceScroll = true,
-    }: {
-      position: number;
-      forceScroll?: boolean;
-    }) => {
+    ({ position }: { position: number }) => {
       const page = (position / 1000) >> 0;
       const state = page * 1000;
       setActivePage(page);
       setText(fullText.slice(state, state + 1000));
-      scrollToElement({ headerRef, selectedRef, forceScroll });
+      scrollToElement({ headerRef, selectedRef, forceScroll: true });
     },
     [
       setActivePage,
