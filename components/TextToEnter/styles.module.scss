@@ -7,6 +7,8 @@
   padding: 10px 0;
   line-height: 2;
   text-align: justify;
+  outline: none;
+
   > * {
     line-height: 2em;
   }
@@ -44,25 +46,12 @@
     color: red;
     display: flex;
     max-height: 1em;
-    align-items: stretch;
-    top: 0;
+    top: -2px;
+    align-items: center;
     border-bottom: 2px solid;
-    bottom: -2px;
+    bottom: 0;
+    margin-top: 4px;
   }
-
-  //&:after {
-  //  content: attr(data-text);
-  //  position: absolute;
-  //  width: 100%;
-  //  min-width: 5px;
-  //  bottom: -1.5px
-  //  left: 0;
-  //  height: 100%;
-  //  color: red;
-  //  display: flex;
-  //  align-items: center;
-  //  border-bottom: 2px solid;
-  //}
 
   &:before {
     content: attr(data-pressed);
@@ -77,5 +66,6 @@
     align-items: center;
     left: 0;
     right: 0;
+    max-height: 1.5em;
   }
 }

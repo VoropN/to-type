@@ -73,7 +73,7 @@ export const useTextToEnterProps = ({
       const state = page * 1000;
       setActivePage(page);
       setText(fullText.slice(state, state + 1000));
-      scrollToElement({ headerRef, selectedRef, forceScroll: true });
+      scrollToElement({ headerRef, selectedRef, forceScroll: false });
     },
     [
       setActivePage,
@@ -105,14 +105,13 @@ export const useTextToEnterProps = ({
       localStorage.getItem(storedName) ||
         '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0}'
     );
-
     setPosition(progress.position);
     setTypoCounter(progress.typoCounter);
     setTypedCounter(progress.typedCounter);
     setSpeedCounter(progress.speedCounter);
     setPressedLetter('');
     updateActivePage({ position: progress.position });
-  }, [textOptions, fullText, storedName]);
+  }, [textOptions]);
 
   useEffect(() => {
     if (pressedLetter) {
@@ -121,11 +120,13 @@ export const useTextToEnterProps = ({
   }, [pressedLetter]);
 
   useEffect(() => {
-    localStorage.setItem(
-      storedName,
-      JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
-    );
-  }, [storedName, position, typedCounter, typoCounter, speedCounter]);
+    if (pressedLetter) {
+      localStorage.setItem(
+        storedName,
+        JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
+      );
+    }
+  }, [pressedLetter]);
 
   useEffect(() => {
     if (pressedLetter === currentLetter) {

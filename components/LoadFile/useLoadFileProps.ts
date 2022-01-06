@@ -1,12 +1,12 @@
-import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
-import { ILoadFile } from "./";
+import { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react';
+import { ILoadFile } from './';
 
 export interface ITextOptions {
   name: string;
   size?: number;
   lastModified?: number;
   lastModifiedDate?: Date;
-  type?: "text/html" | "text/plain" | string;
+  type?: 'text/html' | 'text/plain' | string;
 }
 
 export interface ILoadedFileData {
@@ -22,7 +22,7 @@ export interface IUseLoadFileProps {
 }
 
 export const useLoadFileProps = ({ data }: IUseLoadFileProps): ILoadFile => {
-  const [text, setText] = useState(data.text || "");
+  const [text, setText] = useState(data.text || '');
   const [textOptions, setTextOptions] = useState(data.textOptions);
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -30,21 +30,20 @@ export const useLoadFileProps = ({ data }: IUseLoadFileProps): ILoadFile => {
 
   const updateText = useCallback(
     ({ content, textOptions }: ILoadedFileData) => {
-      setTextOptions(textOptions);
       const parser = new DOMParser();
-      const htmlDoc = parser.parseFromString(content as string, "text/html");
+      const htmlDoc = parser.parseFromString(content as string, 'text/html');
       const result =
         htmlDoc.body.textContent
           ?.replace(
             /[^A-Za-z0-9-.,!?#$%&@№*(){}_=+<>`"'|;:~/\\\[\]\n\r—\s^]/g,
-            ""
+            ''
           )
-          .replace(/\s{3,}|\r/g, "\n")
-          .replace(/\n+\s*/g, "�")
-          .replace(/\s+/, " ")
-          .replace(/�/g, "\n") || "";
-      setText(result.slice(0, 1000));
+          .replace(/\s{3,}|\r/g, '\n')
+          .replace(/\n+\s*/g, '�')
+          .replace(/\s+/, ' ')
+          .replace(/�/g, '\n') || '';
       setText(result);
+      setTextOptions(textOptions);
     },
     [setTextOptions, setText]
   );
