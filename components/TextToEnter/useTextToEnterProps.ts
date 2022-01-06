@@ -70,12 +70,15 @@ export const useTextToEnterProps = ({
   const updateActivePage = useCallback(
     ({ position }: { position: number }) => {
       const page = (position / 1000) >> 0;
-      const state = page * 1000;
-      setActivePage(page);
-      setText(fullText.slice(state, state + 1000));
-      scrollToElement({ headerRef, selectedRef, forceScroll: false });
+      if (activePage !== page) {
+        const state = page * 1000;
+        setActivePage(page);
+        setText(fullText.slice(state, state + 1000));
+        scrollToElement({ headerRef, selectedRef, forceScroll: false });
+      }
     },
     [
+      activePage,
       setActivePage,
       setText,
       headerRef,
@@ -86,12 +89,12 @@ export const useTextToEnterProps = ({
   );
   const onTimeUpdate = useCallback(
     ({ time }: { time: number }) => {
-      if (position) {
+      if (typedCounter) {
         const seconds = 1000 * 60;
-        setSpeedCounter(Math.round((position * seconds) / time));
+        setSpeedCounter(Math.round((typedCounter * seconds) / time));
       }
     },
-    [position, setSpeedCounter]
+    [typedCounter, setSpeedCounter]
   );
 
   useEffect(() => {
@@ -129,6 +132,7 @@ export const useTextToEnterProps = ({
   }, [pressedLetter]);
 
   useEffect(() => {
+    if (!updateVersion) return;
     if (pressedLetter === currentLetter) {
       setIsPressedLetterVisible(false);
       setTypedCounter(typedCounter + 1);
