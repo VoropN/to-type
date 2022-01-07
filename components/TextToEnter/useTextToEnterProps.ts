@@ -37,16 +37,6 @@ export const useTextToEnterProps = ({
   const [isPositionEditable, setIsPositionEditable] = useState(false);
   const maxPosition = useMemo(() => fullText.length - 1, [fullText]);
 
-  useEffect(() => {
-    let nextPosition = position;
-    if (position > maxPosition) {
-      setPosition(maxPosition);
-      nextPosition = maxPosition;
-    }
-    updateActivePage({ position: nextPosition });
-    selectedRef.current?.focus();
-  }, [position, maxPosition]);
-
   const selectedRef = useRef<HTMLSpanElement>(null);
 
   const currentPosition = position - activePage * 1000;
@@ -57,7 +47,7 @@ export const useTextToEnterProps = ({
   );
   const onChangePosition = (rowPosition: string) => {
     const nextPosition = parseInt(rowPosition);
-    setPosition(position > maxPosition ? maxPosition : nextPosition);
+    setPosition(nextPosition > maxPosition ? maxPosition : nextPosition);
   };
   const onValidatePosition = (rowPosition: string) =>
     !isNaN(parseInt(rowPosition));
@@ -70,7 +60,7 @@ export const useTextToEnterProps = ({
   const updateActivePage = useCallback(
     ({ position }: { position: number }) => {
       const page = (position / 1000) >> 0;
-      if (activePage !== page) {
+      if (activePage !== page || !text) {
         const state = page * 1000;
         setActivePage(page);
         setText(fullText.slice(state, state + 1000));
@@ -96,6 +86,11 @@ export const useTextToEnterProps = ({
     },
     [typedCounter, setSpeedCounter]
   );
+
+  useEffect(() => {
+    updateActivePage({ position });
+    selectedRef.current?.focus();
+  }, [position, selectedRef]);
 
   useEffect(() => {
     if ((position / 1000) >> 0 !== activePage) {
@@ -129,7 +124,7 @@ export const useTextToEnterProps = ({
         JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
       );
     }
-  }, [pressedLetter]);
+  }, [pressedLetter, position]);
 
   useEffect(() => {
     if (!updateVersion) return;
