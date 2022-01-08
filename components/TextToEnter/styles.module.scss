@@ -39,18 +39,19 @@
   &:after {
     content: attr(data-text);
     position: absolute;
-    width: 100%;
+    width: calc(100% - 2px);
     min-width: 5px;
     left: 0;
     height: 100%;
-    color: red;
+    color: black;
     display: flex;
     max-height: 1em;
     top: -2px;
     align-items: center;
-    border-bottom: 2px solid;
+    border-bottom: 2px solid red;
     bottom: 0;
     margin-top: 4px;
+    padding-left: 2px;
   }
 
   &:before {

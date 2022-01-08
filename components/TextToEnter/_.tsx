@@ -9,7 +9,7 @@ export interface ITextToEnter {
   onTimeUpdate: ({ time }: { time: number }) => void;
   currentPosition: number;
   activePage: number;
-  updateVersion: number;
+  updatedVersion: number;
   pressedLetter: string;
   currentLetter: string;
   speedCounter: number;

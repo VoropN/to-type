@@ -1,18 +1,15 @@
-import {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { getWord, scrollToElement } from '../../helpers';
-import { enterSymbol, getSymbol } from './helpers';
+import { RefObject, useState } from 'react';
 import { ITextOptions } from '../LoadFile';
 import { ITextToEnter } from './_';
+import { usePosition } from './hooks/usePosition';
+import { useScrollToPosition } from './hooks/useScrollToPosition';
+import { useActivePage } from './hooks/useActivePage';
+import { useSaveProgress } from './hooks/useSaveProgress';
+import { usePressedLetter } from './hooks/usePressedLetter';
+import { useUpdatedVersion } from './hooks/useUpdatedVersion';
 
 export interface IUseTextToEnterProps {
-  headerRef: MutableRefObject<any>;
+  headerRef: RefObject<HTMLElement>;
   fullText: string;
   textOptions: ITextOptions;
   isLoading: boolean;
@@ -25,159 +22,71 @@ export const useTextToEnterProps = ({
   isLoading,
 }: IUseTextToEnterProps): ITextToEnter => {
   const [text, setText] = useState('');
-  const [pressedLetter, setPressedLetter] = useState('');
-  const [typoCounter, setTypoCounter] = useState(0);
-  const [updateVersion, setUpdateVersion] = useState(0);
-  const [typedCounter, setTypedCounter] = useState(0);
-  const [shouldStart, setShouldStart] = useState(false);
-  const [isPressedLetterVisible, setIsPressedLetterVisible] = useState(false);
-  const [position, setPosition] = useState(0);
-  const [speedCounter, setSpeedCounter] = useState(0);
-  const [activePage, setActivePage] = useState(0);
-  const [isPositionEditable, setIsPositionEditable] = useState(false);
-  const maxPosition = useMemo(() => fullText.length - 1, [fullText]);
 
-  const selectedRef = useRef<HTMLSpanElement>(null);
+  const {
+    pressedLetter,
+    updatedVersion,
+    isPositionEditable,
+    setPressedLetter,
+    setIsPositionEditable,
+  } = usePressedLetter();
 
-  const currentPosition = position - activePage * 1000;
-  const storedName = `progress-${textOptions.name}`;
-  const currentLetter = useMemo(
-    () => getSymbol(fullText[position]),
-    [fullText, position]
-  );
-  const onChangePosition = (rowPosition: string) => {
-    const nextPosition = parseInt(rowPosition);
-    setPosition(nextPosition > maxPosition ? maxPosition : nextPosition);
-  };
-  const onValidatePosition = (rowPosition: string) =>
-    !isNaN(parseInt(rowPosition));
+  const { shouldStart, setShouldStart, selectedRef } = useScrollToPosition({
+    pressedLetter,
+    headerRef,
+    updatedVersion,
+    text,
+  });
+  const { position, setPosition, onChangePosition, onValidatePosition } =
+    usePosition({ fullText });
 
-  const word = useMemo(
-    () => getWord({ text, position: currentPosition }),
-    [text, currentPosition]
-  );
+  const { activePage, setActivePage, updateActivePage } = useActivePage({
+    text,
+    setText,
+    fullText,
+    headerRef,
+    selectedRef,
+    isPositionEditable,
+    position,
+    pressedLetter,
+  });
 
-  const updateActivePage = useCallback(
-    ({ position }: { position: number }) => {
-      const page = (position / 1000) >> 0;
-      if (activePage !== page || !text) {
-        const state = page * 1000;
-        setActivePage(page);
-        setText(fullText.slice(state, state + 1000));
-        scrollToElement({ headerRef, selectedRef, forceScroll: false });
-      }
-    },
-    [
-      activePage,
-      setActivePage,
-      setText,
-      headerRef,
-      selectedRef,
-      fullText,
-      isPositionEditable,
-    ]
-  );
-  const onTimeUpdate = useCallback(
-    ({ time }: { time: number }) => {
-      if (typedCounter) {
-        const seconds = 1000 * 60;
-        setSpeedCounter(Math.round((typedCounter * seconds) / time));
-      }
-    },
-    [typedCounter, setSpeedCounter]
-  );
+  const {
+    word,
+    typoCounter,
+    typedCounter,
+    onTimeUpdate,
+    speedCounter,
+    setTypoCounter,
+    setSpeedCounter,
+    setTypedCounter,
+    currentLetter,
+    currentPosition,
+    isPressedLetterVisible,
+  } = useUpdatedVersion({
+    fullText,
+    position,
+    activePage,
+    text,
+    updatedVersion,
+    pressedLetter,
+    setPosition,
+  });
 
-  useEffect(() => {
-    updateActivePage({ position });
-    selectedRef.current?.focus();
-  }, [position, selectedRef]);
-
-  useEffect(() => {
-    if ((position / 1000) >> 0 !== activePage) {
-      updateActivePage({ position });
-    }
-  }, [pressedLetter, fullText]);
-
-  useEffect(() => {
-    const progress = JSON.parse(
-      localStorage.getItem(storedName) ||
-        '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0}'
-    );
-    setPosition(progress.position);
-    setTypoCounter(progress.typoCounter);
-    setTypedCounter(progress.typedCounter);
-    setSpeedCounter(progress.speedCounter);
-    setPressedLetter('');
-    updateActivePage({ position: progress.position });
-  }, [textOptions]);
-
-  useEffect(() => {
-    if (pressedLetter) {
-      setShouldStart(true);
-    }
-  }, [pressedLetter]);
-
-  useEffect(() => {
-    if (pressedLetter) {
-      localStorage.setItem(
-        storedName,
-        JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
-      );
-    }
-  }, [pressedLetter, position]);
-
-  useEffect(() => {
-    if (!updateVersion) return;
-    if (pressedLetter === currentLetter) {
-      setIsPressedLetterVisible(false);
-      setTypedCounter(typedCounter + 1);
-      setPosition(
-        pressedLetter === enterSymbol
-          ? position + (fullText.slice(position).match(/\S/)?.index || 0)
-          : position + 1
-      );
-    } else {
-      setTypoCounter(typoCounter + 1);
-      setIsPressedLetterVisible(true);
-    }
-  }, [updateVersion]);
-
-  useEffect(() => {
-    scrollToElement({ headerRef, selectedRef, forceScroll: shouldStart });
-  }, [shouldStart]);
-
-  useEffect(() => {
-    scrollToElement({ headerRef, selectedRef });
-  }, [updateVersion, text]);
-
-  useEffect(() => {
-    const inputFunc = (event: KeyboardEvent) => {
-      if (isPositionEditable) return;
-      const { key } = event;
-      event.preventDefault?.();
-      switch (key) {
-        case 'Down':
-        case 'ArrowDown':
-        case 'Up':
-        case 'ArrowUp':
-        case 'Left':
-        case 'ArrowLeft':
-        case 'Right':
-        case 'ArrowRight':
-        case 'Esc':
-        case 'Escape':
-          break;
-        case 'Enter':
-        default: {
-          const letter = getSymbol(key);
-          setPressedLetter(letter);
-          setUpdateVersion((version) => version + 1);
-        }
-      }
-    };
-    document.addEventListener('keypress', inputFunc, false);
-    return () => document.removeEventListener('keypress', inputFunc, false);
-  }, [setPressedLetter, setUpdateVersion, isPositionEditable]);
+  useSaveProgress({
+    textOptions,
+    setPosition,
+    setTypoCounter,
+    setSpeedCounter,
+    setPressedLetter,
+    updateActivePage,
+    pressedLetter,
+    setTypedCounter,
+    typedCounter,
+    typoCounter,
+    speedCounter,
+    position,
+  });
 
   return {
     text,
@@ -193,7 +102,7 @@ export const useTextToEnterProps = ({
     typedCounter,
     onTimeUpdate,
     setActivePage,
-    updateVersion,
+    updatedVersion,
     currentLetter,
     pressedLetter,
     setShouldStart,
