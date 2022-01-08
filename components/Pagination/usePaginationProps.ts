@@ -1,14 +1,16 @@
-import {Dispatch, SetStateAction, useState} from "react";
-import {IPagination} from "./index";
+import { IPagination } from './index';
+import { IPage } from '../TextToEnter/hooks/useActivePage';
 
 export interface IUsePaginationProps {
-  fullText: string;
-  setText: Dispatch<SetStateAction<string>>
   activePage: number;
-  setActivePage: Dispatch<SetStateAction<number>>
+  pages: IPage[];
 }
-export const usePaginationProps = ({fullText, setText, activePage, setActivePage}: IUsePaginationProps): IPagination => {
+export const usePaginationProps = ({
+  activePage,
+  pages,
+}: IUsePaginationProps): IPagination => {
   return {
-    fullText, setText, activePage, setActivePage
-  }
-}
+    activePage,
+    pages,
+  };
+};

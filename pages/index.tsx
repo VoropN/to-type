@@ -25,10 +25,8 @@ const Home: FC<any> = ({ data }) => {
     isLoading: loadFileProps.isLoading,
   });
   const paginationProps = usePaginationProps({
-    fullText: loadFileProps.text,
-    setText: textToEnterProps.setText,
     activePage: textToEnterProps.activePage,
-    setActivePage: textToEnterProps.setActivePage,
+    pages: textToEnterProps.pages,
   });
 
   const indicatorsProps = useIndicatorsProps({

@@ -38,7 +38,10 @@ export const useUpdatedVersion = ({
     [fullText, position]
   );
   const word = useMemo(
-    () => getWord({ text, position: currentPosition }),
+    () =>
+      activePage === (position / 1000) >> 0
+        ? getWord({ text, position: currentPosition })
+        : null,
     [text, currentPosition]
   );
 

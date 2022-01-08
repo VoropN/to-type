@@ -3,10 +3,10 @@ interface IGetWord {
   text: string;
 }
 
-export interface IWordData {
+export type IWordData = {
   position: { start: number; end: number };
   text: { start: string; end: string };
-}
+} | null;
 
 export const getWord = ({ position, text }: IGetWord) => {
   const textLength = text.length;

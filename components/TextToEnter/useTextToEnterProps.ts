@@ -40,7 +40,7 @@ export const useTextToEnterProps = ({
   const { position, setPosition, onChangePosition, onValidatePosition } =
     usePosition({ fullText });
 
-  const { activePage, setActivePage, updateActivePage } = useActivePage({
+  const { activePage, pages, updateActivePage } = useActivePage({
     text,
     setText,
     fullText,
@@ -91,6 +91,7 @@ export const useTextToEnterProps = ({
   return {
     text,
     word,
+    pages,
     setText,
     position,
     isLoading,
@@ -101,7 +102,6 @@ export const useTextToEnterProps = ({
     speedCounter,
     typedCounter,
     onTimeUpdate,
-    setActivePage,
     updatedVersion,
     currentLetter,
     pressedLetter,

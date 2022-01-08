@@ -4,9 +4,15 @@ import {
   SetStateAction,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { scrollToElement } from '../../../helpers';
+
+export interface IPage {
+  name: string | number;
+  onSelect: () => void;
+}
 
 interface IUseActivePage {
   text: string;
@@ -29,14 +35,36 @@ export const useActivePage = ({
   position,
   pressedLetter,
 }: IUseActivePage) => {
+  const charactersPerPage = 1000;
   const [activePage, setActivePage] = useState(0);
+
+  const pages: IPage[] = useMemo(
+    () =>
+      Array.from(
+        { length: (1 + fullText.length / charactersPerPage) >> 0 },
+        (_, i) => {
+          const start = i * charactersPerPage;
+          const end = start + charactersPerPage;
+
+          return {
+            name: i,
+            onSelect: () => {
+              setText(fullText.slice(start, end));
+              setActivePage(i);
+            },
+          };
+        }
+      ),
+    [fullText]
+  );
+
   const updateActivePage = useCallback(
     ({ position }: { position: number }) => {
-      const page = (position / 1000) >> 0;
+      const page = (position / charactersPerPage) >> 0;
       if (activePage !== page || !text) {
-        const state = page * 1000;
+        const state = page * charactersPerPage;
         setActivePage(page);
-        setText(fullText.slice(state, state + 1000));
+        setText(fullText.slice(state, state + charactersPerPage));
         scrollToElement({ headerRef, selectedRef, forceScroll: false });
       }
     },
@@ -57,14 +85,14 @@ export const useActivePage = ({
   }, [position, selectedRef]);
 
   useEffect(() => {
-    if ((position / 1000) >> 0 !== activePage) {
+    if ((position / charactersPerPage) >> 0 !== activePage) {
       updateActivePage({ position });
     }
   }, [pressedLetter, fullText]);
 
   return {
+    pages,
     activePage,
-    setActivePage,
     updateActivePage,
   };
 };

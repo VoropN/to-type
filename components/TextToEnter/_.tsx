@@ -3,9 +3,10 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { spaceSymbol, visibleSymbols } from './helpers';
 import { IWordData } from '../../helpers';
+import { IPage } from './hooks/useActivePage';
 
 export interface ITextToEnter {
-  setActivePage: Dispatch<SetStateAction<number>>;
+  pages: IPage[];
   onTimeUpdate: ({ time }: { time: number }) => void;
   currentPosition: number;
   activePage: number;
@@ -45,7 +46,7 @@ const TextToEnter = ({
   return (
     <div className={styles.text} tabIndex={1}>
       {isLoading && '...loading'}
-      {(position / 1000) >> 0 === activePage ? (
+      {(position / 1000) >> 0 === activePage && word ? (
         <>
           <span>{text.slice(0, word.position.start)}</span>
           <div className={styles.word}>
