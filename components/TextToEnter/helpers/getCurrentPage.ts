@@ -13,12 +13,12 @@ export const getCurrentPage = ({ position }: { position: number }) =>
 
 export const getPageText = ({
   fullText,
-  currentPage,
+  page,
 }: {
   fullText: string;
-  currentPage: number;
+  page: number;
 }) => {
-  const start = currentPage * charactersPerPage;
+  const start = page * charactersPerPage;
   const end = start + charactersPerPage;
   return fullText.slice(start, end);
 };

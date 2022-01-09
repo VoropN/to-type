@@ -52,7 +52,7 @@ export const useActivePage = ({
           return {
             name: i,
             onSelect: () => {
-              setText(getPageText({ currentPage, fullText }));
+              setText(getPageText({ page: i, fullText }));
               setActivePage(i);
             },
           };
@@ -65,7 +65,7 @@ export const useActivePage = ({
     ({ currentPage, forceUpdate = false }) => {
       if (activePage !== currentPage || forceUpdate) {
         setActivePage(currentPage);
-        setText(getPageText({ currentPage, fullText }));
+        setText(getPageText({ page: currentPage, fullText }));
         scrollToPosition({ forceScroll: forceUpdate });
       }
     },

@@ -21,6 +21,7 @@ export interface IIndicators {
   onValidatePosition: (position: string) => boolean;
   setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
   enteredCounter: number;
+  currentPage: number;
 }
 
 const Indicators = ({
@@ -29,6 +30,7 @@ const Indicators = ({
   pressedLetter,
   position,
   length,
+  currentPage,
   textOptions,
   shouldStart,
   setShouldStart,
@@ -81,7 +83,10 @@ const Indicators = ({
         setShouldStart={setShouldStart}
         onUpdate={onTimeUpdate}
       />
-      <h4 className={styles.indicator}>Speed: {speedCounter}</h4>
+      <div>
+        <h4 className={styles.indicator}>Speed: {speedCounter}</h4>
+        <h4 className={styles.indicator}>Page: {currentPage}</h4>
+      </div>
     </div>
   );
 };

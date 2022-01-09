@@ -28,5 +28,6 @@ export const useIndicatorsProps = ({
     setShouldStart: textToEnterProps.setShouldStart,
     onTimeUpdate: textToEnterProps.onTimeUpdate,
     speedCounter: textToEnterProps.speedCounter,
+    currentPage: textToEnterProps.currentPage,
   };
 };
