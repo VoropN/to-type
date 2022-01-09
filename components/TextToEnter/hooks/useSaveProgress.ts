@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { ITextOptions } from '../../LoadFile';
+import { IUpdateActivePage } from './useActivePage';
+import { getCurrentPage } from '../helpers/getCurrentPage';
 
 interface IUseSaveProgress {
   textOptions: ITextOptions;
@@ -7,7 +9,7 @@ interface IUseSaveProgress {
   setTypoCounter: Dispatch<SetStateAction<number>>;
   setSpeedCounter: Dispatch<SetStateAction<number>>;
   setPressedLetter: Dispatch<SetStateAction<string>>;
-  updateActivePage: ({ position }: { position: number }) => void;
+  updateActivePage: IUpdateActivePage;
   pressedLetter: string;
   setTypedCounter: Dispatch<SetStateAction<number>>;
   typedCounter: number;
@@ -42,7 +44,10 @@ export const useSaveProgress = ({
     setTypedCounter(progress.typedCounter);
     setSpeedCounter(progress.speedCounter);
     setPressedLetter('');
-    updateActivePage({ position: progress.position });
+    updateActivePage({
+      currentPage: getCurrentPage({ position: progress.position }),
+      forceUpdate: true,
+    });
   }, [textOptions]);
 
   useEffect(() => {

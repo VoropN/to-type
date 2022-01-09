@@ -8,10 +8,12 @@ import {
 } from 'react';
 import { enterSymbol, getSymbol } from '../helpers';
 import { getWord } from '../../../helpers';
+import { getCurrentPosition } from '../helpers/getCurrentPage';
 
 interface IUseUpdatedVersion {
   fullText: string;
   position: number;
+  currentPage: number;
   activePage: number;
   text: string;
   updatedVersion: number;
@@ -27,19 +29,20 @@ export const useUpdatedVersion = ({
   updatedVersion,
   pressedLetter,
   setPosition,
+  currentPage,
 }: IUseUpdatedVersion) => {
   const [typoCounter, setTypoCounter] = useState(0);
   const [typedCounter, setTypedCounter] = useState(0);
   const [isPressedLetterVisible, setIsPressedLetterVisible] = useState(false);
   const [speedCounter, setSpeedCounter] = useState(0);
-  const currentPosition = position - activePage * 1000;
+  const currentPosition = getCurrentPosition({ position, activePage });
   const currentLetter = useMemo(
     () => getSymbol(fullText[position]),
     [fullText, position]
   );
   const word = useMemo(
     () =>
-      activePage === (position / 1000) >> 0
+      activePage === currentPage
         ? getWord({ text, position: currentPosition })
         : null,
     [text, currentPosition]

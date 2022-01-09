@@ -7,6 +7,7 @@ interface IUseScrollToPosition {
   updatedVersion: number;
   text: string;
 }
+export type IScrollToPosition = (props: { forceScroll?: boolean }) => void;
 
 export const useScrollToPosition = ({
   pressedLetter,
@@ -16,13 +17,28 @@ export const useScrollToPosition = ({
 }: IUseScrollToPosition) => {
   const [shouldStart, setShouldStart] = useState(false);
   const selectedRef = useRef<HTMLSpanElement>(null);
+  const [scrollOptions, setScrollOptions] = useState({
+    counter: 0,
+    forceScroll: false,
+  });
+  const scrollToPosition = ({ forceScroll = false }) => {
+    setScrollOptions(({ counter }) => ({ counter: counter + 1, forceScroll }));
+  };
 
   useEffect(() => {
-    scrollToElement({ headerRef, selectedRef, forceScroll: shouldStart });
+    scrollToElement({
+      headerRef,
+      selectedRef,
+      forceScroll: scrollOptions.forceScroll,
+    });
+  }, [scrollOptions]);
+
+  useEffect(() => {
+    scrollToPosition({ forceScroll: shouldStart });
   }, [shouldStart]);
 
   useEffect(() => {
-    scrollToElement({ headerRef, selectedRef });
+    scrollToPosition({ forceScroll: false });
   }, [updatedVersion, text]);
 
   useEffect(() => {
@@ -35,5 +51,6 @@ export const useScrollToPosition = ({
     shouldStart,
     setShouldStart,
     selectedRef,
+    scrollToPosition,
   };
 };

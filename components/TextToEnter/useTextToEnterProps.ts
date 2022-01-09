@@ -31,14 +31,21 @@ export const useTextToEnterProps = ({
     setIsPositionEditable,
   } = usePressedLetter();
 
-  const { shouldStart, setShouldStart, selectedRef } = useScrollToPosition({
-    pressedLetter,
-    headerRef,
-    updatedVersion,
-    text,
-  });
-  const { position, setPosition, onChangePosition, onValidatePosition } =
-    usePosition({ fullText });
+  const { shouldStart, setShouldStart, selectedRef, scrollToPosition } =
+    useScrollToPosition({
+      headerRef,
+      pressedLetter,
+      updatedVersion,
+      text,
+    });
+
+  const {
+    position,
+    setPosition,
+    currentPage,
+    onChangePosition,
+    onValidatePosition,
+  } = usePosition({ fullText, scrollToPosition });
 
   const { activePage, pages, updateActivePage } = useActivePage({
     text,
@@ -46,9 +53,10 @@ export const useTextToEnterProps = ({
     fullText,
     headerRef,
     selectedRef,
-    isPositionEditable,
-    position,
+    currentPage,
     pressedLetter,
+    scrollToPosition,
+    isPositionEditable,
   });
 
   const {
@@ -57,20 +65,21 @@ export const useTextToEnterProps = ({
     typedCounter,
     onTimeUpdate,
     speedCounter,
+    currentLetter,
     setTypoCounter,
     setSpeedCounter,
     setTypedCounter,
-    currentLetter,
     currentPosition,
     isPressedLetterVisible,
   } = useUpdatedVersion({
-    fullText,
-    position,
-    activePage,
     text,
-    updatedVersion,
-    pressedLetter,
+    position,
+    fullText,
+    activePage,
+    currentPage,
     setPosition,
+    pressedLetter,
+    updatedVersion,
   });
 
   useSaveProgress({
@@ -96,15 +105,16 @@ export const useTextToEnterProps = ({
     position,
     isLoading,
     activePage,
+    currentPage,
     typoCounter,
     shouldStart,
     selectedRef,
     speedCounter,
     typedCounter,
     onTimeUpdate,
-    updatedVersion,
     currentLetter,
     pressedLetter,
+    updatedVersion,
     setShouldStart,
     currentPosition,
     onChangePosition,

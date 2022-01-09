@@ -7,7 +7,8 @@ import { IPage } from './hooks/useActivePage';
 
 export interface ITextToEnter {
   pages: IPage[];
-  onTimeUpdate: ({ time }: { time: number }) => void;
+  currentPage: number;
+  onTimeUpdate: (props: { time: number }) => void;
   currentPosition: number;
   activePage: number;
   updatedVersion: number;
@@ -34,9 +35,9 @@ export interface ITextToEnter {
 const TextToEnter = ({
   text,
   word,
-  position,
   isLoading,
   activePage,
+  currentPage,
   selectedRef,
   pressedLetter,
   currentLetter,
@@ -46,7 +47,7 @@ const TextToEnter = ({
   return (
     <div className={styles.text} tabIndex={1}>
       {isLoading && '...loading'}
-      {(position / 1000) >> 0 === activePage && word ? (
+      {currentPage === activePage && word ? (
         <>
           <span>{text.slice(0, word.position.start)}</span>
           <div className={styles.word}>

@@ -7,7 +7,13 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { scrollToElement } from '../../../helpers';
+import { getCurrentPage, getPageText } from '../helpers/getCurrentPage';
+import { IScrollToPosition } from './useScrollToPosition';
+
+export type IUpdateActivePage = (props: {
+  currentPage: number;
+  forceUpdate?: boolean;
+}) => void;
 
 export interface IPage {
   name: string | number;
@@ -21,35 +27,32 @@ interface IUseActivePage {
   headerRef: RefObject<HTMLElement>;
   selectedRef: RefObject<HTMLElement>;
   isPositionEditable: boolean;
-  position: number;
+  currentPage: number;
   pressedLetter: string;
+  scrollToPosition: IScrollToPosition;
 }
 
 export const useActivePage = ({
-  text,
   setText,
   fullText,
   headerRef,
   selectedRef,
-  isPositionEditable,
-  position,
+  currentPage,
   pressedLetter,
+  scrollToPosition,
+  isPositionEditable,
 }: IUseActivePage) => {
-  const charactersPerPage = 1000;
   const [activePage, setActivePage] = useState(0);
 
   const pages: IPage[] = useMemo(
     () =>
       Array.from(
-        { length: (1 + fullText.length / charactersPerPage) >> 0 },
+        { length: 1 + getCurrentPage({ position: fullText.length }) },
         (_, i) => {
-          const start = i * charactersPerPage;
-          const end = start + charactersPerPage;
-
           return {
             name: i,
             onSelect: () => {
-              setText(fullText.slice(start, end));
+              setText(getPageText({ currentPage, fullText }));
               setActivePage(i);
             },
           };
@@ -59,34 +62,24 @@ export const useActivePage = ({
   );
 
   const updateActivePage = useCallback(
-    ({ position }: { position: number }) => {
-      const page = (position / charactersPerPage) >> 0;
-      if (activePage !== page || !text) {
-        const state = page * charactersPerPage;
-        setActivePage(page);
-        setText(fullText.slice(state, state + charactersPerPage));
-        scrollToElement({ headerRef, selectedRef, forceScroll: false });
+    ({ currentPage, forceUpdate = false }) => {
+      if (activePage !== currentPage || forceUpdate) {
+        setActivePage(currentPage);
+        setText(getPageText({ currentPage, fullText }));
+        scrollToPosition({ forceScroll: forceUpdate });
       }
     },
-    [
-      activePage,
-      setActivePage,
-      setText,
-      headerRef,
-      selectedRef,
-      fullText,
-      isPositionEditable,
-    ]
+    [activePage, headerRef, selectedRef, fullText, isPositionEditable]
   );
 
   useEffect(() => {
-    updateActivePage({ position });
+    updateActivePage({ currentPage, forceUpdate: true });
     selectedRef.current?.focus();
-  }, [position, selectedRef]);
+  }, [currentPage, selectedRef]);
 
   useEffect(() => {
-    if ((position / charactersPerPage) >> 0 !== activePage) {
-      updateActivePage({ position });
+    if (currentPage !== activePage) {
+      updateActivePage({ currentPage });
     }
   }, [pressedLetter, fullText]);
 
