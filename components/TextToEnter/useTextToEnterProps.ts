@@ -47,7 +47,7 @@ export const useTextToEnterProps = ({
     onValidatePosition,
   } = usePosition({ fullText, scrollToPosition });
 
-  const { activePage, pages, updateActivePage } = useActivePage({
+  const { activePage, pages, pagesLength, updateActivePage } = useActivePage({
     text,
     setText,
     fullText,
@@ -89,7 +89,7 @@ export const useTextToEnterProps = ({
     setSpeedCounter,
     setPressedLetter,
     updateActivePage,
-    pressedLetter,
+    updatedVersion,
     setTypedCounter,
     typedCounter,
     typoCounter,
@@ -106,6 +106,7 @@ export const useTextToEnterProps = ({
     isLoading,
     activePage,
     currentPage,
+    pagesLength,
     typoCounter,
     shouldStart,
     selectedRef,

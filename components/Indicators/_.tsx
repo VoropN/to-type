@@ -6,6 +6,7 @@ import { EditableField } from '../EditableField';
 
 export interface IIndicators {
   position: number;
+  pagesLength: number;
   length: number;
   shouldStart: boolean;
   isPositionEditable: boolean;
@@ -26,6 +27,7 @@ export interface IIndicators {
 
 const Indicators = ({
   typedCounter,
+  pagesLength,
   currentLetter,
   pressedLetter,
   position,
@@ -63,7 +65,7 @@ const Indicators = ({
       </div>
       <div>
         <h4 className={styles.indicator} onClick={onPositionEdit}>
-          Position:{' '}
+          Position:&nbsp;
           <EditableField
             onValidate={onValidatePosition}
             onChange={onChangePosition}
@@ -85,7 +87,9 @@ const Indicators = ({
       />
       <div>
         <h4 className={styles.indicator}>Speed: {speedCounter}</h4>
-        <h4 className={styles.indicator}>Page: {currentPage}</h4>
+        <h4 className={styles.indicator}>
+          Page: {currentPage + 1}/{pagesLength}
+        </h4>
       </div>
     </div>
   );

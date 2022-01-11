@@ -17,6 +17,7 @@ export type IUpdateActivePage = (props: {
 
 export interface IPage {
   name: string | number;
+  pageId: number;
   onSelect: () => void;
 }
 
@@ -43,21 +44,23 @@ export const useActivePage = ({
   isPositionEditable,
 }: IUseActivePage) => {
   const [activePage, setActivePage] = useState(0);
+  const pagesLength = useMemo(
+    () => 1 + getCurrentPage({ position: fullText.length }),
+    [fullText]
+  );
 
   const pages: IPage[] = useMemo(
     () =>
-      Array.from(
-        { length: 1 + getCurrentPage({ position: fullText.length }) },
-        (_, i) => {
-          return {
-            name: i,
-            onSelect: () => {
-              setText(getPageText({ page: i, fullText }));
-              setActivePage(i);
-            },
-          };
-        }
-      ),
+      Array.from({ length: pagesLength }, (_, i) => {
+        return {
+          pageId: i,
+          name: i + 1,
+          onSelect: () => {
+            setText(getPageText({ page: i, fullText }));
+            setActivePage(i);
+          },
+        };
+      }),
     [fullText]
   );
 
@@ -86,6 +89,7 @@ export const useActivePage = ({
   return {
     pages,
     activePage,
+    pagesLength,
     updateActivePage,
   };
 };

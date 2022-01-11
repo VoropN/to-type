@@ -11,6 +11,7 @@ export interface ITextToEnter {
   onTimeUpdate: (props: { time: number }) => void;
   currentPosition: number;
   activePage: number;
+  pagesLength: number;
   updatedVersion: number;
   pressedLetter: string;
   currentLetter: string;

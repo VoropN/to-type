@@ -12,6 +12,7 @@ export const useIndicatorsProps = ({
 }: IUseIndicatorsProps): IIndicators => {
   return {
     length: loadFileProps.text.length,
+    pagesLength: textToEnterProps.pagesLength,
     enteredCounter:
       textToEnterProps.typoCounter + textToEnterProps.typedCounter,
     typoCounter: textToEnterProps.typoCounter,

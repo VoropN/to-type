@@ -11,12 +11,12 @@ export interface IPagination {
 const Pagination = ({ activePage, pages }: IPagination) => {
   return (
     <div className={styles.pagination}>
-      {pages.map(({ name, onSelect }) => (
+      {pages.map(({ name, onSelect, pageId }) => (
         <div
           key={name}
           onClick={onSelect}
           className={classNames(styles.paginationItem, {
-            [styles.paginationActiveItem]: name === activePage,
+            [styles.paginationActiveItem]: pageId === activePage,
           })}
         >
           {name}

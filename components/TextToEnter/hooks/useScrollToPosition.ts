@@ -45,7 +45,7 @@ export const useScrollToPosition = ({
     if (pressedLetter) {
       setShouldStart(true);
     }
-  }, [pressedLetter]);
+  }, [updatedVersion]);
 
   return {
     shouldStart,
