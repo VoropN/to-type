@@ -27,7 +27,8 @@ export const useIndicatorsProps = ({
     textOptions: loadFileProps.textOptions,
     shouldStart: textToEnterProps.shouldStart,
     setShouldStart: textToEnterProps.setShouldStart,
-    onTimeUpdate: textToEnterProps.onTimeUpdate,
+    time: textToEnterProps.time,
+    setTime: textToEnterProps.setTime,
     speedCounter: textToEnterProps.speedCounter,
     currentPage: textToEnterProps.currentPage,
   };

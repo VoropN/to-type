@@ -15,7 +15,8 @@ interface ITimer {
   className: string;
   shouldUpdate: any;
   shouldStart: boolean;
-  onUpdate: ({ time }: { time: number }) => void;
+  setTime: Dispatch<SetStateAction<number>>;
+  time: number;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -38,18 +39,12 @@ const startTimer = ({
 const Timer = ({
   setShouldStart,
   shouldUpdate,
-  onUpdate,
+  time,
+  setTime,
   shouldStart,
-  name,
   className,
 }: ITimer) => {
-  const timerName = useMemo(() => `timer-${name}`, [name]);
-  const [time, setTime] = useState(0);
   const clearIntervalTimer = useRef<any>(null);
-
-  useEffect(() => {
-    setTime(Number(localStorage.getItem(timerName) || 0));
-  }, [timerName]);
 
   useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
@@ -73,11 +68,6 @@ const Timer = ({
     window.addEventListener('keydown', inputFunc, true);
     return () => window.removeEventListener('keydown', inputFunc, true);
   }, [setShouldStart, clearIntervalTimer]);
-
-  useEffect(() => {
-    onUpdate({ time });
-    localStorage.setItem(timerName, String(time));
-  }, [time]);
 
   useEffect(() => {
     if (shouldStart && !clearIntervalTimer.current) {

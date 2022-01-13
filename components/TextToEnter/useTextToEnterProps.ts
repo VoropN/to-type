@@ -22,21 +22,22 @@ export const useTextToEnterProps = ({
   isLoading,
 }: IUseTextToEnterProps): ITextToEnter => {
   const [text, setText] = useState('');
+  const [time, setTime] = useState(0);
 
   const {
     pressedLetter,
     updatedVersion,
-    isPositionEditable,
     setPressedLetter,
+    isPositionEditable,
     setIsPositionEditable,
   } = usePressedLetter();
 
   const { shouldStart, setShouldStart, selectedRef, scrollToPosition } =
     useScrollToPosition({
+      text,
       headerRef,
       pressedLetter,
       updatedVersion,
-      text,
     });
 
   const {
@@ -63,7 +64,6 @@ export const useTextToEnterProps = ({
     word,
     typoCounter,
     typedCounter,
-    onTimeUpdate,
     speedCounter,
     currentLetter,
     setTypoCounter,
@@ -73,6 +73,7 @@ export const useTextToEnterProps = ({
     isPressedLetterVisible,
   } = useUpdatedVersion({
     text,
+    time,
     position,
     fullText,
     activePage,
@@ -83,24 +84,28 @@ export const useTextToEnterProps = ({
   });
 
   useSaveProgress({
+    time,
+    setTime,
+    position,
     textOptions,
     setPosition,
+    typoCounter,
+    typedCounter,
+    speedCounter,
     setTypoCounter,
+    updatedVersion,
     setSpeedCounter,
+    setTypedCounter,
     setPressedLetter,
     updateActivePage,
-    updatedVersion,
-    setTypedCounter,
-    typedCounter,
-    typoCounter,
-    speedCounter,
-    position,
   });
 
   return {
     text,
     word,
+    time,
     pages,
+    setTime,
     setText,
     position,
     isLoading,
@@ -112,7 +117,6 @@ export const useTextToEnterProps = ({
     selectedRef,
     speedCounter,
     typedCounter,
-    onTimeUpdate,
     currentLetter,
     pressedLetter,
     updatedVersion,

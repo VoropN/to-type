@@ -1,11 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { enterSymbol, getSymbol } from '../helpers';
 import { getWord } from '../../../helpers';
 import { getCurrentPosition } from '../helpers/getCurrentPage';
@@ -15,6 +8,7 @@ interface IUseUpdatedVersion {
   position: number;
   currentPage: number;
   activePage: number;
+  time: number;
   text: string;
   updatedVersion: number;
   pressedLetter: string;
@@ -26,6 +20,7 @@ export const useUpdatedVersion = ({
   position,
   activePage,
   text,
+  time,
   updatedVersion,
   pressedLetter,
   setPosition,
@@ -48,15 +43,13 @@ export const useUpdatedVersion = ({
     [text, currentPosition]
   );
 
-  const onTimeUpdate = useCallback(
-    ({ time }: { time: number }) => {
-      if (typedCounter) {
-        const seconds = 1000 * 60;
-        setSpeedCounter(Math.round((typedCounter * seconds) / time));
-      }
-    },
-    [typedCounter, setSpeedCounter]
-  );
+  useEffect(() => {
+    if (typedCounter) {
+      const seconds = 1000 * 60;
+      setSpeedCounter(Math.round((typedCounter * seconds) / time));
+    }
+  }, [updatedVersion, time]);
+
   useEffect(() => {
     if (!updatedVersion) return;
     if (pressedLetter === currentLetter) {
@@ -77,7 +70,6 @@ export const useUpdatedVersion = ({
     word,
     typoCounter,
     typedCounter,
-    onTimeUpdate,
     speedCounter,
     setTypoCounter,
     setSpeedCounter,

@@ -11,6 +11,8 @@ interface IUseSaveProgress {
   setPressedLetter: Dispatch<SetStateAction<string>>;
   updateActivePage: IUpdateActivePage;
   setTypedCounter: Dispatch<SetStateAction<number>>;
+  setTime: Dispatch<SetStateAction<number>>;
+  time: number;
   typedCounter: number;
   typoCounter: number;
   speedCounter: number;
@@ -20,6 +22,8 @@ interface IUseSaveProgress {
 
 export const useSaveProgress = ({
   textOptions,
+  setTime,
+  time,
   setPosition,
   setTypoCounter,
   setSpeedCounter,
@@ -37,11 +41,12 @@ export const useSaveProgress = ({
   useEffect(() => {
     const progress = JSON.parse(
       localStorage.getItem(storedName) ||
-        '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0}'
+        '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0, "time": 0}'
     );
     setPosition(progress.position);
     setTypoCounter(progress.typoCounter);
     setTypedCounter(progress.typedCounter);
+    setTime(progress.time);
     setSpeedCounter(progress.speedCounter);
     setPressedLetter('');
     updateActivePage({
@@ -53,7 +58,13 @@ export const useSaveProgress = ({
   useEffect(() => {
     localStorage.setItem(
       storedName,
-      JSON.stringify({ position, typedCounter, typoCounter, speedCounter })
+      JSON.stringify({
+        position,
+        typedCounter,
+        typoCounter,
+        speedCounter,
+        time,
+      })
     );
-  }, [updatedVersion, position]);
+  }, [updatedVersion, position, time]);
 };

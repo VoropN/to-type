@@ -13,11 +13,12 @@ export interface IIndicators {
   textOptions: ITextOptions;
   typoCounter: number;
   typedCounter: number;
-  onTimeUpdate: ({ time }: { time: number }) => void;
   pressedLetter: string;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
   currentLetter: string;
   speedCounter: number;
+  setTime: Dispatch<SetStateAction<number>>;
+  time: number;
   onChangePosition: (position: string) => void;
   onValidatePosition: (position: string) => boolean;
   setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
@@ -36,7 +37,8 @@ const Indicators = ({
   textOptions,
   shouldStart,
   setShouldStart,
-  onTimeUpdate,
+  time,
+  setTime,
   typoCounter,
   enteredCounter,
   speedCounter,
@@ -83,7 +85,8 @@ const Indicators = ({
         shouldStart={shouldStart}
         shouldUpdate={enteredCounter}
         setShouldStart={setShouldStart}
-        onUpdate={onTimeUpdate}
+        time={time}
+        setTime={setTime}
       />
       <div>
         <h4 className={styles.indicator}>Speed: {speedCounter}</h4>

@@ -8,7 +8,6 @@ import { IPage } from './hooks/useActivePage';
 export interface ITextToEnter {
   pages: IPage[];
   currentPage: number;
-  onTimeUpdate: (props: { time: number }) => void;
   currentPosition: number;
   activePage: number;
   pagesLength: number;
@@ -19,11 +18,13 @@ export interface ITextToEnter {
   isLoading: boolean;
   typoCounter: number;
   typedCounter: number;
+  time: number;
   shouldStart: boolean;
   isPressedLetterVisible: boolean;
   text: string;
   position: number;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
+  setTime: Dispatch<SetStateAction<number>>;
   onChangePosition: (position: string) => void;
   onValidatePosition: (position: string) => boolean;
   setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
