@@ -1,13 +1,13 @@
 .indicators {
   display: grid;
-  grid-template-columns: 33% 33% 33%;
-  grid-gap: 10px;
-  width: 700px;
+  grid-template-columns: 2fr 1fr 2fr;
+  grid-gap: 60px;
+  max-width: 700px;
   margin: 0;
   color: red;
   top: 0;
   z-index: 100;
-  text-align: justify;
+  justify-content: center;
   align-items: center;
 }
 
@@ -27,8 +27,6 @@
 
 .section1 {
   display: grid;
-  grid-gap: 5px;
-  max-width: 175px;
 }
 
 .section2 {
@@ -37,7 +35,6 @@
   background: #adff2e;
   padding: 5px 35px;
   text-shadow: 0.1px 0.4px 0.4px black;
-  margin-right: 42px;
   border-radius: 10px;
   box-shadow: 1px 2px 3px grey, inset 1px 2px 3px #ddffc2;
 
@@ -50,6 +47,11 @@
   font-size: 12px;
   grid-template-columns: 2fr 3fr;
   display: grid;
+  grid-gap: 0 20px;
+
+  > * {
+    min-width: 90px;
+  }
 }
 
 .sectionVisible {

@@ -13,7 +13,7 @@ export const useIndicatorsProps = ({
   return {
     length: loadFileProps.text.length,
     pagesLength: textToEnterProps.pagesLength,
-    isHintSectionVisible: textToEnterProps.isPressedLetterVisible,
+    isHintSectionVisible: !textToEnterProps.shouldStart,
     enteredCounter:
       textToEnterProps.typoCounter + textToEnterProps.typedCounter,
     typoCounter: textToEnterProps.typoCounter,
