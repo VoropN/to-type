@@ -1,0 +1,19 @@
+.section {
+  visibility: hidden;
+  font-size: 20px;
+  background: #adff2e;
+  padding: 5px 0 5px 30px;
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px grey, inset 1px 2px 3px #ddffc2;
+}
+
+.sectionVisible {
+  visibility: visible;
+}
+
+.indicator {
+  height: 21px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}

@@ -23,6 +23,7 @@ export interface ITextToEnter {
   isPressedLetterVisible: boolean;
   text: string;
   position: number;
+  enteredCounter: number;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
   setTime: Dispatch<SetStateAction<number>>;
   onChangePosition: (position: string) => void;

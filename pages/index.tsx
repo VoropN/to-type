@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styles from './Home.module.scss';
-import { useLoadFileProps } from '../components/LoadFile';
-import { Pagination, usePaginationProps } from '../components/Pagination';
+import { useLoadFileProps } from 'components/LoadFile';
+import { Pagination } from '../components/Pagination';
 import { TextToEnter, useTextToEnterProps } from '../components/TextToEnter';
 import { Header } from '../components/header';
 
@@ -20,10 +20,6 @@ const Home: FC<any> = ({ data }) => {
     textOptions: loadFileProps.textOptions,
     isLoading: loadFileProps.isLoading,
   });
-  const paginationProps = usePaginationProps({
-    activePage: textToEnterProps.activePage,
-    pages: textToEnterProps.pages,
-  });
 
   return (
     <>
@@ -33,7 +29,10 @@ const Home: FC<any> = ({ data }) => {
       />
       <div className={styles.root}>
         <TextToEnter {...textToEnterProps} />
-        <Pagination {...paginationProps} />
+        <Pagination
+          activePage={textToEnterProps.activePage}
+          pages={textToEnterProps.pages}
+        />
       </div>
     </>
   );

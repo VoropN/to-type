@@ -1,16 +1,3 @@
-.indicators {
-  display: grid;
-  grid-template-columns: 1fr 4fr 6fr;
-  grid-gap: 40px;
-  width: 700px;
-  margin: 0;
-  color: red;
-  top: 0;
-  z-index: 100;
-  justify-content: center;
-  align-items: center;
-}
-
 .typoPercentage {
   margin-top: 10px;
 }
@@ -21,27 +8,7 @@
   align-items: center;
 }
 
-.speed {
-}
-
-.section1 {
-  display: grid;
-}
-
-.section2 {
-  visibility: hidden;
-  font-size: 20px;
-  background: #adff2e;
-  padding: 5px 0 5px 30px;
-  border-radius: 10px;
-  box-shadow: 1px 2px 3px grey, inset 1px 2px 3px #ddffc2;
-
-  > * {
-    height: 21px;
-  }
-}
-
-.section3 {
+.section {
   font-size: 12px;
   grid-template-columns: 2fr 3fr;
   display: grid;
@@ -50,8 +17,4 @@
   > * {
     min-width: 100px;
   }
-}
-
-.sectionVisible {
-  visibility: visible;
 }

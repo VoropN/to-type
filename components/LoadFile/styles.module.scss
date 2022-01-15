@@ -1,3 +1,5 @@
+@import '../../styles/variables.module';
+
 .container {
   font-size: 14px;
 }
@@ -18,6 +20,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 190px;
+  width: $load-file-width;
   margin: 0;
 }

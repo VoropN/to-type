@@ -1,4 +1,4 @@
-import { RefObject, useState } from 'react';
+import { useState } from 'react';
 import { ITextOptions } from '../LoadFile';
 import { ITextToEnter } from './_';
 import { usePosition } from './hooks/usePosition';
@@ -116,6 +116,7 @@ export const useTextToEnterProps = ({
     currentLetter,
     pressedLetter,
     updatedVersion,
+    enteredCounter: typoCounter + typedCounter,
     setShouldStart,
     currentPosition,
     onChangePosition,
