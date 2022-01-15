@@ -5,3 +5,7 @@ $Inconsolata: 'Inconsolata';
 $PT_Mono: 'PT_Mono';
 
 $header-height: 90px;
+
+:export {
+  headerHeight: $header-height;
+}

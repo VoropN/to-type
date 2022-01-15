@@ -1,10 +1,9 @@
-import { FC, useRef } from 'react';
+import { FC } from 'react';
 import styles from './Home.module.scss';
-import { LoadFile } from '../components/LoadFile';
-import { Pagination, usePaginationProps } from '../components/Pagination';
 import { useLoadFileProps } from '../components/LoadFile';
+import { Pagination, usePaginationProps } from '../components/Pagination';
 import { TextToEnter, useTextToEnterProps } from '../components/TextToEnter';
-import { Indicators, useIndicatorsProps } from '../components/Indicators';
+import { Header } from '../components/header';
 
 export async function getStaticProps(context: any) {
   // @ts-ignore
@@ -15,11 +14,8 @@ export async function getStaticProps(context: any) {
 }
 
 const Home: FC<any> = ({ data }) => {
-  const headerRef = useRef<HTMLDivElement>(null);
-
   const loadFileProps = useLoadFileProps({ data });
   const textToEnterProps = useTextToEnterProps({
-    headerRef,
     fullText: loadFileProps.text,
     textOptions: loadFileProps.textOptions,
     isLoading: loadFileProps.isLoading,
@@ -29,18 +25,12 @@ const Home: FC<any> = ({ data }) => {
     pages: textToEnterProps.pages,
   });
 
-  const indicatorsProps = useIndicatorsProps({
-    loadFileProps,
-    textToEnterProps,
-  });
-
   return (
     <>
-      <header className={styles.header} ref={headerRef}>
-        <Indicators {...indicatorsProps}>
-          <LoadFile {...loadFileProps} />
-        </Indicators>
-      </header>
+      <Header
+        loadFileProps={loadFileProps}
+        textToEnterProps={textToEnterProps}
+      />
       <div className={styles.root}>
         <TextToEnter {...textToEnterProps} />
         <Pagination {...paginationProps} />

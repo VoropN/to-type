@@ -1,9 +1,9 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
-import { scrollToElement } from '../../../helpers';
+import { useEffect, useRef, useState } from 'react';
+import { scrollToElement } from 'helpers';
+import variables from 'styles/variables.module.scss';
 
 interface IUseScrollToPosition {
   pressedLetter: string;
-  headerRef: RefObject<HTMLElement>;
   updatedVersion: number;
   text: string;
 }
@@ -11,7 +11,6 @@ export type IScrollToPosition = (props: { forceScroll?: boolean }) => void;
 
 export const useScrollToPosition = ({
   pressedLetter,
-  headerRef,
   updatedVersion,
   text,
 }: IUseScrollToPosition) => {
@@ -27,7 +26,7 @@ export const useScrollToPosition = ({
 
   useEffect(() => {
     scrollToElement({
-      headerRef,
+      offsetTop: parseInt(variables.headerHeight),
       selectedRef,
       forceScroll: scrollOptions.forceScroll,
     });

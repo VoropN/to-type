@@ -9,14 +9,12 @@ import { usePressedLetter } from './hooks/usePressedLetter';
 import { useUpdatedVersion } from './hooks/useUpdatedVersion';
 
 export interface IUseTextToEnterProps {
-  headerRef: RefObject<HTMLElement>;
   fullText: string;
   textOptions: ITextOptions;
   isLoading: boolean;
 }
 
 export const useTextToEnterProps = ({
-  headerRef,
   fullText,
   textOptions,
   isLoading,
@@ -35,7 +33,6 @@ export const useTextToEnterProps = ({
   const { shouldStart, setShouldStart, selectedRef, scrollToPosition } =
     useScrollToPosition({
       text,
-      headerRef,
       pressedLetter,
       updatedVersion,
     });
@@ -52,7 +49,6 @@ export const useTextToEnterProps = ({
     text,
     setText,
     fullText,
-    headerRef,
     selectedRef,
     currentPage,
     pressedLetter,

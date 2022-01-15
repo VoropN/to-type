@@ -1,15 +1,15 @@
 import { ILoadFile } from '../LoadFile';
 import { ITextToEnter } from '../TextToEnter';
-import { IIndicators } from './';
 
 interface IUseIndicatorsProps {
   textToEnterProps: ITextToEnter;
   loadFileProps: ILoadFile;
 }
+
 export const useIndicatorsProps = ({
   textToEnterProps,
   loadFileProps,
-}: IUseIndicatorsProps): Omit<IIndicators, 'children'> => {
+}: IUseIndicatorsProps) => {
   return {
     length: loadFileProps.text.length,
     pagesLength: textToEnterProps.pagesLength,

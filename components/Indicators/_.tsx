@@ -1,58 +1,49 @@
-import { Dispatch, memo, ReactNode, SetStateAction } from 'react';
+import { memo, ReactNode } from 'react';
 import styles from './styles.module.scss';
 import { Timer } from '../Timer';
-import { ITextOptions } from '../LoadFile';
+import { ILoadFile } from '../LoadFile';
 import { EditableField } from '../EditableField';
 import cn from 'classnames';
 import { formatTime } from '../Timer/utils/formatTime';
+import { useIndicatorsProps } from 'components/Indicators/useIndicatorsProps';
+import { ITextToEnter } from 'components/TextToEnter';
 
-export interface IIndicators {
-  position: number;
-  pagesLength: number;
-  length: number;
-  shouldStart: boolean;
-  isPositionEditable: boolean;
-  isHintSectionVisible: boolean;
-  textOptions: ITextOptions;
-  typoCounter: number;
-  typedCounter: number;
-  pressedLetter: string;
-  setShouldStart: Dispatch<SetStateAction<boolean>>;
-  currentLetter: string;
-  speedCounter: number;
-  setTime: Dispatch<SetStateAction<number>>;
-  time: number;
-  onChangePosition: (position: string) => void;
-  onValidatePosition: (position: string) => boolean;
-  setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
-  enteredCounter: number;
-  currentPage: number;
+interface IIndicators {
+  textToEnterProps: ITextToEnter;
+  loadFileProps: ILoadFile;
   children: ReactNode;
 }
 
 const Indicators = ({
   children,
-  isHintSectionVisible,
-  typedCounter,
-  pagesLength,
-  currentLetter,
-  pressedLetter,
-  position,
-  length,
-  currentPage,
-  textOptions,
-  shouldStart,
-  setShouldStart,
-  time,
-  setTime,
-  typoCounter,
-  enteredCounter,
-  speedCounter,
-  onChangePosition,
-  isPositionEditable,
-  onValidatePosition,
-  setIsPositionEditable,
+  loadFileProps,
+  textToEnterProps,
 }: IIndicators) => {
+  const {
+    isHintSectionVisible,
+    typedCounter,
+    pagesLength,
+    currentLetter,
+    pressedLetter,
+    position,
+    length,
+    currentPage,
+    textOptions,
+    shouldStart,
+    setShouldStart,
+    time,
+    setTime,
+    typoCounter,
+    enteredCounter,
+    speedCounter,
+    onChangePosition,
+    isPositionEditable,
+    onValidatePosition,
+    setIsPositionEditable,
+  } = useIndicatorsProps({
+    loadFileProps,
+    textToEnterProps,
+  });
   const onPositionEdit = () => {
     !isPositionEditable && setIsPositionEditable(true);
   };

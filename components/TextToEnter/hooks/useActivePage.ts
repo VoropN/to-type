@@ -25,7 +25,6 @@ interface IUseActivePage {
   text: string;
   setText: Dispatch<SetStateAction<string>>;
   fullText: string;
-  headerRef: RefObject<HTMLElement>;
   selectedRef: RefObject<HTMLElement>;
   isPositionEditable: boolean;
   currentPage: number;
@@ -36,7 +35,6 @@ interface IUseActivePage {
 export const useActivePage = ({
   setText,
   fullText,
-  headerRef,
   selectedRef,
   currentPage,
   pressedLetter,
@@ -72,7 +70,7 @@ export const useActivePage = ({
         scrollToPosition({ forceScroll: forceUpdate });
       }
     },
-    [activePage, headerRef, selectedRef, fullText, isPositionEditable]
+    [activePage, selectedRef, fullText, isPositionEditable]
   );
 
   useEffect(() => {
