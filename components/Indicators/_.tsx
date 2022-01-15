@@ -61,7 +61,6 @@ const Indicators = ({
       <div className={styles.section1}>
         {children}
         <Timer
-          className={styles.indicator}
           name={textOptions.name}
           shouldStart={shouldStart}
           shouldUpdate={enteredCounter}

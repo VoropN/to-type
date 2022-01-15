@@ -2,17 +2,16 @@ import {
   Dispatch,
   memo,
   SetStateAction,
+  useCallback,
   useEffect,
-  useMemo,
   useRef,
-  useState,
 } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 interface ITimer {
   name: string;
-  className: string;
+  className?: string;
   shouldUpdate: any;
   shouldStart: boolean;
   setTime: Dispatch<SetStateAction<number>>;
@@ -45,6 +44,11 @@ const Timer = ({
   className,
 }: ITimer) => {
   const clearIntervalTimer = useRef<any>(null);
+  const stopTimer = useCallback(() => {
+    clearIntervalTimer.current?.();
+    clearIntervalTimer.current = null;
+    setShouldStart(false);
+  }, [setShouldStart, clearIntervalTimer]);
 
   useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
@@ -56,9 +60,7 @@ const Timer = ({
       switch (key) {
         case 'Esc': // IE/Edge specific value
         case 'Escape':
-          clearIntervalTimer.current?.();
-          clearIntervalTimer.current = null;
-          setShouldStart(false);
+          stopTimer();
           break;
         default:
           return; // Quit when this doesn't handle the key event.
@@ -67,7 +69,7 @@ const Timer = ({
     };
     window.addEventListener('keydown', inputFunc, true);
     return () => window.removeEventListener('keydown', inputFunc, true);
-  }, [setShouldStart, clearIntervalTimer]);
+  }, [stopTimer]);
 
   useEffect(() => {
     if (shouldStart && !clearIntervalTimer.current) {
@@ -88,10 +90,13 @@ const Timer = ({
 
   return (
     <button
-      className={classNames(styles.timerButton, {
+      className={classNames(className, styles.timerButton, {
         [styles.timerButtonStop]: shouldStart,
       })}
-      onClick={() => setShouldStart(!shouldStart)}
+      onClick={(event: any) => {
+        event.target?.blur();
+        shouldStart ? stopTimer() : setShouldStart(true);
+      }}
     >
       {shouldStart ? 'Stop' : 'Start'}
     </button>
