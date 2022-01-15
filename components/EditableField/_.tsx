@@ -98,16 +98,16 @@ const EditableField = ({
       {isEditable ? (
         <div className={styles.buttons}>
           <IconButton size="small" onClick={onApply}>
-            <CheckIcon tabIndex={-1} fontSize="small" color="success" />
+            <CheckIcon tabIndex={-1} fontSize="inherit" color="success" />
           </IconButton>
           <IconButton size="small" onClick={onCancel}>
-            <CloseIcon fontSize="small" color="warning" />
+            <CloseIcon fontSize="inherit" color="warning" />
           </IconButton>
         </div>
       ) : (
         <div className={styles.buttons}>
           <IconButton size="small" onClick={setEdit}>
-            <EditIcon fontSize="small" color="disabled" />
+            <EditIcon fontSize="inherit" color="disabled" />
           </IconButton>
         </div>
       )}
