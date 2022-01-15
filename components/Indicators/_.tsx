@@ -4,6 +4,7 @@ import { Timer } from '../Timer';
 import { ITextOptions } from '../LoadFile';
 import { EditableField } from '../EditableField';
 import cn from 'classnames';
+import { formatTime } from '../Timer/utils/formatTime';
 
 export interface IIndicators {
   position: number;
@@ -81,7 +82,7 @@ const Indicators = ({
         <h4 className={cn(styles.indicator, styles.speed)}>
           Speed: {speedCounter}
         </h4>
-        <h4 className={styles.indicator}>Time: {(time / 1000).toFixed(0)}</h4>
+        <h4 className={styles.indicator}>Time: {formatTime({ time })}</h4>
         <h4 className={styles.indicator}>
           Page: {currentPage + 1}/{pagesLength}
         </h4>
@@ -102,7 +103,7 @@ const Indicators = ({
           }%`}
         </h4>
         <h4 className={styles.indicator}>
-          Typed: {typedCounter}/{length}{' '}
+          Typed: {typedCounter}/{length}
         </h4>
       </div>
     </div>
