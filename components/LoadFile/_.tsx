@@ -1,6 +1,7 @@
 import { ChangeEvent, Dispatch, memo, SetStateAction, RefObject } from 'react';
 import styles from './styles.module.scss';
 import { ITextOptions } from './useLoadFileProps';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 export interface ILoadFile {
   text: string;
@@ -14,10 +15,11 @@ export interface ILoadFile {
   textOptions: ITextOptions;
 }
 
-const LoadFile = ({ fileButtonRef, onChange }: ILoadFile) => {
+const LoadFile = ({ fileButtonRef, onChange, textOptions }: ILoadFile) => {
   return (
-    <div className={styles.container} tabIndex={-1}>
+    <label className={styles.container} tabIndex={-1}>
       <input
+        className={styles.fileInput}
         tabIndex={-1}
         type="file"
         placeholder="choose text"
@@ -25,7 +27,12 @@ const LoadFile = ({ fileButtonRef, onChange }: ILoadFile) => {
         onChange={onChange}
         ref={fileButtonRef}
       />
-    </div>
+      <h4 className={styles.name}>{textOptions.name}</h4>
+      <div className={styles.hint}>
+        Upload text to type (.txt|.html)
+        <UploadFileIcon color="inherit" />
+      </div>
+    </label>
   );
 };
 

@@ -37,8 +37,9 @@ const Home: FC<any> = ({ data }) => {
   return (
     <>
       <header className={styles.header} ref={headerRef}>
-        <LoadFile {...loadFileProps} />
-        <Indicators {...indicatorsProps} />
+        <Indicators {...indicatorsProps}>
+          <LoadFile {...loadFileProps} />
+        </Indicators>
       </header>
       <div className={styles.root}>
         <TextToEnter {...textToEnterProps} />

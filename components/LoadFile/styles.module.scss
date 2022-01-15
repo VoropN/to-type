@@ -1,0 +1,23 @@
+.container {
+  font-size: 14px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.hint {
+  font-size: 9px;
+  color: #777;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 175px;
+  margin: 0;
+}

@@ -9,10 +9,11 @@ interface IUseIndicatorsProps {
 export const useIndicatorsProps = ({
   textToEnterProps,
   loadFileProps,
-}: IUseIndicatorsProps): IIndicators => {
+}: IUseIndicatorsProps): Omit<IIndicators, 'children'> => {
   return {
     length: loadFileProps.text.length,
     pagesLength: textToEnterProps.pagesLength,
+    isHintSectionVisible: textToEnterProps.isPressedLetterVisible,
     enteredCounter:
       textToEnterProps.typoCounter + textToEnterProps.typedCounter,
     typoCounter: textToEnterProps.typoCounter,

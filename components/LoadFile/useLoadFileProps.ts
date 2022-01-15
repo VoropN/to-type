@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { ILoadFile } from './';
 
 export interface ITextOptions {
@@ -35,7 +35,7 @@ export const useLoadFileProps = ({ data }: IUseLoadFileProps): ILoadFile => {
       const result =
         htmlDoc.body.textContent
           ?.replace(
-            /[^A-Za-z0-9-.,!?#$%&@№*(){}_=+<>`"'|;:~/\\\[\]\n\r—\s^]/g,
+            /[^A-Za-z0-9-.,!?#$%&@№*(){}_=+<>`"'|;:~/\\[\]\n\r—\s^]/g,
             ''
           )
           .replace(/\s{3,}|\r/g, '\n')

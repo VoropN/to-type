@@ -87,17 +87,14 @@ const Timer = ({
   }, [shouldStart, shouldUpdate]);
 
   return (
-    <div>
-      <h4 className={className}>Time: {(time / 1000).toFixed(0)}</h4>
-      <button
-        className={classNames(styles.timerButton, {
-          [styles.timerButtonStop]: shouldStart,
-        })}
-        onClick={() => setShouldStart(!shouldStart)}
-      >
-        {shouldStart ? 'Stop' : 'Start'}
-      </button>
-    </div>
+    <button
+      className={classNames(styles.timerButton, {
+        [styles.timerButtonStop]: shouldStart,
+      })}
+      onClick={() => setShouldStart(!shouldStart)}
+    >
+      {shouldStart ? 'Stop' : 'Start'}
+    </button>
   );
 };
 

@@ -93,6 +93,7 @@ const EditableField = ({
 
   return (
     <div className={styles.container} {...containerActions}>
+      &nbsp;
       <div {...actions} ref={ref} />
       {isEditable ? (
         <div className={styles.buttons}>

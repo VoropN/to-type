@@ -1,13 +1,14 @@
 .indicators {
   display: grid;
-  grid-template-columns: 85px 3fr 4fr 3fr 90px;
+  grid-template-columns: 35% 30% 35%;
   grid-gap: 10px;
   width: 750px;
-  margin: 10px 0 5px;
+  margin: 0;
   color: red;
   top: 0;
   z-index: 100;
   text-align: justify;
+  align-items: center;
 }
 
 .typoPercentage {
@@ -16,7 +17,41 @@
 
 .indicator {
   margin: 5px 0;
-  height: 20px;
   display: flex;
   align-items: center;
+}
+
+.speed {
+  text-shadow: 0.1px 0.4px 0.4px;
+}
+
+.section1 {
+  justify-content: center;
+  display: grid;
+  grid-gap: 5px;
+}
+
+.section2 {
+  visibility: hidden;
+  font-size: 20px;
+  background: #adff2e;
+  padding: 5px 35px;
+  text-shadow: 0.1px 0.4px 0.4px black;
+  margin-right: 42px;
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px grey, inset 1px 2px 3px #ddffc2;
+
+  > * {
+    height: 21px;
+  }
+}
+
+.section3 {
+  font-size: 12px;
+  grid-template-columns: 2fr 3fr;
+  display: grid;
+}
+
+.sectionVisible {
+  visibility: visible;
 }
