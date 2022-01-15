@@ -3,7 +3,7 @@ import styles from './Home.module.scss';
 import { useLoadFileProps } from 'components/LoadFile';
 import { Pagination } from '../components/Pagination';
 import { TextToEnter, useTextToEnterProps } from '../components/TextToEnter';
-import { Header } from '../components/header';
+import { Header } from '../components/Header';
 
 export async function getStaticProps(context: any) {
   // @ts-ignore

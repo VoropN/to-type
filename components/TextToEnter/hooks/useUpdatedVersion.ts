@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { enterSymbol, getSymbol } from '../helpers';
-import { getWord } from '../../../helpers';
+import { getWord } from '../../../utils';
 import { getCurrentPosition } from '../helpers/getCurrentPage';
 
 interface IUseUpdatedVersion {

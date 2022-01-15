@@ -3,7 +3,7 @@ import { Indicators } from '../Indicators';
 import { ILoadFile, LoadFile } from '../LoadFile';
 import { ITextToEnter } from 'components/TextToEnter';
 import { Timer } from 'components/Timer';
-import { EnteredLetterHint } from 'components/header/EnteredLetterHint';
+import { EnteredLetterHint } from 'components/Header/EnteredLetterHint';
 import styles from './styles.module.scss';
 
 interface IHeader {

@@ -2,7 +2,7 @@ import { Dispatch, memo, MutableRefObject, SetStateAction } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { spaceSymbol, visibleSymbols } from './helpers';
-import { IWordData } from '../../helpers';
+import { IWordData } from '../../utils';
 import { IPage } from './hooks/useActivePage';
 
 export interface ITextToEnter {

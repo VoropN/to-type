@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { scrollToElement } from 'helpers';
+import { scrollToElement } from 'utils';
 import variables from 'styles/variables.module.scss';
 
 interface IUseScrollToPosition {

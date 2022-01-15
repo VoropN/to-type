@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import { setCaret } from './helpers';
+import { setCaret } from './utils';
 
 export interface IEditableField {
   onEdit: (isEditable: boolean) => void;
