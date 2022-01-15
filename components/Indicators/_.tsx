@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import styles from './styles.module.scss';
-import { ILoadFile } from '../LoadFile';
 import { EditableField } from '../EditableField';
 import cn from 'classnames';
 import { formatTime } from '../Timer/utils/formatTime';
@@ -8,14 +7,10 @@ import { ITextToEnter } from 'components/TextToEnter';
 
 interface IIndicators {
   textToEnterProps: ITextToEnter;
-  loadFileProps: ILoadFile;
+  textLength: number;
 }
 
-const Indicators = ({ loadFileProps, textToEnterProps }: IIndicators) => {
-  const {
-    text: { length },
-  } = loadFileProps;
-
+const Indicators = ({ textLength, textToEnterProps }: IIndicators) => {
   const {
     time,
     position,
@@ -60,7 +55,7 @@ const Indicators = ({ loadFileProps, textToEnterProps }: IIndicators) => {
         }%`}
       </h4>
       <h4 className={styles.indicator}>
-        Typed: {typedCounter}/{length}
+        Typed: {typedCounter}/{textLength}
       </h4>
     </div>
   );

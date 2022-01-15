@@ -28,3 +28,11 @@
 .section {
   display: grid;
 }
+
+.textName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: $load-file-width;
+  margin: 0;
+}

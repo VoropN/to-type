@@ -1,30 +1,33 @@
-import { FC } from 'react';
+import { FC, useCallback, useState } from 'react';
 import styles from './Home.module.scss';
-import { useLoadFileProps } from 'components/LoadFile';
 import { Pagination } from '../components/Pagination';
 import { TextToEnter, useTextToEnterProps } from '../components/TextToEnter';
 import { Header } from '../components/Header';
-
+import { IText } from 'types/ILoadText';
 export async function getStaticProps(context: any) {
   // @ts-ignore
   const text = (await import('/data/notebooks.txt')).default;
   return {
-    props: { data: { text, textOptions: { name: 'medium-patterns' } } },
+    props: { data: { text, options: { name: 'medium-patterns' } } },
   };
 }
 
-const Home: FC<any> = ({ data }) => {
-  const loadFileProps = useLoadFileProps({ data });
-  const textToEnterProps = useTextToEnterProps({
-    fullText: loadFileProps.text,
-    textOptions: loadFileProps.textOptions,
-    isLoading: loadFileProps.isLoading,
-  });
+const Home: FC<any> = ({ data }: { data: IText }) => {
+  const [textData, setTextData] = useState(data);
+
+  const loadText = useCallback(
+    (textData: IText) => {
+      setTextData(textData);
+    },
+    [setTextData]
+  );
+  const textToEnterProps = useTextToEnterProps(textData);
 
   return (
     <>
       <Header
-        loadFileProps={loadFileProps}
+        loadText={loadText}
+        textData={textData}
         textToEnterProps={textToEnterProps}
       />
       <div className={styles.root}>

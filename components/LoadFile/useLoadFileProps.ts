@@ -1,51 +1,44 @@
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
-import { ILoadFile } from './';
-
-export interface ITextOptions {
-  name: string;
-  size?: number;
-  lastModified?: number;
-  lastModifiedDate?: Date;
-  type?: 'text/html' | 'text/plain' | string;
-}
+import { ILoadTextFunc, ITextOptions } from 'types/ILoadText';
 
 export interface ILoadedFileData {
-  content: string | ArrayBuffer;
-  textOptions: ITextOptions;
+  content: string;
+  options: ITextOptions;
 }
 
 export interface IUseLoadFileProps {
-  data: {
-    text: string;
-    textOptions: ITextOptions;
-  };
+  loadText: ILoadTextFunc;
 }
 
-export const useLoadFileProps = ({ data }: IUseLoadFileProps): ILoadFile => {
-  const [text, setText] = useState(data.text || '');
-  const [textOptions, setTextOptions] = useState(data.textOptions);
+enum TextType {
+  CSV = 'text/csv',
+  HTML = 'text/html',
+  TXT = 'text/plain',
+}
+
+export const useLoadFileProps = ({ loadText }: IUseLoadFileProps) => {
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const fileButtonRef = useRef<HTMLInputElement>(null);
 
   const updateText = useCallback(
-    ({ content, textOptions }: ILoadedFileData) => {
-      const parser = new DOMParser();
-      const htmlDoc = parser.parseFromString(content as string, 'text/html');
-      const result =
-        htmlDoc.body.textContent
-          ?.replace(
-            /[^A-Za-z0-9-.,!?#$%&@№*(){}_=+<>`"'|;:~/\\[\]\n\r—\s^]/g,
-            ''
-          )
-          .replace(/\s{3,}|\r/g, '\n')
-          .replace(/\n+\s*/g, '�')
-          .replace(/\s+/, ' ')
-          .replace(/�/g, '\n') || '';
-      setText(result);
-      setTextOptions(textOptions);
+    ({ content, options }: ILoadedFileData) => {
+      if (options.type === TextType.HTML) {
+        const parser = new DOMParser();
+        const htmlDoc = parser.parseFromString(content as string, 'text/html');
+        content = htmlDoc.body.textContent || '';
+      }
+
+      const text = content
+        ?.replace(/[^A-Za-z0-9-.,!?#$%&@№*(){}_=+<>`"'|;:~/\\[\]\n\r—\s^]/g, '')
+        .replace(/\s{3,}|\r/g, '\n')
+        .replace(/\n+\s*/g, '�')
+        .replace(/\s+/, ' ')
+        .replace(/�/g, '\n');
+
+      loadText({ text, options });
     },
-    [setTextOptions, setText]
+    [loadText]
   );
 
   const onChange = useCallback(
@@ -56,8 +49,8 @@ export const useLoadFileProps = ({ data }: IUseLoadFileProps): ILoadFile => {
         setLoading(true);
         const reader = new FileReader();
         reader.onload = (ev: ProgressEvent<FileReader>) => {
-          const content = ev.target?.result;
-          content && updateText({ content, textOptions: file });
+          const content = ev.target?.result as string;
+          content && updateText({ content, options: file });
           setLoading(false);
           fileButtonRef.current?.blur();
         };
@@ -70,12 +63,9 @@ export const useLoadFileProps = ({ data }: IUseLoadFileProps): ILoadFile => {
 
   return {
     fileButtonRef,
-    text,
-    textOptions,
     errors,
     onChange,
     isLoading,
-    setText,
     setErrors,
     setLoading,
   };

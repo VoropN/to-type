@@ -1,25 +1,28 @@
 import { memo } from 'react';
 import { Indicators } from '../Indicators';
-import { ILoadFile, LoadFile } from '../LoadFile';
+import { LoadFile } from '../LoadFile';
 import { ITextToEnter } from 'components/TextToEnter';
 import { Timer } from 'components/Timer';
 import { EnteredLetterHint } from 'components/Header/EnteredLetterHint';
 import styles from './styles.module.scss';
+import { ILoadTextFunc, IText } from 'types/ILoadText';
 
 interface IHeader {
   textToEnterProps: ITextToEnter;
-  loadFileProps: ILoadFile;
+  textData: IText;
+  loadText: ILoadTextFunc;
 }
 
-const Header = ({ loadFileProps, textToEnterProps }: IHeader) => {
+const Header = ({ loadText, textToEnterProps, textData }: IHeader) => {
   return (
     <header className={styles.container}>
       <div className={styles.header}>
         <div className={styles.section}>
-          <LoadFile {...loadFileProps} />
+          <h4 className={styles.textName}>{textData.options.name}</h4>
+
+          <LoadFile loadText={loadText} />
           <Timer
             time={textToEnterProps.time}
-            name={loadFileProps.textOptions.name}
             setTime={textToEnterProps.setTime}
             shouldStart={textToEnterProps.shouldStart}
             shouldUpdate={textToEnterProps.updatedVersion}
@@ -32,7 +35,7 @@ const Header = ({ loadFileProps, textToEnterProps }: IHeader) => {
           isHintSectionVisible={!textToEnterProps.shouldStart}
         />
         <Indicators
-          loadFileProps={loadFileProps}
+          textLength={textData.text.length}
           textToEnterProps={textToEnterProps}
         />
       </div>

@@ -10,8 +10,6 @@ import classNames from 'classnames';
 import styles from './styles.module.scss';
 
 interface ITimer {
-  name: string;
-  className?: string;
   shouldUpdate: any;
   shouldStart: boolean;
   setTime: Dispatch<SetStateAction<number>>;
@@ -41,7 +39,6 @@ const Timer = ({
   time,
   setTime,
   shouldStart,
-  className,
 }: ITimer) => {
   const clearIntervalTimer = useRef<any>(null);
   const stopTimer = useCallback(() => {
@@ -90,7 +87,7 @@ const Timer = ({
 
   return (
     <button
-      className={classNames(className, styles.timerButton, {
+      className={classNames(styles.timerButton, {
         [styles.timerButtonStop]: shouldStart,
       })}
       onClick={(event: any) => {

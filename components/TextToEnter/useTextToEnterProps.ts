@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { ITextOptions } from '../LoadFile';
 import { ITextToEnter } from './_';
 import { usePosition } from './hooks/usePosition';
 import { useScrollToPosition } from './hooks/useScrollToPosition';
@@ -7,17 +6,13 @@ import { useActivePage } from './hooks/useActivePage';
 import { useSaveProgress } from './hooks/useSaveProgress';
 import { usePressedLetter } from './hooks/usePressedLetter';
 import { useUpdatedVersion } from './hooks/useUpdatedVersion';
+import { IText } from 'types/ILoadText';
 
-export interface IUseTextToEnterProps {
-  fullText: string;
-  textOptions: ITextOptions;
-  isLoading: boolean;
-}
+export interface IUseTextToEnterProps extends IText {}
 
 export const useTextToEnterProps = ({
-  fullText,
-  textOptions,
-  isLoading,
+  text: fullText,
+  options: textOptions,
 }: IUseTextToEnterProps): ITextToEnter => {
   const [text, setText] = useState('');
   const [time, setTime] = useState(0);
@@ -104,7 +99,6 @@ export const useTextToEnterProps = ({
     setTime,
     setText,
     position,
-    isLoading,
     activePage,
     currentPage,
     pagesLength,

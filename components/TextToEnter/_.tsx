@@ -2,7 +2,7 @@ import { Dispatch, memo, MutableRefObject, SetStateAction } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { spaceSymbol, visibleSymbols } from './helpers';
-import { IWordData } from '../../utils';
+import { IWordData } from 'utils';
 import { IPage } from './hooks/useActivePage';
 
 export interface ITextToEnter {
@@ -15,7 +15,6 @@ export interface ITextToEnter {
   pressedLetter: string;
   currentLetter: string;
   speedCounter: number;
-  isLoading: boolean;
   typoCounter: number;
   typedCounter: number;
   time: number;
@@ -38,7 +37,6 @@ export interface ITextToEnter {
 const TextToEnter = ({
   text,
   word,
-  isLoading,
   activePage,
   currentPage,
   selectedRef,
@@ -49,7 +47,6 @@ const TextToEnter = ({
 }: ITextToEnter) => {
   return (
     <div className={styles.text} tabIndex={1}>
-      {isLoading && '...loading'}
       {currentPage === activePage && word ? (
         <>
           <span>{text.slice(0, word.position.start)}</span>
