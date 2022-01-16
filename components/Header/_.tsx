@@ -58,7 +58,7 @@ const Header = ({
         })}
       >
         <Button
-          color="success"
+          color="primary"
           size="small"
           variant="contained"
           onClick={temporaryIndicators.onStartSession}

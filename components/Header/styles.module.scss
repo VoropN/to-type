@@ -41,7 +41,6 @@
   position: absolute;
   right: 25px;
   z-index: 1000;
-  background: aliceblue;
   padding: 10px 10px 0;
   top: 3px;
   display: grid;
@@ -49,7 +48,9 @@
   margin: auto;
   border-radius: 14px;
   border: 1px solid mintcream;
-  box-shadow: 1px 2px 3px rgb(0 0 0 / 26%), inset 1px 2px 3px #f6f6f6;
+  background: rgba(246, 245, 245, 0.34);
+  box-shadow: 1px 2px 3px rgb(0 0 0 / 26%),
+    inset 1px 2px 3px rgba(255, 255, 255, 0.47);
   text-shadow: 0.1px 0.4px 0.4px;
 }
 
