@@ -2,10 +2,10 @@ import { Dispatch, SetStateAction } from 'react';
 import { IScrollToPositionFunc } from 'types/IScrollToPosition';
 
 export interface ITimerProps {
-  updatedVersion: number;
-  shouldStart: boolean;
-  setTime: Dispatch<SetStateAction<number>>;
   time: number;
+  setTime: Dispatch<SetStateAction<number>>;
+  shouldStart: boolean;
+  updatedVersion: number;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
 }
 

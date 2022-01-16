@@ -4,6 +4,7 @@ import { Pagination } from '../components/Pagination';
 import { TextToEnter, useHomePage } from '../components/TextToEnter';
 import { Header } from '../components/Header';
 import { IText } from 'types/ILoadText';
+import { Page } from 'components/Page';
 
 export async function getStaticProps(context: any) {
   // @ts-ignore
@@ -31,7 +32,7 @@ const Home: FC<any> = ({ data }: { data: IText }) => {
   } = useHomePage(textData);
 
   return (
-    <>
+    <Page>
       <Header
         loadText={loadText}
         textData={textData}
@@ -43,7 +44,7 @@ const Home: FC<any> = ({ data }: { data: IText }) => {
         <TextToEnter {...textToEnterProps} />
         <Pagination {...paginationProps} />
       </div>
-    </>
+    </Page>
   );
 };
 

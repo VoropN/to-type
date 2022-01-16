@@ -36,3 +36,38 @@
   width: $load-file-width;
   margin: 0;
 }
+
+.session {
+  position: absolute;
+  right: 25px;
+  z-index: 1000;
+  background: aliceblue;
+  padding: 10px 10px 0;
+  top: 3px;
+  display: grid;
+  justify-content: center;
+  margin: auto;
+  border-radius: 14px;
+  border: 1px solid mintcream;
+  box-shadow: 1px 2px 3px rgb(0 0 0 / 26%), inset 1px 2px 3px #f6f6f6;
+  text-shadow: 0.1px 0.4px 0.4px;
+}
+
+.onlySession {
+  padding: 10px;
+}
+
+.sessionButton {
+  &,
+  &:hover {
+    background: #adff2e;
+    color: black;
+    border: 0.5px solid rgba(173, 255, 47, 0.5);
+    box-shadow: 1px 2px 3px rgb(0 0 0 / 26%), inset 1px 2px 3px #f6f6f6;
+  }
+
+  &:hover {
+    background: rgba(#adff2e, 0.75);
+    color: rgba(black, 0.9);
+  }
+}

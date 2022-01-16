@@ -11,9 +11,9 @@ interface IIndicators extends IIndicatorProps {
 }
 
 const Indicators = ({
-  textLength,
   time,
   position,
+  textLength,
   currentPage,
   pagesLength,
   typoCounter,
