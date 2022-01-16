@@ -1,29 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
 import { scrollToElement } from 'utils';
 import variables from 'styles/variables.module.scss';
+import { IScrollOptions, IScrollToPositionFunc } from 'types/IScrollToPosition';
 
 interface IUseScrollToPosition {
-  pressedLetter: string;
-  updatedVersion: number;
   text: string;
+  selectedRef: RefObject<HTMLElement>;
+  shouldStart: boolean;
+  pressedLetter: string;
+  scrollOptions: IScrollOptions;
+  setShouldStart: Dispatch<SetStateAction<boolean>>;
+  updatedVersion: number;
+  scrollToPosition: IScrollToPositionFunc;
 }
 export type IScrollToPosition = (props: { forceScroll?: boolean }) => void;
 
 export const useScrollToPosition = ({
-  pressedLetter,
-  updatedVersion,
   text,
+  selectedRef,
+  shouldStart,
+  pressedLetter,
+  scrollOptions,
+  setShouldStart,
+  updatedVersion,
+  scrollToPosition,
 }: IUseScrollToPosition) => {
-  const [shouldStart, setShouldStart] = useState(false);
-  const selectedRef = useRef<HTMLSpanElement>(null);
-  const [scrollOptions, setScrollOptions] = useState({
-    counter: 0,
-    forceScroll: false,
-  });
-  const scrollToPosition = ({ forceScroll = false }) => {
-    setScrollOptions(({ counter }) => ({ counter: counter + 1, forceScroll }));
-  };
-
   useEffect(() => {
     scrollToElement({
       offsetTop: parseInt(variables.headerHeight),
@@ -45,11 +46,4 @@ export const useScrollToPosition = ({
       setShouldStart(true);
     }
   }, [updatedVersion]);
-
-  return {
-    shouldStart,
-    setShouldStart,
-    selectedRef,
-    scrollToPosition,
-  };
 };

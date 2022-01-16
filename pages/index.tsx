@@ -1,9 +1,10 @@
 import { FC, useCallback, useState } from 'react';
 import styles from './Home.module.scss';
 import { Pagination } from '../components/Pagination';
-import { TextToEnter, useTextToEnterProps } from '../components/TextToEnter';
+import { TextToEnter, useHomePage } from '../components/TextToEnter';
 import { Header } from '../components/Header';
 import { IText } from 'types/ILoadText';
+
 export async function getStaticProps(context: any) {
   // @ts-ignore
   const text = (await import('/data/notebooks.txt')).default;
@@ -21,21 +22,26 @@ const Home: FC<any> = ({ data }: { data: IText }) => {
     },
     [setTextData]
   );
-  const textToEnterProps = useTextToEnterProps(textData);
+  const {
+    timerProps,
+    paginationProps,
+    indicatorsProps,
+    textToEnterProps,
+    enteredLetterHintProps,
+  } = useHomePage(textData);
 
   return (
     <>
       <Header
         loadText={loadText}
         textData={textData}
-        textToEnterProps={textToEnterProps}
+        timerProps={timerProps}
+        indicatorsProps={indicatorsProps}
+        enteredLetterHintProps={enteredLetterHintProps}
       />
       <div className={styles.root}>
         <TextToEnter {...textToEnterProps} />
-        <Pagination
-          activePage={textToEnterProps.activePage}
-          pages={textToEnterProps.pages}
-        />
+        <Pagination {...paginationProps} />
       </div>
     </>
   );

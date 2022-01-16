@@ -1,37 +1,25 @@
-import { Dispatch, memo, MutableRefObject, SetStateAction } from 'react';
+import { Dispatch, memo, SetStateAction, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import { spaceSymbol, visibleSymbols } from './helpers';
 import { IWordData } from 'utils';
-import { IPage } from './hooks/useActivePage';
+import { useScrollToPosition } from 'components/TextToEnter/hooks/useScrollToPosition';
+import { IScrollOptions, IScrollToPositionFunc } from 'types/IScrollToPosition';
 
 export interface ITextToEnter {
-  pages: IPage[];
-  currentPage: number;
-  currentPosition: number;
+  text: string;
+  word: IWordData;
   activePage: number;
-  pagesLength: number;
-  updatedVersion: number;
+  currentPage: number;
   pressedLetter: string;
   currentLetter: string;
-  speedCounter: number;
-  typoCounter: number;
-  typedCounter: number;
-  time: number;
-  shouldStart: boolean;
+  currentPosition: number;
   isPressedLetterVisible: boolean;
-  text: string;
-  position: number;
-  enteredCounter: number;
+  shouldStart: boolean;
+  updatedVersion: number;
   setShouldStart: Dispatch<SetStateAction<boolean>>;
-  setTime: Dispatch<SetStateAction<number>>;
-  onChangePosition: (position: string) => void;
-  onValidatePosition: (position: string) => boolean;
-  setIsPositionEditable: Dispatch<SetStateAction<boolean>>;
-  selectedRef: MutableRefObject<any>;
-  word: IWordData;
-  setText: Dispatch<SetStateAction<string>>;
-  isPositionEditable: boolean;
+  scrollOptions: IScrollOptions;
+  scrollToPosition: IScrollToPositionFunc;
 }
 
 const TextToEnter = ({
@@ -39,12 +27,29 @@ const TextToEnter = ({
   word,
   activePage,
   currentPage,
-  selectedRef,
-  pressedLetter,
+  shouldStart,
   currentLetter,
+  pressedLetter,
+  scrollOptions,
+  setShouldStart,
+  updatedVersion,
   currentPosition,
+  scrollToPosition,
   isPressedLetterVisible,
 }: ITextToEnter) => {
+  const selectedRef = useRef<HTMLSpanElement>(null);
+
+  useScrollToPosition({
+    text,
+    selectedRef,
+    shouldStart,
+    pressedLetter,
+    scrollOptions,
+    setShouldStart,
+    updatedVersion,
+    scrollToPosition,
+  });
+
   return (
     <div className={styles.text} tabIndex={1}>
       {currentPage === activePage && word ? (

@@ -8,7 +8,7 @@ export type IWordData = {
   text: { start: string; end: string };
 } | null;
 
-export const getWord = ({ position, text }: IGetWord) => {
+export const getWord = ({ position, text }: IGetWord): IWordData => {
   const textLength = text.length;
 
   const wordData = {

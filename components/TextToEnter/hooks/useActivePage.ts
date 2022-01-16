@@ -1,6 +1,5 @@
 import {
   Dispatch,
-  RefObject,
   SetStateAction,
   useCallback,
   useEffect,
@@ -25,7 +24,6 @@ interface IUseActivePage {
   text: string;
   setText: Dispatch<SetStateAction<string>>;
   fullText: string;
-  selectedRef: RefObject<HTMLElement>;
   isPositionEditable: boolean;
   currentPage: number;
   pressedLetter: string;
@@ -35,7 +33,6 @@ interface IUseActivePage {
 export const useActivePage = ({
   setText,
   fullText,
-  selectedRef,
   currentPage,
   pressedLetter,
   scrollToPosition,
@@ -70,13 +67,12 @@ export const useActivePage = ({
         scrollToPosition({ forceScroll: forceUpdate });
       }
     },
-    [activePage, selectedRef, fullText, isPositionEditable]
+    [activePage, fullText, isPositionEditable]
   );
 
   useEffect(() => {
     updateActivePage({ currentPage, forceUpdate: true });
-    selectedRef.current?.focus();
-  }, [currentPage, selectedRef]);
+  }, [currentPage]);
 
   useEffect(() => {
     if (currentPage !== activePage) {

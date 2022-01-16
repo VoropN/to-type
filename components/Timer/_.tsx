@@ -1,21 +1,7 @@
-import {
-  Dispatch,
-  memo,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
-
-interface ITimer {
-  shouldUpdate: any;
-  shouldStart: boolean;
-  setTime: Dispatch<SetStateAction<number>>;
-  time: number;
-  setShouldStart: Dispatch<SetStateAction<boolean>>;
-}
+import { ITimerProps } from 'types/IHomePage';
 
 const startTimer = ({
   time,
@@ -35,11 +21,11 @@ const startTimer = ({
 
 const Timer = ({
   setShouldStart,
-  shouldUpdate,
+  updatedVersion,
   time,
   setTime,
   shouldStart,
-}: ITimer) => {
+}: ITimerProps) => {
   const clearIntervalTimer = useRef<any>(null);
   const stopTimer = useCallback(() => {
     clearIntervalTimer.current?.();
@@ -83,7 +69,7 @@ const Timer = ({
     return () => {
       clearTimeout(currentTimer);
     };
-  }, [shouldStart, shouldUpdate]);
+  }, [shouldStart, updatedVersion]);
 
   return (
     <button

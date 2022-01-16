@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, memo, RefObject, SetStateAction } from 'react';
+import { memo } from 'react';
 import styles from './styles.module.scss';
 import { useLoadFileProps } from './useLoadFileProps';
 import UploadFileIcon from '@mui/icons-material/UploadFile';

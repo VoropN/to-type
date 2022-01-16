@@ -1,16 +1,18 @@
-import { useMemo, useState } from 'react';
-import { getCurrentPage } from '../helpers/getCurrentPage';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 import { IScrollToPosition } from './useScrollToPosition';
 
 interface IUsePosition {
-  fullText: string;
+  textLength: number;
   scrollToPosition: IScrollToPosition;
+  setPosition: Dispatch<SetStateAction<number>>;
 }
 
-export const usePosition = ({ fullText, scrollToPosition }: IUsePosition) => {
-  const [position, setPosition] = useState(0);
-  const maxPosition = useMemo(() => fullText.length - 1, [fullText]);
-  const currentPage = useMemo(() => getCurrentPage({ position }), [position]);
+export const usePosition = ({
+  textLength,
+  scrollToPosition,
+  setPosition,
+}: IUsePosition) => {
+  const maxPosition = useMemo(() => textLength - 1, [textLength]);
 
   const onChangePosition = (rowPosition: string) => {
     const nextPosition = parseInt(rowPosition);
@@ -21,9 +23,6 @@ export const usePosition = ({ fullText, scrollToPosition }: IUsePosition) => {
     !isNaN(parseInt(rowPosition));
 
   return {
-    position,
-    setPosition,
-    currentPage,
     onChangePosition,
     onValidatePosition,
   };

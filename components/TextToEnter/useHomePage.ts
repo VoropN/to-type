@@ -1,50 +1,44 @@
-import { useState } from 'react';
-import { ITextToEnter } from './_';
-import { usePosition } from './hooks/usePosition';
-import { useScrollToPosition } from './hooks/useScrollToPosition';
+import { useMemo, useState } from 'react';
 import { useActivePage } from './hooks/useActivePage';
 import { useSaveProgress } from './hooks/useSaveProgress';
 import { usePressedLetter } from './hooks/usePressedLetter';
 import { useUpdatedVersion } from './hooks/useUpdatedVersion';
 import { IText } from 'types/ILoadText';
+import { getCurrentPage } from 'components/TextToEnter/helpers/getCurrentPage';
 
 export interface IUseTextToEnterProps extends IText {}
 
-export const useTextToEnterProps = ({
+export const useHomePage = ({
   text: fullText,
   options: textOptions,
-}: IUseTextToEnterProps): ITextToEnter => {
+}: IUseTextToEnterProps) => {
   const [text, setText] = useState('');
   const [time, setTime] = useState(0);
+  const [pressedLetter, setPressedLetter] = useState('');
+  const [updatedVersion, setUpdatedVersion] = useState(0);
+  const [isPositionEditable, setIsPositionEditable] = useState(false);
+  const [shouldStart, setShouldStart] = useState(false);
+  const [position, setPosition] = useState(0);
+  const [scrollOptions, setScrollOptions] = useState({
+    counter: 0,
+    forceScroll: false,
+  });
+  const currentPage = useMemo(() => getCurrentPage({ position }), [position]);
 
-  const {
-    pressedLetter,
-    updatedVersion,
+  usePressedLetter({
     setPressedLetter,
+    setUpdatedVersion,
     isPositionEditable,
-    setIsPositionEditable,
-  } = usePressedLetter();
+  });
 
-  const { shouldStart, setShouldStart, selectedRef, scrollToPosition } =
-    useScrollToPosition({
-      text,
-      pressedLetter,
-      updatedVersion,
-    });
-
-  const {
-    position,
-    setPosition,
-    currentPage,
-    onChangePosition,
-    onValidatePosition,
-  } = usePosition({ fullText, scrollToPosition });
+  const scrollToPosition = ({ forceScroll = false }) => {
+    setScrollOptions(({ counter }) => ({ counter: counter + 1, forceScroll }));
+  };
 
   const { activePage, pages, pagesLength, updateActivePage } = useActivePage({
     text,
     setText,
     fullText,
-    selectedRef,
     currentPage,
     pressedLetter,
     scrollToPosition,
@@ -91,32 +85,61 @@ export const useTextToEnterProps = ({
     updateActivePage,
   });
 
-  return {
+  const textToEnterProps = {
     text,
     word,
-    time,
-    pages,
-    setTime,
-    setText,
-    position,
     activePage,
+    currentPage,
+    shouldStart,
+    currentLetter,
+    pressedLetter,
+    scrollOptions,
+    setShouldStart,
+    updatedVersion,
+    currentPosition,
+    scrollToPosition,
+    isPressedLetterVisible,
+  };
+
+  const timerProps = {
+    time,
+    setTime,
+    shouldStart,
+    updatedVersion,
+    setShouldStart,
+  };
+
+  const paginationProps = {
+    pages,
+    activePage,
+  };
+
+  const indicatorsProps = {
+    time,
+    position,
     currentPage,
     pagesLength,
     typoCounter,
-    shouldStart,
-    selectedRef,
-    speedCounter,
+    setPosition,
     typedCounter,
-    currentLetter,
-    pressedLetter,
-    updatedVersion,
+    speedCounter,
     enteredCounter: typoCounter + typedCounter,
-    setShouldStart,
-    currentPosition,
-    onChangePosition,
-    onValidatePosition,
+    scrollToPosition,
     isPositionEditable,
     setIsPositionEditable,
-    isPressedLetterVisible,
+  };
+
+  const enteredLetterHintProps = {
+    currentLetter,
+    pressedLetter,
+    isHintSectionVisible: !shouldStart,
+  };
+
+  return {
+    timerProps,
+    paginationProps,
+    indicatorsProps,
+    textToEnterProps,
+    enteredLetterHintProps,
   };
 };

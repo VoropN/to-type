@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { getSymbol } from '../helpers';
 
-export const usePressedLetter = () => {
-  const [pressedLetter, setPressedLetter] = useState('');
-  const [updatedVersion, setUpdatedVersion] = useState(0);
-  const [isPositionEditable, setIsPositionEditable] = useState(false);
+interface IUsePressedLetter {
+  setPressedLetter: Dispatch<SetStateAction<string>>;
+  setUpdatedVersion: Dispatch<SetStateAction<number>>;
+  isPositionEditable: boolean;
+}
 
+export const usePressedLetter = ({
+  setPressedLetter,
+  setUpdatedVersion,
+  isPositionEditable,
+}: IUsePressedLetter) => {
   useEffect(() => {
     const inputFunc = (event: KeyboardEvent) => {
       if (isPositionEditable) return;
@@ -34,13 +40,4 @@ export const usePressedLetter = () => {
     document.addEventListener('keypress', inputFunc, false);
     return () => document.removeEventListener('keypress', inputFunc, false);
   }, [setPressedLetter, setUpdatedVersion, isPositionEditable]);
-
-  return {
-    pressedLetter,
-    setPressedLetter,
-    updatedVersion,
-    setUpdatedVersion,
-    isPositionEditable,
-    setIsPositionEditable,
-  };
 };

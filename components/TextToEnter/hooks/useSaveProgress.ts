@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { ITextOptions } from '../../LoadFile';
 import { IUpdateActivePage } from './useActivePage';
 import { getCurrentPage } from '../helpers/getCurrentPage';
+import { ITextOptions } from 'types/ILoadText';
 
 interface IUseSaveProgress {
   textOptions: ITextOptions;
