@@ -1,26 +1,21 @@
 import { memo } from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
-
-interface IEnteredLetterHint {
-  isHintSectionVisible: boolean;
-  currentLetter: string;
-  pressedLetter: string;
-}
+import { IEnteredLetterHintProps } from 'types/IHomePage';
 
 const EnteredLetterHint = ({
-  isHintSectionVisible,
   currentLetter,
-  pressedLetter,
-}: IEnteredLetterHint) => {
+  isHintSectionVisible,
+}: IEnteredLetterHintProps) => {
   return (
     <div
       className={cn(styles.section, {
         [styles.sectionVisible]: isHintSectionVisible,
       })}
     >
-      <h4 className={styles.indicator}>Expected: {currentLetter}</h4>
-      <h4 className={styles.indicator}>Pressed: {pressedLetter}</h4>
+      <h4 className={styles.indicator}>
+        Expected:<span className={styles.content}> {currentLetter}</span>
+      </h4>
     </div>
   );
 };

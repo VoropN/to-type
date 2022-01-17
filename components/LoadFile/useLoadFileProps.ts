@@ -30,10 +30,11 @@ export const useLoadFileProps = ({ loadText }: IUseLoadFileProps) => {
       }
 
       const text = content
-        ?.replace(
-          /[^А-Яа-яA-Za-z0-9-.,!?#$%&@№*(){}_=+<>`"'|;:~/\\[\]\n\r—\s^]/g,
-          ''
-        )
+        // ?.replace(
+        //   /[^А-Яа-яA-Za-z0-9-.,!?#$%&@№*(){}_=+<>`"'|;:~/\\[\]\n\r—\s^]/g,
+        //   ''
+        // )
+        // .replace(/�/g, '')
         .replace(/\s{3,}|\r/g, '\n')
         .replace(/\n+\s*/g, '�')
         .replace(/\s+/, ' ')

@@ -131,7 +131,6 @@ export const useHomePage = ({
 
   const enteredLetterHintProps = {
     currentLetter,
-    pressedLetter,
     isHintSectionVisible: !shouldStart,
   };
 

@@ -1,7 +1,6 @@
-import { memo, useCallback, useEffect, useRef } from 'react';
-import classNames from 'classnames';
-import styles from './styles.module.scss';
+import { ChangeEvent, memo, useCallback, useEffect, useRef } from 'react';
 import { ITimerProps } from 'types/IHomePage';
+import { Button } from '@mui/material';
 
 const startTimer = ({
   time,
@@ -72,17 +71,17 @@ const Timer = ({
   }, [shouldStart, updatedVersion]);
 
   return (
-    <button
-      className={classNames(styles.timerButton, {
-        [styles.timerButtonStop]: shouldStart,
-      })}
-      onClick={(event: any) => {
+    <Button
+      variant="contained"
+      color={shouldStart ? 'warning' : 'primary'}
+      size="small"
+      onClick={(event: ChangeEvent<any>) => {
         event.target?.blur();
         shouldStart ? stopTimer() : setShouldStart(true);
       }}
     >
       {shouldStart ? 'Stop' : 'Start'}
-    </button>
+    </Button>
   );
 };
 

@@ -26,6 +26,5 @@ export interface IIndicatorProps {
 
 export interface IEnteredLetterHintProps {
   currentLetter: string;
-  pressedLetter: string;
   isHintSectionVisible: boolean;
 }
