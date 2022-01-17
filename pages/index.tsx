@@ -10,7 +10,7 @@ export async function getStaticProps(context: any) {
   // @ts-ignore
   const text = (await import('/data/notebooks.txt')).default;
   return {
-    props: { data: { text, options: { name: 'medium-patterns' } } },
+    props: { data: { text, options: { name: 'The HTML DOM API' } } },
   };
 }
 

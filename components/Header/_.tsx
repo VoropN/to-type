@@ -11,7 +11,7 @@ import {
   ITimerProps,
 } from 'types/IHomePage';
 import { useTemporaryIndicators } from 'components/Header/useTemporaryIndicators';
-import { Button, Switch } from '@mui/material';
+import { Button, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import classNames from 'classnames';
 
 interface IHeader {
@@ -58,15 +58,25 @@ const Header = ({
         })}
       >
         <Button
-          color="primary"
+          color={temporaryIndicators.isShowSwitcher ? 'warning' : 'primary'}
           size="small"
-          variant="contained"
+          variant={
+            temporaryIndicators.isShowSwitcher ? 'outlined' : 'contained'
+          }
           onClick={temporaryIndicators.onStartSession}
         >
           New session
         </Button>
         {temporaryIndicators.isShowSwitcher && (
-          <Switch color="warning" {...temporaryIndicators.switchProps} />
+          <FormGroup>
+            <FormControlLabel
+              className={styles.control}
+              control={
+                <Switch color="warning" {...temporaryIndicators.switchProps} />
+              }
+              label={temporaryIndicators.switchProps.checked ? 'Session' : ''}
+            />
+          </FormGroup>
         )}
       </div>
     </header>
