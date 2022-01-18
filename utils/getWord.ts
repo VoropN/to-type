@@ -25,7 +25,7 @@ export const getWord = ({ position, text }: IGetWord): IWordData => {
       wordData.text.start = text[wordData.position.start] + wordData.text.start;
     }
     while (
-      !/\s+|[-—]/.test(text[++wordData.position.end]) &&
+      !/\s+|[-—]/.test(text[wordData.position.end++]) &&
       wordData.position.end < textLength
     ) {
       wordData.text.end += text[wordData.position.end];
