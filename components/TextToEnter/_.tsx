@@ -52,6 +52,7 @@ const TextToEnter = ({
 
   return (
     <div className={styles.text} tabIndex={1}>
+      <div className={styles.unStandardSymbol}>↵</div>
       {currentPage === activePage && word ? (
         <>
           <span>{text.slice(0, word.position.start)}</span>
@@ -59,15 +60,7 @@ const TextToEnter = ({
             {word.text.start}
             <span
               ref={selectedRef}
-              className={classNames(
-                styles.selected,
-                {
-                  [styles.space]:
-                    currentLetter === spaceSymbol ||
-                    visibleSymbols.includes(currentLetter),
-                },
-                { [styles.hideCaret]: visibleSymbols.includes(currentLetter) }
-              )}
+              className={styles.selected}
               {...{
                 ...(isPressedLetterVisible && {
                   'data-pressed': pressedLetter,

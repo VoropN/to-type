@@ -26,10 +26,6 @@
   }
 }
 
-.space {
-  white-space: pre-line;
-}
-
 .selected {
   position: relative;
   color: red;
@@ -43,7 +39,7 @@
     min-width: 5px;
     left: 0;
     height: 100%;
-    color: black;
+    color: red;
     display: flex;
     max-height: 1em;
     top: -2px;
@@ -69,4 +65,8 @@
     right: 0;
     max-height: 1.5em;
   }
+}
+
+.unStandardSymbol {
+  visibility: hidden;
 }
