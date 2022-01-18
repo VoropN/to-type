@@ -1,7 +1,6 @@
 import { Dispatch, memo, SetStateAction, useRef } from 'react';
-import classNames from 'classnames';
 import styles from './styles.module.scss';
-import { spaceSymbol, visibleSymbols } from './helpers';
+import { visibleSymbols } from './helpers';
 import { IWordData } from 'utils';
 import { useScrollToPosition } from 'components/TextToEnter/hooks/useScrollToPosition';
 import { IScrollOptions, IScrollToPositionFunc } from 'types/IScrollToPosition';

@@ -57,7 +57,7 @@ const Timer = ({
     if (shouldStart && !clearIntervalTimer.current) {
       clearIntervalTimer.current = startTimer({ time, setTime });
     }
-  }, [shouldStart]);
+  }, [shouldStart, setTime]);
 
   useEffect(() => {
     const currentTimer = setTimeout(() => {
@@ -68,7 +68,7 @@ const Timer = ({
     return () => {
       clearTimeout(currentTimer);
     };
-  }, [shouldStart, updatedVersion]);
+  }, [shouldStart, updatedVersion, setShouldStart]);
 
   return (
     <Button
