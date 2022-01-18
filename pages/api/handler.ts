@@ -1,6 +1,15 @@
-import fs from "fs";
+import { NextApiRequest, NextApiResponse } from 'next';
+import fs from 'fs';
 
-export default async function handler (req, res) {
-  const example = await fs.readFile('/data/notebooks.txt');
-  return res.status(200).json({example});
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const data = await new Promise((res, rej) => {
+    fs.readFile('/data/notebooks.txt', 'utf-8', (err, source) => {
+      if (err) return rej(err);
+      res(source);
+    });
+  });
+  return res.status(200).json({ data });
 }
