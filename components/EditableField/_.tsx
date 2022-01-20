@@ -12,6 +12,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { setCaret } from './utils';
+import cn from 'classnames';
 
 export interface IEditableField {
   onEdit: (isEditable: boolean) => void;
@@ -94,7 +95,11 @@ const EditableField = ({
   return (
     <div className={styles.container} {...containerActions}>
       &nbsp;
-      <div {...actions} ref={ref} />
+      <div
+        {...actions}
+        ref={ref}
+        className={cn(styles.field, { [styles.isEditable]: isEditable })}
+      />
       {isEditable ? (
         <div className={styles.buttons}>
           <IconButton size="small" onClick={onApply}>
