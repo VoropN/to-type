@@ -20,6 +20,10 @@
   white-space: nowrap;
 }
 
+.space {
+  white-space: pre-wrap;
+}
+
 @media not all and (min-resolution: 0.001dpcm) {
   .word {
     text-shadow: 0 0 1px;

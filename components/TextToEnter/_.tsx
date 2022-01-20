@@ -4,6 +4,7 @@ import { visibleSymbols } from './helpers';
 import { IWordData } from 'utils';
 import { useScrollToPosition } from 'components/TextToEnter/hooks/useScrollToPosition';
 import { IScrollOptions, IScrollToPositionFunc } from 'types/IScrollToPosition';
+import cn from 'classnames';
 
 export interface ITextToEnter {
   text: string;
@@ -48,6 +49,7 @@ const TextToEnter = ({
     updatedVersion,
     scrollToPosition,
   });
+  const isSpace = /\s+/.test(text[currentPosition]);
 
   return (
     <div className={styles.text} tabIndex={1}>
@@ -55,7 +57,7 @@ const TextToEnter = ({
       {currentPage === activePage && word ? (
         <>
           <span>{text.slice(0, word.position.start)}</span>
-          <div className={styles.word}>
+          <div className={cn(styles.word, { [styles.space]: isSpace })}>
             {word.text.start}
             <span
               ref={selectedRef}
