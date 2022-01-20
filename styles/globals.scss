@@ -1,12 +1,12 @@
-@import "./fonts/fonts";
+@import './fonts/fonts';
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: $Inconsolata, $Lekton, $Anonymous-Pro, $IBM-Regular, $PT_Mono,
-    monospace, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: $Inconsolata, monospace, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
 }
 
 a {
