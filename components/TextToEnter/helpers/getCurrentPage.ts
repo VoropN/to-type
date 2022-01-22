@@ -1,4 +1,4 @@
-export const charactersPerPage = 1000;
+export const charactersPerPage = 5000;
 
 export const getCurrentPosition = ({
   position,
