@@ -8,7 +8,7 @@ import { Page } from 'components/Page';
 
 export async function getStaticProps(context: any) {
   // @ts-ignore
-  const text = (await import('/data/notebooks.txt')).default;
+  const text = (await import('../data/notebooks.txt')).default;
   return {
     props: { data: { text, options: { name: 'The HTML DOM API' } } },
   };
