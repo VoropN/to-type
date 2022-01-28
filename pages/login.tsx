@@ -7,20 +7,28 @@ import awsExports from 'src/aws-exports';
 import { useEffect } from 'react';
 import Profile from 'components/Profile';
 import { Page } from 'components';
+import { Button } from '@mui/material';
+import styles from './Login.module.scss';
+import classNames from 'classnames';
 
 Amplify.configure(awsExports);
-
+const User = withAuthenticator(Profile);
 const Login = ({ user }: any) => {
   const router = useRouter();
   useEffect(() => {
-    router.back();
+    // router.back();
   }, [user]);
 
   return (
     <Page>
-      <Profile />
+      <div className={classNames(styles.container)}>
+        <Button variant="outlined" color="warning" href="/">
+          Home
+        </Button>
+      </div>
+      <User />
     </Page>
   );
 };
 
-export default withAuthenticator(Login);
+export default Login;

@@ -1,0 +1,16 @@
+.container {
+  position: absolute;
+  right: 25px;
+  z-index: 1000;
+  top: 6px;
+  display: grid;
+  justify-content: center;
+  margin: auto;
+  border-radius: 14px;
+  border: 1px solid mintcream;
+  background: rgba(246, 245, 245, 0.34);
+  box-shadow: 1px 2px 3px rgb(0 0 0 / 26%),
+    inset 1px 2px 3px rgba(255, 255, 255, 0.47);
+  text-shadow: 0.1px 0.4px 0.4px;
+  padding: 10px;
+}

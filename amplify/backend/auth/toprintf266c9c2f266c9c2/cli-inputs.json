@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "toprint116529b5_identitypool_116529b5",
+    "identityPoolName": "toprintf266c9c2_identitypool_f266c9c2",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "toprin116529b5",
-    "userPoolName": "toprint116529b5_userpool_116529b5",
+    "resourceNameTruncated": "toprinf266c9c2",
+    "userPoolName": "toprintf266c9c2_userpool_f266c9c2",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,17 +31,28 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "toprin116529b5_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
-    "sharedId": "116529b5",
-    "resourceName": "toprint116529b5",
+    "userpoolClientLambdaRole": "toprinf266c9c2_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": true,
+    "sharedId": "f266c9c2",
+    "resourceName": "toprintf266c9c2f266c9c2",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
+    "useDefault": "manual",
+    "thirdPartyAuth": true,
+    "authProviders": [],
     "usernameAttributes": [
       "email"
     ],
+    "userPoolGroups": true,
+    "adminQueries": true,
     "triggers": {},
-    "userPoolGroupList": [],
+    "hostedUI": true,
+    "hostedUIDomainName": "toprintf266c9c2-f266c9c2",
+    "authProvidersUserPool": [],
+    "hostedUIProviderMeta": "[]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://main.djylof2dauaym.amplifyapp.com/\"],\"LogoutURLs\":[\"https://main.djylof2dauaym.amplifyapp.com/\",\"https://main.djylof2dauaym.amplifyapp.com/login/\"]}",
+    "userPoolGroupList": [
+      "userPoolGroupsToPrint"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
