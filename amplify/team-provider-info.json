@@ -10,11 +10,6 @@
       "StackName": "amplify-toprint-dev-170526",
       "StackId": "arn:aws:cloudformation:eu-north-1:384122972435:stack/amplify-toprint-dev-170526/bbb88f60-804b-11ec-96a7-0eca612de530",
       "AmplifyAppId": "djylof2dauaym"
-    },
-    "categories": {
-      "auth": {
-        "toprintf266c9c2f266c9c2": {}
-      }
     }
   }
 }

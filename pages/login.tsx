@@ -10,6 +10,7 @@ import { Page } from 'components';
 import { Button } from '@mui/material';
 import styles from './Login.module.scss';
 import classNames from 'classnames';
+import SignInWithGoogle from 'components/SignIn/SignInWithGoogle';
 
 Amplify.configure(awsExports);
 const User = withAuthenticator(Profile);
@@ -25,6 +26,7 @@ const Login = ({ user }: any) => {
         <Button variant="outlined" color="warning" href="/">
           Home
         </Button>
+        <SignInWithGoogle />
       </div>
       <User />
     </Page>
