@@ -11,7 +11,6 @@ import { Button } from '@mui/material';
 import styles from './Login.module.scss';
 import classNames from 'classnames';
 import SignInWithGoogle from 'components/SignIn/SignInWithGoogle';
-
 Amplify.configure(awsExports);
 const User = withAuthenticator(Profile);
 const Login = ({ user }: any) => {
