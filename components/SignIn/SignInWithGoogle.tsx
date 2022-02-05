@@ -14,10 +14,10 @@ declare global {
 
 Amplify.configure(awsConfig);
 
-const Login = () => {
+const SignInWithGoogle = () => {
   const [user, setUser] = useState<any>(null);
   const [customState, setCustomState] = useState(null);
-
+  console.log(user);
   useEffect(() => {
     const unsubscribe = Hub.listen('auth', ({ payload: { event, data } }) => {
       switch (event) {
@@ -69,7 +69,7 @@ const Login = () => {
     <div className="App">
       {user ? (
         <button id="name" onClick={() => Auth.signOut()}>
-          Sign Out {user.getEmail()}
+          Sign Out
         </button>
       ) : (
         <div
@@ -88,4 +88,4 @@ const Login = () => {
   );
 };
 
-export default memo(Login);
+export default memo(SignInWithGoogle);

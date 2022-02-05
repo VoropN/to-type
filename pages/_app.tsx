@@ -10,7 +10,7 @@ Amplify.configure({ ...config, ssr: true });
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Authenticator.Provider>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </Authenticator.Provider>
   );
 }
