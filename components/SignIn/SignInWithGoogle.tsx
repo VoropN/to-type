@@ -9,6 +9,7 @@ import { loadScript } from 'components/SignIn/utils/loadScript';
 declare global {
   interface Window {
     gapi: any;
+    google: any;
   }
 }
 
@@ -16,8 +17,10 @@ Amplify.configure(awsConfig);
 
 const SignInWithGoogle = () => {
   const [user, setUser] = useState<any>(null);
+  const [isReady, setIsReady] = useState(false);
   const [customState, setCustomState] = useState(null);
-  console.log(user);
+  const googleButton = useRef(null);
+
   useEffect(() => {
     const unsubscribe = Hub.listen('auth', ({ payload: { event, data } }) => {
       switch (event) {
@@ -40,50 +43,38 @@ const SignInWithGoogle = () => {
   }, []);
 
   useEffect(() => {
-    const initGapi = () => {
-      const gapi = window.gapi;
-      gapi.load('auth2', function () {
-        gapi.auth2.init({
-          client_id:
-            '533677469724-4q8glcedf5hm5pl8g385nvspgtsn8p2a.apps.googleusercontent.com',
-          scope: 'profile email openid',
-        });
-        gapi.signin2.render('gs2', {
-          scope: 'email',
-          width: 150,
-          height: 25,
-          longtitle: true,
-          theme: 'dark',
-        });
+    const renderGoogleButton = () => {
+      setIsReady(true);
+      window.google.accounts.id.initialize({
+        client_id:
+          '533677469724-4q8glcedf5hm5pl8g385nvspgtsn8p2a.apps.googleusercontent.com',
+      });
+      window.google.accounts.id.renderButton(googleButton.current, {
+        theme: 'outline',
+        size: 'medium',
       });
     };
 
     if (!window.gapi?.auth2?.getAuthInstance?.())
       loadScript({
-        url: 'https://apis.google.com/js/platform.js',
-        onLoad: initGapi,
+        url: 'https://accounts.google.com/gsi/client',
+        onLoad: renderGoogleButton,
       });
   }, []);
 
+  if (user || !isReady) return null;
+
   return (
-    <div className="App">
-      {user ? (
-        <button id="name" onClick={() => Auth.signOut()}>
-          Sign Out
-        </button>
-      ) : (
-        <div
-          id="gs2"
-          onClick={() =>
-            Auth.federatedSignIn({
-              provider: CognitoHostedUIIdentityProvider.Google,
-            })
-          }
-          className={styles.googleButton}
-        >
-          Sign in with Google
-        </div>
-      )}
+    <div
+      ref={googleButton}
+      onClick={() =>
+        Auth.federatedSignIn({
+          provider: CognitoHostedUIIdentityProvider.Google,
+        })
+      }
+      className={styles.googleButton}
+    >
+      Sign in with Google
     </div>
   );
 };

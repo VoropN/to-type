@@ -13,12 +13,8 @@ import classNames from 'classnames';
 import SignInWithGoogle from 'components/SignIn/SignInWithGoogle';
 Amplify.configure(awsExports);
 const User = withAuthenticator(Profile);
-const Login = ({ user }: any) => {
-  const router = useRouter();
-  useEffect(() => {
-    // router.back();
-  }, [user]);
 
+const Login = () => {
   return (
     <Page>
       <div className={classNames(styles.container)}>
@@ -27,7 +23,7 @@ const Login = ({ user }: any) => {
         </Button>
         <SignInWithGoogle />
       </div>
-      <User />
+      <User left />
     </Page>
   );
 };

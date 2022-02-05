@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { Auth } from 'aws-amplify';
 import SignInWithGoogle from 'components/SignIn/SignInWithGoogle';
 
-const Profile = () => {
+const Profile = ({ left }: { left?: boolean }) => {
   const [user, setUser] = useState<null | { email: string }>(null);
   useEffect(() => {
     const getUser = async () => {
@@ -19,9 +19,7 @@ const Profile = () => {
     setUser(null);
   };
   return (
-    <div className={classNames(styles.container)}>
-      <SignInWithGoogle />
-
+    <div className={classNames(styles.container, { [styles.left]: left })}>
       {user ? (
         <>
           <div className={styles.userData}>{user.email}</div>
@@ -35,9 +33,12 @@ const Profile = () => {
           </Button>
         </>
       ) : (
-        <Button variant="outlined" color="warning" href="/login">
-          login
-        </Button>
+        <>
+          <Button variant="outlined" color="warning" href="/login">
+            login
+          </Button>
+          <SignInWithGoogle />
+        </>
       )}
     </div>
   );
