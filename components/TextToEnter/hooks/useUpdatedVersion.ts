@@ -60,6 +60,11 @@ export const useUpdatedVersion = ({
           ? position + (fullText.slice(position).match(/\S/)?.index || 0)
           : position + 1
       );
+    } else if (pressedLetter === 'Backspace') {
+      setIsPressedLetterVisible(true);
+      setPosition(
+        position + (fullText.slice(position).match(/\S/)?.index || 1)
+      );
     } else {
       setTypoCounter(typoCounter + 1);
       setIsPressedLetterVisible(true);

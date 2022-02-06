@@ -30,6 +30,7 @@ export const usePressedLetter = ({
         case 'Escape':
           break;
         case 'Enter':
+        case 'Backspace':
         default: {
           const letter = getSymbol(key);
           setPressedLetter(letter);
@@ -37,7 +38,7 @@ export const usePressedLetter = ({
         }
       }
     };
-    document.addEventListener('keypress', inputFunc, false);
-    return () => document.removeEventListener('keypress', inputFunc, false);
+    document.addEventListener('keydown', inputFunc, false);
+    return () => document.removeEventListener('keydown', inputFunc, false);
   }, [setPressedLetter, setUpdatedVersion, isPositionEditable]);
 };

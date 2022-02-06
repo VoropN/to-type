@@ -8,6 +8,7 @@ export const getSymbol = (letter: string) => {
   if (/[`'’]/.test(letter)) return "'";
   if (/[-—]/g.test(letter)) return '-';
   if (/[….·]/.test(letter)) return '.';
+  if (/[“"]/.test(letter)) return '"';
 
   return letter;
 };

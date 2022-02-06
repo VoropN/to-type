@@ -40,6 +40,9 @@ const Timer = ({
       }
 
       switch (key) {
+        case 'Backspace':
+          setTimeout(() => stopTimer(), 0);
+          break;
         case 'Esc': // IE/Edge specific value
         case 'Escape':
           stopTimer();
