@@ -1,20 +1,12 @@
-import Amplify, { withSSRContext } from 'aws-amplify';
-import config from 'src/aws-exports';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-// Amplify SSR configuration needs to be done within each API route
-Amplify.configure({ ...config, ssr: true });
 
 export default async function profile(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { Auth } = withSSRContext({ req });
-
   let data;
-  let user;
+  let user: any;
   try {
-    user = await Auth.currentAuthenticatedUser();
     console.log('user is authenticated');
     // fetch some data and assign it to the data variable
   } catch (err) {
@@ -24,6 +16,6 @@ export default async function profile(
   res.statusCode = 200;
   res.json({
     data: data ? data : null,
-    username: user ? user.attributes : null,
+    username: user?.attributes || null,
   });
 }
