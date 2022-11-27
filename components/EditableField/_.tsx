@@ -39,7 +39,7 @@ const EditableField = ({
   }, [isEditable]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const onKeyDown = (event: ChangeEvent<any>) => {
+  const onInput = (event: ChangeEvent<any>) => {
     const value = event.target.textContent;
     if (onValidate && !onValidate(value)) {
       onChange?.(content);
@@ -79,7 +79,7 @@ const EditableField = ({
 
   const actions = isEditable
     ? {
-        onKeyDown,
+        onInput,
         contentEditable: isEditable,
         suppressContentEditableWarning: true,
         dangerouslySetInnerHTML: { __html: content },
