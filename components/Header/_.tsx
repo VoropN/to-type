@@ -1,18 +1,18 @@
-import { memo, useMemo } from 'react';
-import { Indicators } from '../Indicators';
-import { LoadFile } from '../LoadFile';
-import { Timer } from 'components/Timer';
 import { EnteredLetterHint } from 'components/Header/EnteredLetterHint';
-import styles from './styles.module.scss';
-import { ILoadTextFunc, IText } from 'types/ILoadText';
+import { useTemporaryIndicators } from 'components/Header/useTemporaryIndicators';
+import NewSession from 'components/NewSession';
+import Profile from 'components/Profile';
+import { Timer } from 'components/Timer';
+import { memo, useMemo } from 'react';
 import {
   IEnteredLetterHintProps,
   IIndicatorProps,
   ITimerProps,
 } from 'types/IHomePage';
-import { useTemporaryIndicators } from 'components/Header/useTemporaryIndicators';
-import NewSession from 'components/NewSession';
-import Profile from 'components/Profile';
+import { ILoadTextFunc, IText } from 'types/ILoadText';
+import { Indicators } from '../Indicators';
+import { LoadFile } from '../LoadFile';
+import styles from './styles.module.scss';
 
 interface IHeader {
   textData: IText;

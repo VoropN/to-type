@@ -1,9 +1,9 @@
-import { memo } from 'react';
-import styles from './styles.module.scss';
-import { useLoadFileProps } from './useLoadFileProps';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { IconButton } from '@mui/material';
+import { memo } from 'react';
 import { ILoadTextFunc } from 'types/ILoadText';
+import styles from './styles.module.scss';
+import { useLoadFileProps } from './useLoadFileProps';
 
 const LoadFile = ({ loadText }: { loadText: ILoadTextFunc }) => {
   const { onChange, isLoading, fileButtonRef } = useLoadFileProps({ loadText });

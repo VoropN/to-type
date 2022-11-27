@@ -24,6 +24,12 @@ export const usePressedLetter = ({
         case 'ArrowUp':
         case 'Left':
         case 'ArrowLeft':
+        case 'Shift':
+        case 'Alt':
+        case 'Control':
+        case 'CapsLock':
+        case 'Meta':
+        case 'F12':
         case 'Right':
         case 'ArrowRight':
         case 'Esc':

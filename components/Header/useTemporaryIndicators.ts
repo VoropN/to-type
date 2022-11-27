@@ -1,7 +1,7 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { getSpeed } from 'utils';
-import { IText } from 'types/ILoadText';
 import { getIndicatorsDiff } from 'components/Header/utils/getIndicatorsDiff';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { IText } from 'types/ILoadText';
+import { getSpeed } from 'utils';
 
 interface IUseTemporaryIndicators {
   time: number;
@@ -29,7 +29,7 @@ export const useTemporaryIndicators = ({
       setShowSessionProgress(true);
       event.target?.blur();
     },
-    [setSessionVersion]
+    [setSessionVersion],
   );
   const switchProps = useMemo(
     () => ({
@@ -39,7 +39,7 @@ export const useTemporaryIndicators = ({
         event.target.blur();
       },
     }),
-    [showSessionProgress]
+    [showSessionProgress],
   );
   const diffIndicators = getIndicatorsDiff(initialIndicators, {
     time,

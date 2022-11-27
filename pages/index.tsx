@@ -1,10 +1,10 @@
+import { Page } from 'components/Page';
 import { FC, useCallback, useState } from 'react';
-import styles from './Home.module.scss';
+import { IText } from 'types/ILoadText';
+import { Header } from '../components/Header';
 import { Pagination } from '../components/Pagination';
 import { TextToEnter, useHomePage } from '../components/TextToEnter';
-import { Header } from '../components/Header';
-import { IText } from 'types/ILoadText';
-import { Page } from 'components/Page';
+import styles from './Home.module.scss';
 
 export async function getStaticProps(context: any) {
   // @ts-ignore
@@ -21,7 +21,7 @@ const Home: FC<any> = ({ data }: { data: IText }) => {
     (textData: IText) => {
       setTextData(textData);
     },
-    [setTextData]
+    [setTextData],
   );
   const {
     timerProps,

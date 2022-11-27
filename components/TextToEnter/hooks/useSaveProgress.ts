@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
-import { IUpdateActivePage } from './useActivePage';
-import { getCurrentPage } from '../helpers/getCurrentPage';
 import { ITextOptions } from 'types/ILoadText';
+import { getCurrentPage } from '../helpers/getCurrentPage';
+import { IUpdateActivePage } from './useActivePage';
 
 interface IUseSaveProgress {
   textOptions: ITextOptions;
@@ -41,7 +41,7 @@ export const useSaveProgress = ({
   useEffect(() => {
     const progress = JSON.parse(
       localStorage.getItem(storedName) ||
-        '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0, "time": 0}'
+        '{"position": 0, "typedCounter": 0, "typoCounter": 0, "speedCounter": 0, "time": 0}',
     );
     setPosition(progress.position);
     setTypoCounter(progress.typoCounter);
@@ -64,7 +64,7 @@ export const useSaveProgress = ({
         typoCounter,
         speedCounter,
         time,
-      })
+      }),
     );
   }, [updatedVersion, position, time]);
 };

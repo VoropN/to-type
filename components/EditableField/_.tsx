@@ -1,3 +1,8 @@
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButton from '@mui/material/IconButton';
+import cn from 'classnames';
 import {
   ChangeEvent,
   memo,
@@ -7,12 +12,7 @@ import {
   useState,
 } from 'react';
 import styles from './styles.module.scss';
-import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
 import { setCaret } from './utils';
-import cn from 'classnames';
 
 export interface IEditableField {
   onEdit: (isEditable: boolean) => void;
@@ -39,7 +39,7 @@ const EditableField = ({
   }, [isEditable]);
 
   const ref = useRef<HTMLDivElement>(null);
-  const onInput = (event: ChangeEvent<any>) => {
+  const onKeyDown = (event: ChangeEvent<any>) => {
     const value = event.target.textContent;
     if (onValidate && !onValidate(value)) {
       onChange?.(content);
@@ -74,12 +74,12 @@ const EditableField = ({
         return;
       onCancel();
     },
-    [content]
+    [content],
   );
 
   const actions = isEditable
     ? {
-        onInput,
+        onKeyDown,
         contentEditable: isEditable,
         suppressContentEditableWarning: true,
         dangerouslySetInnerHTML: { __html: content },
@@ -95,7 +95,7 @@ const EditableField = ({
   return (
     <div className={styles.container} {...containerActions}>
       &nbsp;
-      <div
+      <mark
         {...actions}
         ref={ref}
         className={cn(styles.field, { [styles.isEditable]: isEditable })}

@@ -1,10 +1,10 @@
-import { Dispatch, memo, SetStateAction, useRef } from 'react';
-import styles from './styles.module.scss';
-import { enterSymbol, spaceSymbol, visibleSymbols } from './helpers';
-import { IWordData } from 'utils';
-import { useScrollToPosition } from 'components/TextToEnter/hooks/useScrollToPosition';
-import { IScrollOptions, IScrollToPositionFunc } from 'types/IScrollToPosition';
 import cn from 'classnames';
+import { useScrollToPosition } from 'components/TextToEnter/hooks/useScrollToPosition';
+import { Dispatch, memo, SetStateAction, useRef } from 'react';
+import { IScrollOptions, IScrollToPositionFunc } from 'types/IScrollToPosition';
+import { IWordData } from 'utils';
+import { visibleSymbols } from './helpers';
+import styles from './styles.module.scss';
 
 export interface ITextToEnter {
   text: string;

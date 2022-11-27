@@ -1,7 +1,7 @@
-import { memo, useEffect, useState } from 'react';
-import styles from './styles.module.scss';
-import classNames from 'classnames';
 import { Button } from '@mui/material';
+import classNames from 'classnames';
+import { memo, useState } from 'react';
+import styles from './styles.module.scss';
 
 const Profile = ({ left }: { left?: boolean }) => {
   const [user, setUser] = useState<null | { email: string }>(null);

@@ -1,7 +1,7 @@
+import { Button, FormControlLabel, FormGroup, Switch } from '@mui/material';
+import classNames from 'classnames';
 import { ChangeEvent, memo } from 'react';
 import styles from './styles.module.scss';
-import classNames from 'classnames';
-import { Button, FormControlLabel, FormGroup, Switch } from '@mui/material';
 
 interface INewSession {
   switchProps: {

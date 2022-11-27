@@ -1,5 +1,5 @@
-import { memo, ReactNode } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
+import { memo, ReactNode } from 'react';
 import { theme } from 'theme';
 
 interface IPage {

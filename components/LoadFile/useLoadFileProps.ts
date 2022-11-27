@@ -42,7 +42,7 @@ export const useLoadFileProps = ({ loadText }: IUseLoadFileProps) => {
 
       loadText({ text, options });
     },
-    [loadText]
+    [loadText],
   );
 
   const onChange = useCallback(
@@ -62,7 +62,7 @@ export const useLoadFileProps = ({ loadText }: IUseLoadFileProps) => {
         reader.readAsText(file);
       }
     },
-    [setLoading, updateText, setErrors]
+    [setLoading, updateText, setErrors],
   );
 
   return {

@@ -6,7 +6,13 @@
     "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",
-    "stylelint-check": "stylelint-config-prettier-check"
+    "format": "prettier --write .",
+    "check-types": "tsc --pretty --noEmit",
+    "stylelint-check": "stylelint-config-prettier-check",
+    "prepare": "husky install",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js",
+    "test": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -27,8 +33,10 @@
     "@types/react": "17.0.38",
     "eslint": "8.5.0",
     "eslint-config-next": "^12.0.7",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.2",
     "prettier": "2.5.1",
+    "prettier-plugin-organize-imports": "^3.2.1",
     "raw-loader": "^4.0.2",
     "stylelint": "^14.2.0",
     "stylelint-config-prettier": "^9.0.3",

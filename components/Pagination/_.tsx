@@ -1,8 +1,8 @@
-import { ChangeEvent, memo } from 'react';
-import styles from './styles.module.scss';
-import { IPage } from '../TextToEnter/hooks/useActivePage';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { ChangeEvent, memo } from 'react';
+import { IPage } from '../TextToEnter/hooks/useActivePage';
+import styles from './styles.module.scss';
 
 export interface IPagination {
   activePage: number;

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { enterSymbol, getSymbol } from '../helpers';
 import { getWord } from '../../../utils';
+import { enterSymbol, getSymbol } from '../helpers';
 import { getCurrentPosition } from '../helpers/getCurrentPage';
 
 interface IUseUpdatedVersion {
@@ -33,14 +33,14 @@ export const useUpdatedVersion = ({
   const currentPosition = getCurrentPosition({ position, activePage });
   const currentLetter = useMemo(
     () => getSymbol(fullText[position]),
-    [fullText, position]
+    [fullText, position],
   );
   const word = useMemo(
     () =>
       activePage === currentPage
         ? getWord({ text, position: currentPosition })
         : null,
-    [text, currentPosition]
+    [text, currentPosition],
   );
 
   useEffect(() => {
@@ -58,12 +58,12 @@ export const useUpdatedVersion = ({
       setPosition(
         pressedLetter === enterSymbol
           ? position + (fullText.slice(position).match(/\S/)?.index || 0)
-          : position + 1
+          : position + 1,
       );
     } else if (pressedLetter === 'Backspace') {
       setIsPressedLetterVisible(true);
       setPosition(
-        position + (fullText.slice(position).match(/\S/)?.index || 1)
+        position + (fullText.slice(position).match(/\S/)?.index || 1),
       );
     } else {
       setTypoCounter(typoCounter + 1);

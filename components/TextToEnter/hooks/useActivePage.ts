@@ -41,7 +41,7 @@ export const useActivePage = ({
   const [activePage, setActivePage] = useState(0);
   const pagesLength = useMemo(
     () => 1 + getCurrentPage({ position: fullText.length }),
-    [fullText]
+    [fullText],
   );
 
   const pages: IPage[] = useMemo(
@@ -56,7 +56,7 @@ export const useActivePage = ({
           },
         };
       }),
-    [fullText]
+    [fullText],
   );
 
   const updateActivePage = useCallback(
@@ -67,7 +67,7 @@ export const useActivePage = ({
         scrollToPosition({ forceScroll: forceUpdate });
       }
     },
-    [activePage, fullText, isPositionEditable]
+    [activePage, fullText, isPositionEditable],
   );
 
   useEffect(() => {

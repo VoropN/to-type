@@ -1,10 +1,10 @@
-import { memo } from 'react';
-import styles from './styles.module.scss';
-import { EditableField } from '../EditableField';
 import cn from 'classnames';
-import { formatTime } from '../Timer/utils/formatTime';
 import { usePosition } from 'components/TextToEnter/hooks/usePosition';
+import { memo } from 'react';
 import { IIndicatorProps } from 'types/IHomePage';
+import { EditableField } from '../EditableField';
+import { formatTime } from '../Timer/utils/formatTime';
+import styles from './styles.module.scss';
 
 interface IIndicators extends IIndicatorProps {
   textLength: number;

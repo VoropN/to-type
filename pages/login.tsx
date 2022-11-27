@@ -1,8 +1,7 @@
-import Profile from 'components/Profile';
-import { Page } from 'components';
 import { Button } from '@mui/material';
-import styles from './Login.module.scss';
 import classNames from 'classnames';
+import { Page } from 'components';
+import styles from './Login.module.scss';
 
 const Login = () => {
   return (

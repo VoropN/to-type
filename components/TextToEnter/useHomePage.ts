@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react';
-import { useActivePage } from './hooks/useActivePage';
-import { useSaveProgress } from './hooks/useSaveProgress';
-import { usePressedLetter } from './hooks/usePressedLetter';
-import { useUpdatedVersion } from './hooks/useUpdatedVersion';
-import { IText } from 'types/ILoadText';
 import { getCurrentPage } from 'components/TextToEnter/helpers/getCurrentPage';
+import { useMemo, useState } from 'react';
+import { IText } from 'types/ILoadText';
+import { useActivePage } from './hooks/useActivePage';
+import { usePressedLetter } from './hooks/usePressedLetter';
+import { useSaveProgress } from './hooks/useSaveProgress';
+import { useUpdatedVersion } from './hooks/useUpdatedVersion';
 
 export interface IUseTextToEnterProps extends IText {}
 

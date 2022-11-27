@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const data = await new Promise((res, rej) => {
     fs.readFile('/data/notebooks.txt', 'utf-8', (err, source) => {

@@ -1,7 +1,7 @@
-import { memo } from 'react';
-import styles from './styles.module.scss';
 import cn from 'classnames';
+import { memo } from 'react';
 import { IEnteredLetterHintProps } from 'types/IHomePage';
+import styles from './styles.module.scss';
 
 const EnteredLetterHint = ({
   currentLetter,

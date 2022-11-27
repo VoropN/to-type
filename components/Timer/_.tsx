@@ -1,6 +1,6 @@
+import { Button } from '@mui/material';
 import { ChangeEvent, memo, useCallback, useEffect, useRef } from 'react';
 import { ITimerProps } from 'types/IHomePage';
-import { Button } from '@mui/material';
 
 const startTimer = ({
   time,

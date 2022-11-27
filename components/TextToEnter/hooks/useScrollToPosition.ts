@@ -1,7 +1,7 @@
 import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
-import { scrollToElement } from 'utils';
 import variables from 'styles/variables.module.scss';
 import { IScrollOptions, IScrollToPositionFunc } from 'types/IScrollToPosition';
+import { scrollToElement } from 'utils';
 
 interface IUseScrollToPosition {
   text: string;
