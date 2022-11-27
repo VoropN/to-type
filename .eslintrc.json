@@ -1,6 +1,7 @@
 {
   "extends": ["next", "prettier"],
   "plugins": ["prettier"],
+  "ignorePatterns": [".next", "out/*"],
   "rules": {
     "prettier/prettier": ["error"],
     "react/display-name": 0
